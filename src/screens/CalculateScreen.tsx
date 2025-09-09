@@ -136,22 +136,29 @@ export const CalculateScreen: React.FC = () => {
       <View style={styles.contentContainer}>
         {/* Selected Currency Card */}
         <LinearGradient
-          colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
+          colors={['#E300FF', '#880099']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={styles.selectedCard}
+          style={styles.selectedCardBorder}
         >
-          <View style={styles.selectedCardContent}>
-            <View style={styles.flagContainer}>
-              <Text style={styles.selectedFlag}>{selectedCurrency?.flag}</Text>
+          <LinearGradient
+            colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.selectedCard}
+          >
+            <View style={styles.selectedCardContent}>
+              <View style={styles.flagContainer}>
+                <Text style={styles.selectedFlag}>{selectedCurrency?.flag}</Text>
+              </View>
+              <View style={styles.selectedInfo}>
+                <Text style={styles.selectedAmount}>{inputValue}</Text>
+                <Text style={styles.selectedCurrency}>
+                  {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
+                </Text>
+              </View>
             </View>
-            <View style={styles.selectedInfo}>
-              <Text style={styles.selectedAmount}>{inputValue}</Text>
-              <Text style={styles.selectedCurrency}>
-                {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
-              </Text>
-            </View>
-          </View>
+          </LinearGradient>
         </LinearGradient>
 
         {/* Conversion Results */}
@@ -312,14 +319,16 @@ const styles = StyleSheet.create({
   conversionsScrollView: {
     flex: 1,
   },
-  selectedCard: {
+  selectedCardBorder: {
     marginHorizontal: 20,
     marginTop: 20,
     borderRadius: 16,
     padding: 2,
   },
+  selectedCard: {
+    borderRadius: 14,
+  },
   selectedCardContent: {
-    backgroundColor: Colors.BACKGROUND,
     borderRadius: 14,
     paddingVertical: 16,
     paddingHorizontal: 20,
