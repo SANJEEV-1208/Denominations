@@ -17,6 +17,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -185,8 +186,7 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <View style={styles.searchBar}>
-              <SearchIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+            <BlurView intensity={20} tint="light" style={styles.searchBar}>
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search"
@@ -194,7 +194,10 @@ export const EditListScreen: React.FC = () => {
                 value={searchQuery}
                 onChangeText={setSearchQuery}
               />
-            </View>
+              <TouchableOpacity style={styles.searchIconButton}>
+                <SearchIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+              </TouchableOpacity>
+            </BlurView>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -337,23 +340,29 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.CARD_BACKGROUND,
-    borderRadius: 25,
+    backgroundColor: 'rgba(217, 217, 217, 0.2)',
+    borderRadius: 42,
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    height: 84,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowRadius: 4,
+    elevation: 3,
   },
   searchInput: {
     flex: 1,
-    marginLeft: 10,
-    fontSize: 16,
+    fontSize: 24,
+    fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
+    textAlign: 'left',
+  },
+  searchIconButton: {
+    padding: 5,
   },
 });
