@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: Platform.OS === 'ios' ? 15 : 30,
     left: '10%',
     right: '10%',
   },
