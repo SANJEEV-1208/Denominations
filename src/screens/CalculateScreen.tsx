@@ -126,7 +126,7 @@ export const CalculateScreen: React.FC = () => {
             style={styles.closeButton}
           >
             <View style={styles.closeIconContainer}>
-              <CloseIcon width={18} height={18} fill={Colors.BUTTON_ICON} />
+              <CloseIcon width={18} height={18} fill={Colors.TEXT_WHITE} />
             </View>
           </TouchableOpacity>
         </View>

@@ -80,7 +80,7 @@ export const HomeScreen: React.FC = () => {
           </View>
           <TouchableOpacity onPress={handleSettingsPress} style={styles.settingsButton}>
             <View style={styles.settingsIconContainer}>
-              <SettingsIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+              <SettingsIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
             </View>
           </TouchableOpacity>
         </View>
