@@ -461,12 +461,12 @@ const styles = StyleSheet.create({
   },
   numPadWrapper: {
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 10 : 20,
+    bottom: Platform.OS === 'ios' ? 0 : 20,
     left: 0,
     right: 0,
     paddingTop: 15,
     paddingHorizontal: 15,
-    paddingBottom: Platform.OS === 'ios' ? 7.5 : 15,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 15,
   },
   numPadContainer: {
     borderRadius: 20,
