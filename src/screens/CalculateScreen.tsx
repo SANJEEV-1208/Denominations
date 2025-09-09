@@ -184,7 +184,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
+          <BlurView intensity={20} tint="light" style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
               value={inputValue}
@@ -196,7 +196,7 @@ export const CalculateScreen: React.FC = () => {
             <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
               <Text style={styles.clearText}>×</Text>
             </TouchableOpacity>
-          </View>
+          </BlurView>
           <TouchableOpacity 
             style={styles.calculateButton}
             onPress={handleCalculatePress}
@@ -409,12 +409,22 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'rgba(217, 217, 217, 0.2)',
     borderRadius: 42,
     paddingHorizontal: 20,
     height: 84,
     alignItems: 'center',
     marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   input: {
     flex: 1,
