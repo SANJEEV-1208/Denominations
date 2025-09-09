@@ -407,12 +407,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
-    bottom: 380,
+    bottom: 390,
     left: 20,
     right: 20,
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 10,
+    marginBottom: 10,
   },
   inputWrapper: {
     flex: 1,
