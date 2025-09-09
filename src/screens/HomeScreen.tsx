@@ -72,15 +72,15 @@ export const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View>
+        <TouchableOpacity onPress={handleSettingsPress} style={styles.settingsButton}>
+          <View style={styles.settingsIconContainer}>
+            <SettingsIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>Denominations</Text>
           <Text style={styles.subtitle}>Saved List</Text>
         </View>
-        <TouchableOpacity onPress={handleSettingsPress} style={styles.settingsButton}>
-          <View style={styles.settingsIconContainer}>
-            <SettingsIcon width={24} height={24} fill={Colors.PRIMARY} />
-          </View>
-        </TouchableOpacity>
       </View>
 
       {savedCurrencyCodes.length === 0 ? (
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -129,13 +129,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
+  titleContainer: {
+    alignItems: 'flex-end',
+  },
   title: {
     ...Typography.HEADER,
     fontSize: 20,
+    textAlign: 'right',
   },
   subtitle: {
     ...Typography.SUBTITLE,
     marginTop: 2,
+    textAlign: 'right',
   },
   settingsButton: {
     padding: 8,

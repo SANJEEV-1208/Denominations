@@ -23,4 +23,7 @@ export const Colors = {
   // Glass morphism
   GLASS_BACKGROUND: 'rgba(255, 255, 255, 0.1)',
   GLASS_BORDER: 'rgba(255, 255, 255, 0.2)',
+  
+  // Button icon color
+  BUTTON_ICON: '#FFBFFF',
 };

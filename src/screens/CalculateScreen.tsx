@@ -115,18 +115,18 @@ export const CalculateScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>Denominations</Text>
-          <Text style={styles.subtitle}>Calculate</Text>
-        </View>
         <TouchableOpacity 
           onPress={() => navigation.goBack()} 
           style={styles.closeButton}
         >
           <View style={styles.closeIconContainer}>
-            <CloseIcon width={24} height={24} fill={Colors.BACKGROUND} />
+            <CloseIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
           </View>
         </TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Denominations</Text>
+          <Text style={styles.subtitle}>Calculate</Text>
+        </View>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -222,13 +222,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
+  titleContainer: {
+    alignItems: 'flex-end',
+  },
   title: {
     ...Typography.HEADER,
     fontSize: 20,
+    textAlign: 'right',
   },
   subtitle: {
     ...Typography.SUBTITLE,
     marginTop: 2,
+    textAlign: 'right',
   },
   closeButton: {
     padding: 8,
