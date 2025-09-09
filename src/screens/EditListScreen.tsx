@@ -17,7 +17,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { BlurView } from 'expo-blur';
+import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -186,33 +186,18 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            {Platform.OS === 'ios' ? (
-              <BlurView intensity={80} tint="light" style={styles.searchBar}>
-                <TextInput
-                  style={styles.searchInput}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </BlurView>
-            ) : (
-              <View style={[styles.searchBar, styles.searchBarAndroid]}>
-                <TextInput
-                  style={styles.searchInput}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </View>
-            )}
+            <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search"
+                placeholderTextColor="#757575"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              <TouchableOpacity style={styles.searchIconButton}>
+                <SearchIcon width={20} height={20} stroke="#757575" />
+              </TouchableOpacity>
+            </CustomBlurView>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -358,12 +343,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 84,
     overflow: 'hidden',
-  },
-  searchBarAndroid: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    elevation: 5,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   searchInput: {
     flex: 1,

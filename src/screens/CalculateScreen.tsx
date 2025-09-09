@@ -13,7 +13,7 @@ import {
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
+import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
@@ -193,35 +193,19 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          {Platform.OS === 'ios' ? (
-            <BlurView intensity={80} tint="light" style={styles.inputWrapper}>
-              <TextInput
-                style={styles.input}
-                value={inputValue}
-                onChangeText={setInputValue}
-                keyboardType="numeric"
-                editable={false}
-                placeholder="0"
-              />
-              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-                <Text style={styles.clearText}>×</Text>
-              </TouchableOpacity>
-            </BlurView>
-          ) : (
-            <View style={[styles.inputWrapper, styles.inputWrapperAndroid]}>
-              <TextInput
-                style={styles.input}
-                value={inputValue}
-                onChangeText={setInputValue}
-                keyboardType="numeric"
-                editable={false}
-                placeholder="0"
-              />
-              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-                <Text style={styles.clearText}>×</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <CustomBlurView intensity={80} tint="light" style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={inputValue}
+              onChangeText={setInputValue}
+              keyboardType="numeric"
+              editable={false}
+              placeholder="0"
+            />
+            <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+              <Text style={styles.clearText}>×</Text>
+            </TouchableOpacity>
+          </CustomBlurView>
           <TouchableOpacity 
             style={styles.calculateButton}
             onPress={handleCalculatePress}
@@ -232,8 +216,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
-          {Platform.OS === 'ios' ? (
-            <BlurView intensity={80} tint="light" style={styles.numPadContainer}>
+          <CustomBlurView intensity={80} tint="light" style={styles.numPadContainer}>
               <View style={styles.numPadRow}>
                 <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
                   <Text style={styles.numPadText}>1</Text>
@@ -278,55 +261,7 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={styles.numPadText}>{'<'}</Text>
                 </TouchableOpacity>
               </View>
-            </BlurView>
-          ) : (
-            <View style={[styles.numPadContainer, styles.numPadContainerAndroid]}>
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
-                  <Text style={styles.numPadText}>1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
-                  <Text style={styles.numPadText}>2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
-                  <Text style={styles.numPadText}>3</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
-                  <Text style={styles.numPadText}>4</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
-                  <Text style={styles.numPadText}>5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
-                  <Text style={styles.numPadText}>6</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
-                  <Text style={styles.numPadText}>7</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
-                  <Text style={styles.numPadText}>8</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
-                  <Text style={styles.numPadText}>9</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
-                  <Text style={styles.numPadText}>.</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
-                  <Text style={styles.numPadText}>0</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                  <Text style={styles.numPadText}>{'<'}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
+          </CustomBlurView>
         </View>
       </View>
     </SafeAreaView>
@@ -491,12 +426,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 12,
     overflow: 'hidden',
-  },
-  inputWrapperAndroid: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    elevation: 5,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   input: {
     flex: 1,
@@ -542,12 +473,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     overflow: 'hidden',
-  },
-  numPadContainerAndroid: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    elevation: 5,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   numPadRow: {
     flexDirection: 'row',
