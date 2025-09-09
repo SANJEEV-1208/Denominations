@@ -154,7 +154,11 @@ export const EditListScreen: React.FC = () => {
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
+          <ScrollView 
+            style={styles.content}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainer}
+          >
             {/* Saved Currencies */}
             {savedCurrencies.length > 0 && (
               <View style={styles.savedSection}>
@@ -173,18 +177,13 @@ export const EditListScreen: React.FC = () => {
             )}
 
             {/* Available Currencies */}
-            <ScrollView 
-              style={styles.availableSection}
-              showsVerticalScrollIndicator={false}
-            >
-              {availableCurrencies.length > 0 && (
-                <>
-                  <Text style={styles.sectionTitle}>Available Currencies</Text>
-                  {availableCurrencies.map(renderAvailableItem)}
-                </>
-              )}
-            </ScrollView>
-          </View>
+            {availableCurrencies.length > 0 && (
+              <View style={styles.availableSection}>
+                <Text style={styles.sectionTitle}>Available Currencies</Text>
+                {availableCurrencies.map(renderAvailableItem)}
+              </View>
+            )}
+          </ScrollView>
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
@@ -256,13 +255,15 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  contentContainer: {
     paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   savedSection: {
     marginTop: 20,
   },
   availableSection: {
-    flex: 1,
     marginTop: 20,
   },
   sectionTitle: {
