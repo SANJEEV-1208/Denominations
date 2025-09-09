@@ -36,7 +36,9 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <Text style={styles.flag}>{currency.flag}</Text>
+        <View style={styles.flagCircle}>
+          <Text style={styles.flag}>{currency.flag}</Text>
+        </View>
       </View>
       
       <View style={styles.centerContent}>
@@ -53,11 +55,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
-    padding: 20,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 90,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -73,22 +77,44 @@ const styles = StyleSheet.create({
     borderColor: Colors.SELECTED_CARD_BORDER,
   },
   leftContent: {
-    marginRight: 15,
+    marginRight: 16,
+  },
+  flagCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: Colors.BACKGROUND,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   flag: {
-    fontSize: 40,
+    fontSize: 32,
   },
   centerContent: {
     flex: 1,
+    justifyContent: 'center',
   },
   rate: {
-    fontSize: 24,
+    fontSize: 26,
+    fontFamily: 'monospace',
     fontWeight: 'bold',
     color: Colors.TEXT_PRIMARY,
-    marginBottom: 4,
+    marginBottom: 6,
+    letterSpacing: -0.5,
   },
   currencyInfo: {
     fontSize: 14,
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
+    letterSpacing: 0.2,
   },
 });
