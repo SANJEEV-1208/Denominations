@@ -135,36 +135,37 @@ export const CalculateScreen: React.FC = () => {
       </View>
 
       <View style={styles.contentContainer}>
-        {/* Selected Currency Card */}
-        <LinearGradient
-          colors={['#E300FF', '#880099']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.selectedCardBorder}
-        >
-          <LinearGradient
-            colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.selectedCard}
-          >
-            <View style={styles.selectedCardContent}>
-              <View style={styles.flagContainer}>
-                <Text style={styles.selectedFlag}>{selectedCurrency?.flag}</Text>
-              </View>
-              <View style={styles.selectedInfo}>
-                <Text style={styles.selectedAmount}>{inputValue}</Text>
-                <Text style={styles.selectedCurrency}>
-                  {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
-                </Text>
-              </View>
-            </View>
-          </LinearGradient>
-        </LinearGradient>
-
         {/* Conversion Results */}
         <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false}>
           <View style={styles.conversionsContainer}>
+            {/* Selected Currency Card */}
+            <LinearGradient
+              colors={['#E300FF', '#880099']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.selectedCardBorder}
+            >
+              <LinearGradient
+                colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.selectedCard}
+              >
+                <View style={styles.selectedCardContent}>
+                  <View style={styles.flagContainer}>
+                    <Text style={styles.selectedFlag}>{selectedCurrency?.flag}</Text>
+                  </View>
+                  <View style={styles.selectedInfo}>
+                    <Text style={styles.selectedAmount}>{inputValue}</Text>
+                    <Text style={styles.selectedCurrency}>
+                      {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
+                    </Text>
+                  </View>
+                </View>
+              </LinearGradient>
+            </LinearGradient>
+
+            {/* Other Currency Cards */}
             {savedCurrencyCodes
               .filter(code => code !== currencyCode)
               .map(code => {
@@ -320,10 +321,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectedCardBorder: {
-    marginHorizontal: 20,
-    marginTop: 20,
     borderRadius: 16,
     padding: 2,
+    marginBottom: 12,
   },
   selectedCard: {
     borderRadius: 14,
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   conversionsContainer: {
     paddingHorizontal: 20,
-    marginTop: 20,
+    paddingTop: 20,
     paddingBottom: 450,
   },
   conversionCard: {
