@@ -17,7 +17,7 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
   children,
   fallbackStyle,
 }) => {
-  // iOS: Use native BlurView with shadow
+  // iOS: Use native BlurView with subtle shadow
   if (Platform.OS === 'ios') {
     return (
       <BlurView 
@@ -26,13 +26,13 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
         style={[
           style,
           {
-            shadowColor: '#000',
+            shadowColor: 'rgba(0, 0, 0, 0.08)',
             shadowOffset: {
               width: 0,
-              height: 4,
+              height: 2,
             },
-            shadowOpacity: 0.15,
-            shadowRadius: 12,
+            shadowOpacity: 1,
+            shadowRadius: 8,
           }
         ]}
       >
