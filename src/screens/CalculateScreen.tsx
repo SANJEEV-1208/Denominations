@@ -201,7 +201,7 @@ export const CalculateScreen: React.FC = () => {
             style={styles.calculateButton}
             onPress={handleCalculatePress}
           >
-            <CalculateIcon width={24} height={24} stroke={Colors.TEXT_WHITE} />
+            <CalculateIcon width={24} height={24} stroke="#FFFFFF" />
           </TouchableOpacity>
         </View>
 
