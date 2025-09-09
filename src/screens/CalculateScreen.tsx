@@ -501,7 +501,8 @@ const styles = StyleSheet.create({
   },
   numPadText: {
     fontSize: 28,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_PRIMARY,
   },
 });
