@@ -136,14 +136,17 @@ export const EditListScreen: React.FC = () => {
         >
           {/* Header */}
           <View style={styles.header}>
-            <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
-              <View style={styles.doneIconContainer}>
-                <SaveIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+            <View style={styles.spacer} />
+            <View style={styles.headerRight}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Denominations</Text>
+                <Text style={styles.subtitle}>Edit List</Text>
               </View>
-            </TouchableOpacity>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Denominations</Text>
-              <Text style={styles.subtitle}>Edit List</Text>
+              <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
+                <View style={styles.doneIconContainer}>
+                  <SaveIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -216,8 +219,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
+  spacer: {
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   titleContainer: {
     alignItems: 'flex-end',
+    marginRight: 15,
   },
   title: {
     ...Typography.HEADER,

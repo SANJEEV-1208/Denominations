@@ -115,17 +115,20 @@ export const CalculateScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity 
-          onPress={() => navigation.goBack()} 
-          style={styles.closeButton}
-        >
-          <View style={styles.closeIconContainer}>
-            <CloseIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+        <View style={styles.spacer} />
+        <View style={styles.headerRight}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Denominations</Text>
+            <Text style={styles.subtitle}>Calculate</Text>
           </View>
-        </TouchableOpacity>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Denominations</Text>
-          <Text style={styles.subtitle}>Calculate</Text>
+          <TouchableOpacity 
+            onPress={() => navigation.goBack()} 
+            style={styles.closeButton}
+          >
+            <View style={styles.closeIconContainer}>
+              <CloseIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -214,7 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -222,8 +225,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
+  spacer: {
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   titleContainer: {
     alignItems: 'flex-end',
+    marginRight: 15,
   },
   title: {
     ...Typography.HEADER,
