@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   numPadContainer: {
-    backgroundColor: 'rgba(217, 217, 217, 0.2)',
+    backgroundColor: 'rgba(217, 217, 217, 0.5)',
     borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
