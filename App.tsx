@@ -1,20 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { CurrencyProvider } from './src/context/CurrencyContext';
+import { SplashScreen } from './src/screens/SplashScreen';
+import { HomeScreen } from './src/screens/HomeScreen';
+import { CalculateScreen } from './src/screens/CalculateScreen';
+import { EditListScreen } from './src/screens/EditListScreen';
+import { RootStackParamList } from './src/types';
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CurrencyProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false,
+            cardStyle: { backgroundColor: '#FFFFFF' },
+          }}
+        >
+          <Stack.Screen 
+            name="Splash" 
+            component={SplashScreen}
+            options={{
+              animationEnabled: false,
+            }}
+          />
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen}
+            options={{
+              animationEnabled: true,
+              animationTypeForReplace: 'push',
+            }}
+          />
+          <Stack.Screen 
+            name="Calculate" 
+            component={CalculateScreen}
+            options={{
+              presentation: 'modal',
+              animationEnabled: true,
+            }}
+          />
+          <Stack.Screen 
+            name="EditList" 
+            component={EditListScreen}
+            options={{
+              presentation: 'modal',
+              animationEnabled: true,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </CurrencyProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

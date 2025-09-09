@@ -1,0 +1,335 @@
+import React, { useState, useMemo } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import DraggableFlatList, {
+  ScaleDecorator,
+  RenderItemParams,
+} from 'react-native-draggable-flatlist';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useCurrency } from '../context/CurrencyContext';
+import { Colors } from '../constants/colors';
+import { Typography } from '../constants/typography';
+import { RootStackParamList, Currency } from '../types';
+// @ts-ignore
+import SaveIcon from '../assets/Save.svg';
+// @ts-ignore
+import SearchIcon from '../assets/search-Text-Feild.svg';
+
+type EditListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditList'>;
+
+export const EditListScreen: React.FC = () => {
+  const navigation = useNavigation<EditListScreenNavigationProp>();
+  const {
+    savedCurrencyCodes,
+    allCurrencies,
+    addCurrency,
+    removeCurrency,
+    reorderCurrencies,
+    getCurrencyByCode,
+  } = useCurrency();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [localSavedCodes, setLocalSavedCodes] = useState(savedCurrencyCodes);
+
+  // Filter currencies based on search
+  const filteredCurrencies = useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    return allCurrencies.filter(
+      currency =>
+        currency.code.toLowerCase().includes(query) ||
+        currency.name.toLowerCase().includes(query)
+    );
+  }, [searchQuery, allCurrencies]);
+
+  // Separate saved and available currencies
+  const savedCurrencies = useMemo(() => {
+    return localSavedCodes
+      .map(code => getCurrencyByCode(code))
+      .filter((c): c is Currency => c !== undefined);
+  }, [localSavedCodes, getCurrencyByCode]);
+
+  const availableCurrencies = useMemo(() => {
+    return filteredCurrencies.filter(
+      currency => !localSavedCodes.includes(currency.code)
+    );
+  }, [filteredCurrencies, localSavedCodes]);
+
+  const handleDonePress = async () => {
+    await reorderCurrencies(localSavedCodes);
+    navigation.goBack();
+  };
+
+  const handleToggleCurrency = async (code: string) => {
+    if (localSavedCodes.includes(code)) {
+      const newCodes = localSavedCodes.filter(c => c !== code);
+      setLocalSavedCodes(newCodes);
+      await removeCurrency(code);
+    } else {
+      const newCodes = [...localSavedCodes, code];
+      setLocalSavedCodes(newCodes);
+      await addCurrency(code);
+    }
+  };
+
+  const renderSavedItem = ({ item, drag, isActive }: RenderItemParams<Currency>) => {
+    return (
+      <ScaleDecorator>
+        <TouchableOpacity
+          style={[styles.savedCurrencyCard, isActive && styles.dragging]}
+          onLongPress={drag}
+          onPress={() => handleToggleCurrency(item.code)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.currencyContent}>
+            <Text style={styles.flag}>{item.flag}</Text>
+            <View style={styles.currencyInfo}>
+              <Text style={styles.currencyCode}>{item.code}</Text>
+              <Text style={styles.currencyName}>
+                {item.name} {item.symbol}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.dragHandle}>
+            <Text style={styles.dragIcon}>≡</Text>
+          </View>
+        </TouchableOpacity>
+      </ScaleDecorator>
+    );
+  };
+
+  const renderAvailableItem = (currency: Currency) => {
+    return (
+      <TouchableOpacity
+        key={currency.code}
+        style={styles.availableCurrencyCard}
+        onPress={() => handleToggleCurrency(currency.code)}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.flag}>{currency.flag}</Text>
+        <View style={styles.currencyInfo}>
+          <Text style={styles.currencyCode}>{currency.code}</Text>
+          <Text style={styles.currencyName}>
+            {currency.name} {currency.symbol}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <GestureHandlerRootView style={styles.gestureContainer}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          {/* Header */}
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.title}>Denominations</Text>
+              <Text style={styles.subtitle}>Edit List</Text>
+            </View>
+            <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
+              <View style={styles.doneIconContainer}>
+                <SaveIcon width={24} height={24} fill={Colors.BACKGROUND} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Content */}
+          <View style={styles.content}>
+            {/* Saved Currencies */}
+            {savedCurrencies.length > 0 && (
+              <View style={styles.savedSection}>
+                <Text style={styles.sectionTitle}>Saved Currencies (drag to reorder)</Text>
+                <DraggableFlatList
+                  data={savedCurrencies}
+                  renderItem={renderSavedItem}
+                  keyExtractor={(item) => item.code}
+                  onDragEnd={({ data }) => {
+                    const newCodes = data.map(c => c.code);
+                    setLocalSavedCodes(newCodes);
+                  }}
+                  scrollEnabled={false}
+                />
+              </View>
+            )}
+
+            {/* Available Currencies */}
+            <ScrollView 
+              style={styles.availableSection}
+              showsVerticalScrollIndicator={false}
+            >
+              {availableCurrencies.length > 0 && (
+                <>
+                  <Text style={styles.sectionTitle}>Available Currencies</Text>
+                  {availableCurrencies.map(renderAvailableItem)}
+                </>
+              )}
+            </ScrollView>
+          </View>
+
+          {/* Search Bar */}
+          <View style={styles.searchContainer}>
+            <View style={styles.searchBar}>
+              <SearchIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search"
+                placeholderTextColor={Colors.TEXT_BODY}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </GestureHandlerRootView>
+  );
+};
+
+const styles = StyleSheet.create({
+  gestureContainer: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.BACKGROUND,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  title: {
+    ...Typography.HEADER,
+    fontSize: 20,
+  },
+  subtitle: {
+    ...Typography.SUBTITLE,
+    marginTop: 2,
+  },
+  doneButton: {
+    padding: 8,
+  },
+  doneIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.PRIMARY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  savedSection: {
+    marginTop: 20,
+  },
+  availableSection: {
+    flex: 1,
+    marginTop: 20,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.TEXT_SECONDARY,
+    marginBottom: 12,
+  },
+  savedCurrencyCard: {
+    backgroundColor: Colors.SELECTED_CARD_BG,
+    borderWidth: 2,
+    borderColor: Colors.SELECTED_CARD_BORDER,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dragging: {
+    opacity: 0.9,
+    transform: [{ scale: 1.02 }],
+  },
+  availableCurrencyCard: {
+    backgroundColor: Colors.CARD_BACKGROUND,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  currencyContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  flag: {
+    fontSize: 32,
+    marginRight: 12,
+  },
+  currencyInfo: {
+    flex: 1,
+  },
+  currencyCode: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.TEXT_PRIMARY,
+  },
+  currencyName: {
+    fontSize: 12,
+    color: Colors.TEXT_BODY,
+    marginTop: 2,
+  },
+  dragHandle: {
+    padding: 8,
+  },
+  dragIcon: {
+    fontSize: 20,
+    color: Colors.TEXT_BODY,
+  },
+  searchContainer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 20,
+    right: 20,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.CARD_BACKGROUND,
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 16,
+    color: Colors.TEXT_PRIMARY,
+  },
+});
