@@ -16,7 +16,7 @@ export const Typography: Typography = {
   HEADER: {
     fontFamily: 'System',
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: '900',
     color: Colors.TEXT_PRIMARY,
   },
   SUBTITLE: {
