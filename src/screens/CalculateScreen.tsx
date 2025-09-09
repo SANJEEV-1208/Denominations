@@ -345,6 +345,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
+    borderWidth: 2,
+    borderColor: '#E300FF',
   },
   selectedFlag: {
     fontSize: 44,
