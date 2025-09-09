@@ -193,19 +193,35 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          <BlurView intensity={80} tint="light" style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              value={inputValue}
-              onChangeText={setInputValue}
-              keyboardType="numeric"
-              editable={false}
-              placeholder="0"
-            />
-            <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-              <Text style={styles.clearText}>×</Text>
-            </TouchableOpacity>
-          </BlurView>
+          {Platform.OS === 'ios' ? (
+            <BlurView intensity={80} tint="light" style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                value={inputValue}
+                onChangeText={setInputValue}
+                keyboardType="numeric"
+                editable={false}
+                placeholder="0"
+              />
+              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+                <Text style={styles.clearText}>×</Text>
+              </TouchableOpacity>
+            </BlurView>
+          ) : (
+            <View style={[styles.inputWrapper, styles.inputWrapperAndroid]}>
+              <TextInput
+                style={styles.input}
+                value={inputValue}
+                onChangeText={setInputValue}
+                keyboardType="numeric"
+                editable={false}
+                placeholder="0"
+              />
+              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+                <Text style={styles.clearText}>×</Text>
+              </TouchableOpacity>
+            </View>
+          )}
           <TouchableOpacity 
             style={styles.calculateButton}
             onPress={handleCalculatePress}
@@ -216,7 +232,11 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
-          <BlurView intensity={80} tint="light" style={styles.numPadContainer}>
+          {Platform.OS === 'ios' ? (
+            <BlurView intensity={80} tint="light" style={styles.numPadContainer}>
+          ) : (
+            <View style={[styles.numPadContainer, styles.numPadContainerAndroid]}>
+          )}
             <View style={styles.numPadRow}>
               <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
                 <Text style={styles.numPadText}>1</Text>
@@ -261,7 +281,7 @@ export const CalculateScreen: React.FC = () => {
                 <Text style={styles.numPadText}>{'<'}</Text>
               </TouchableOpacity>
             </View>
-          </BlurView>
+          {Platform.OS === 'ios' ? </BlurView> : </View>}
         </View>
       </View>
     </SafeAreaView>
@@ -420,23 +440,18 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 42,
     paddingHorizontal: 20,
     height: 84,
     alignItems: 'center',
     marginRight: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.25)',
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 20,
-    elevation: 5,
     overflow: 'hidden',
+  },
+  inputWrapperAndroid: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    elevation: 5,
   },
   input: {
     flex: 1,
@@ -478,21 +493,16 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   numPadContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.25)',
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {
-      width: 0,
-      height: -10,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 20,
-    elevation: 5,
     overflow: 'hidden',
+  },
+  numPadContainerAndroid: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    elevation: 5,
   },
   numPadRow: {
     flexDirection: 'row',

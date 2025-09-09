@@ -186,18 +186,33 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <BlurView intensity={80} tint="light" style={styles.searchBar}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search"
-                placeholderTextColor="#757575"
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-              />
-              <TouchableOpacity style={styles.searchIconButton}>
-                <SearchIcon width={20} height={20} stroke="#757575" />
-              </TouchableOpacity>
-            </BlurView>
+            {Platform.OS === 'ios' ? (
+              <BlurView intensity={80} tint="light" style={styles.searchBar}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </BlurView>
+            ) : (
+              <View style={[styles.searchBar, styles.searchBarAndroid]}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -339,21 +354,16 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 42,
     paddingHorizontal: 20,
     height: 84,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.25)',
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 20,
-    elevation: 5,
     overflow: 'hidden',
+  },
+  searchBarAndroid: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    elevation: 5,
   },
   searchInput: {
     flex: 1,
