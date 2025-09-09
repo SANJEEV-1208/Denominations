@@ -179,32 +179,31 @@ export const CalculateScreen: React.FC = () => {
           </View>
         </ScrollView>
 
-        {/* Bottom Input and Numpad Container */}
-        <View style={styles.bottomContainer}>
-          {/* Input Field */}
-          <View style={styles.inputContainer}>
-            <View style={styles.inputWrapper}>
-              <TextInput
-                style={styles.input}
-                value={inputValue}
-                onChangeText={setInputValue}
-                keyboardType="numeric"
-                editable={false}
-                placeholder="0"
-              />
-              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-                <Text style={styles.clearText}>×</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity 
-              style={styles.calculateButton}
-              onPress={handleCalculatePress}
-            >
-              <Text style={styles.calculateText}>=</Text>
+        {/* Input Field and Calculate Button */}
+        <View style={styles.inputContainer}>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={inputValue}
+              onChangeText={setInputValue}
+              keyboardType="numeric"
+              editable={false}
+              placeholder="0"
+            />
+            <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+              <Text style={styles.clearText}>×</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity 
+            style={styles.calculateButton}
+            onPress={handleCalculatePress}
+          >
+            <Text style={styles.calculateText}>=</Text>
+          </TouchableOpacity>
+        </View>
 
-          {/* Number Pad */}
+        {/* Number Pad */}
+        <View style={styles.numPadWrapper}>
           <View style={styles.numPadContainer}>
             <View style={styles.numPadRow}>
               <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
@@ -247,7 +246,7 @@ export const CalculateScreen: React.FC = () => {
                 <Text style={styles.numPadText}>0</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                <Text style={styles.numPadText}>&lt;</Text>
+                <Text style={styles.numPadText}><</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -355,7 +354,7 @@ const styles = StyleSheet.create({
   conversionsContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
-    paddingBottom: 320,
+    paddingBottom: 400,
   },
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
@@ -394,30 +393,14 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
     marginTop: 2,
   },
-  bottomContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.98)',
-    paddingBottom: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-  },
   inputContainer: {
+    position: 'absolute',
+    bottom: 340,
+    left: 20,
+    right: 20,
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 15,
     alignItems: 'center',
+    zIndex: 10,
   },
   inputWrapper: {
     flex: 1,
@@ -455,19 +438,38 @@ const styles = StyleSheet.create({
     color: Colors.BACKGROUND,
     fontFamily: 'MonomaniacOne-Regular',
   },
+  numPadWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingTop: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 20,
+  },
   numPadContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
   },
   numPadRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 15,
+    marginBottom: 12,
   },
   numPadButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: width * 0.25,
+    height: 65,
+    borderRadius: 33,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
     alignItems: 'center',
