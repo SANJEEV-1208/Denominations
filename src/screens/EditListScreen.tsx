@@ -334,8 +334,8 @@ const styles = StyleSheet.create({
   searchContainer: {
     position: 'absolute',
     bottom: 30,
-    left: 20,
-    right: 20,
+    left: '10%',
+    right: '10%',
   },
   searchBar: {
     flexDirection: 'row',
