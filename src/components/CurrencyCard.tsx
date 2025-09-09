@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
-    paddingVertical: 24,
+    paddingVertical: 28,
     paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 100,
+    minHeight: 120,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   flagCircle: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   flag: {
-    fontSize: 38,
+    fontSize: 44,
   },
   centerContent: {
     flex: 1,
