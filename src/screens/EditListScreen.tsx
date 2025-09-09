@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontSize: 24,
+    fontSize: 16,
     fontFamily: 'System',
     color: Colors.TEXT_PRIMARY,
     textAlign: 'left',
