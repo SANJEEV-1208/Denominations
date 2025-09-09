@@ -17,6 +17,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -185,7 +186,7 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <View style={styles.searchBar}>
+            <BlurView intensity={80} tint="light" style={styles.searchBar}>
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search"
@@ -196,7 +197,7 @@ export const EditListScreen: React.FC = () => {
               <TouchableOpacity style={styles.searchIconButton}>
                 <SearchIcon width={20} height={20} stroke="#757575" />
               </TouchableOpacity>
-            </View>
+            </BlurView>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>

@@ -13,6 +13,7 @@ import {
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
@@ -192,7 +193,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
+          <BlurView intensity={80} tint="light" style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
               value={inputValue}
@@ -204,7 +205,7 @@ export const CalculateScreen: React.FC = () => {
             <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
               <Text style={styles.clearText}>×</Text>
             </TouchableOpacity>
-          </View>
+          </BlurView>
           <TouchableOpacity 
             style={styles.calculateButton}
             onPress={handleCalculatePress}
@@ -215,7 +216,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
-          <View style={styles.numPadContainer}>
+          <BlurView intensity={80} tint="light" style={styles.numPadContainer}>
             <View style={styles.numPadRow}>
               <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
                 <Text style={styles.numPadText}>1</Text>
@@ -260,7 +261,7 @@ export const CalculateScreen: React.FC = () => {
                 <Text style={styles.numPadText}>{'<'}</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </BlurView>
         </View>
       </View>
     </SafeAreaView>
