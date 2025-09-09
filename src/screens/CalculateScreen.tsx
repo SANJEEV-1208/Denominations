@@ -446,6 +446,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#E300FF',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 5,
   },
   numPadWrapper: {
     position: 'absolute',
