@@ -190,12 +190,12 @@ export const EditListScreen: React.FC = () => {
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search"
-                placeholderTextColor={Colors.TEXT_BODY}
+                placeholderTextColor="#757575"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
               />
               <TouchableOpacity style={styles.searchIconButton}>
-                <SearchIcon width={20} height={20} />
+                <SearchIcon width={20} height={20} fill="#757575" />
               </TouchableOpacity>
             </BlurView>
           </View>
