@@ -409,13 +409,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
-    bottom: 390,
+    bottom: Platform.OS === 'ios' ? 195 : 390,
     left: 20,
     right: 20,
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 10,
-    marginBottom: 10,
+    marginBottom: Platform.OS === 'ios' ? 5 : 10,
   },
   inputWrapper: {
     flex: 1,
