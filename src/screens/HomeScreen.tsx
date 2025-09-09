@@ -16,8 +16,7 @@ import { CurrencyCard } from '../components/CurrencyCard';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
-// @ts-ignore
-import SettingsIcon from '../assets/Settings.svg';
+import { SettingsIcon } from '../components/Icons';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 

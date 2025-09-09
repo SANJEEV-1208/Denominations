@@ -19,8 +19,7 @@ import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { debounce } from '../utils/debounce';
-// @ts-ignore
-import CloseIcon from '../assets/Close.svg';
+import { CloseIcon } from '../components/Icons';
 // @ts-ignore
 import ClearIcon from '../assets/Clear-Text-Feild.svg';
 

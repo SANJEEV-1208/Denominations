@@ -21,8 +21,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
-// @ts-ignore
-import SaveIcon from '../assets/Save.svg';
+import { SaveIcon } from '../components/Icons';
 // @ts-ignore
 import SearchIcon from '../assets/search-Text-Feild.svg';
 
