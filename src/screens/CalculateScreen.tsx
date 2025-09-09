@@ -13,7 +13,6 @@ import {
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
@@ -193,7 +192,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          <BlurView intensity={20} tint="light" style={styles.inputWrapper}>
+          <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
               value={inputValue}
@@ -205,7 +204,7 @@ export const CalculateScreen: React.FC = () => {
             <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
               <Text style={styles.clearText}>×</Text>
             </TouchableOpacity>
-          </BlurView>
+          </View>
           <TouchableOpacity 
             style={styles.calculateButton}
             onPress={handleCalculatePress}
@@ -216,7 +215,7 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
-          <BlurView intensity={20} tint="light" style={styles.numPadContainer}>
+          <View style={styles.numPadContainer}>
             <View style={styles.numPadRow}>
               <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
                 <Text style={styles.numPadText}>1</Text>
@@ -261,7 +260,7 @@ export const CalculateScreen: React.FC = () => {
                 <Text style={styles.numPadText}>{'<'}</Text>
               </TouchableOpacity>
             </View>
-          </BlurView>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -420,14 +419,14 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'rgba(217, 217, 217, 0.2)',
+    backgroundColor: Platform.OS === 'ios' ? 'rgba(217, 217, 217, 0.3)' : 'rgba(240, 240, 240, 0.95)',
     borderRadius: 42,
     paddingHorizontal: 20,
     height: 84,
     alignItems: 'center',
     marginRight: 12,
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+    borderColor: Platform.OS === 'ios' ? '#FFFFFF' : 'rgba(255, 255, 255, 0.8)',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -477,10 +476,12 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   numPadContainer: {
-    backgroundColor: 'rgba(217, 217, 217, 0.2)',
+    backgroundColor: Platform.OS === 'ios' ? 'rgba(217, 217, 217, 0.3)' : 'rgba(240, 240, 240, 0.95)',
     borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
+    borderWidth: Platform.OS === 'android' ? 1 : 0,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
