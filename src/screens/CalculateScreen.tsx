@@ -246,7 +246,7 @@ export const CalculateScreen: React.FC = () => {
                 <Text style={styles.numPadText}>0</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                <Text style={styles.numPadText}><</Text>
+                <Text style={styles.numPadText}>{'<'}</Text>
               </TouchableOpacity>
             </View>
           </View>
