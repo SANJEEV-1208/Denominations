@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
-    paddingVertical: 28,
+    paddingVertical: 16,
     paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 120,
+    minHeight: 96,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
