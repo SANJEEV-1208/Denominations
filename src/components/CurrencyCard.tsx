@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 90,
+    minHeight: 100,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   flagCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   flag: {
-    fontSize: 32,
+    fontSize: 38,
   },
   centerContent: {
     flex: 1,
