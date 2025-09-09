@@ -195,7 +195,7 @@ export const EditListScreen: React.FC = () => {
                 onChangeText={setSearchQuery}
               />
               <TouchableOpacity style={styles.searchIconButton}>
-                <SearchIcon width={20} height={20} fill="#757575" />
+                <SearchIcon width={20} height={20} stroke="#757575" />
               </TouchableOpacity>
             </BlurView>
           </View>
