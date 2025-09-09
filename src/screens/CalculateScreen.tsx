@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   numPadContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+    backgroundColor: 'rgba(217, 217, 217, 0.2)',
     borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     width: width * 0.25,
     height: 65,
     borderRadius: 33,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
