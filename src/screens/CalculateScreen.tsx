@@ -21,6 +21,8 @@ import { debounce } from '../utils/debounce';
 import { CloseIcon } from '../components/Icons';
 // @ts-ignore
 import ClearIcon from '../assets/Clear-Text-Feild.svg';
+// @ts-ignore
+import CalculateIcon from '../assets/Calculate.svg';
 
 type CalculateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calculate'>;
 type CalculateScreenRouteProp = RouteProp<RootStackParamList, 'Calculate'>;
@@ -198,7 +200,7 @@ export const CalculateScreen: React.FC = () => {
             style={styles.calculateButton}
             onPress={handleCalculatePress}
           >
-            <Text style={styles.calculateText}>=</Text>
+            <CalculateIcon width={24} height={24} stroke={Colors.TEXT_WHITE} />
           </TouchableOpacity>
         </View>
 
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
   conversionsContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
-    paddingBottom: 400,
+    paddingBottom: 450,
   },
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
@@ -395,7 +397,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
-    bottom: 340,
+    bottom: 360,
     left: 20,
     right: 20,
     flexDirection: 'row',
@@ -426,26 +428,21 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
   },
   calculateButton: {
-    width: 56,
+    width: 112,
     height: 56,
     borderRadius: 28,
     backgroundColor: Colors.PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  calculateText: {
-    fontSize: 32,
-    color: Colors.BACKGROUND,
-    fontFamily: 'MonomaniacOne-Regular',
-  },
   numPadWrapper: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 20,
     left: 0,
     right: 0,
     paddingTop: 15,
     paddingHorizontal: 15,
-    paddingBottom: 20,
+    paddingBottom: 15,
   },
   numPadContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
