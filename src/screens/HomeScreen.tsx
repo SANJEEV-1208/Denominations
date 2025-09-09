@@ -8,6 +8,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 20,
+    paddingTop: Platform.OS === 'android' ? 40 : 20,
   },
   spacer: {
     flex: 1,

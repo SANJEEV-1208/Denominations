@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 20,
+    paddingTop: Platform.OS === 'android' ? 40 : 20,
   },
   spacer: {
     flex: 1,
