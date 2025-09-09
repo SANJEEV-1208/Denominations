@@ -234,54 +234,99 @@ export const CalculateScreen: React.FC = () => {
         <View style={styles.numPadWrapper}>
           {Platform.OS === 'ios' ? (
             <BlurView intensity={80} tint="light" style={styles.numPadContainer}>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
+                  <Text style={styles.numPadText}>1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
+                  <Text style={styles.numPadText}>2</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
+                  <Text style={styles.numPadText}>3</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
+                  <Text style={styles.numPadText}>4</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
+                  <Text style={styles.numPadText}>5</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
+                  <Text style={styles.numPadText}>6</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
+                  <Text style={styles.numPadText}>7</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
+                  <Text style={styles.numPadText}>8</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
+                  <Text style={styles.numPadText}>9</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
+                  <Text style={styles.numPadText}>.</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
+                  <Text style={styles.numPadText}>0</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
+                  <Text style={styles.numPadText}>{'<'}</Text>
+                </TouchableOpacity>
+              </View>
+            </BlurView>
           ) : (
             <View style={[styles.numPadContainer, styles.numPadContainerAndroid]}>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
+                  <Text style={styles.numPadText}>1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
+                  <Text style={styles.numPadText}>2</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
+                  <Text style={styles.numPadText}>3</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
+                  <Text style={styles.numPadText}>4</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
+                  <Text style={styles.numPadText}>5</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
+                  <Text style={styles.numPadText}>6</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
+                  <Text style={styles.numPadText}>7</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
+                  <Text style={styles.numPadText}>8</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
+                  <Text style={styles.numPadText}>9</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadRow}>
+                <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
+                  <Text style={styles.numPadText}>.</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
+                  <Text style={styles.numPadText}>0</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
+                  <Text style={styles.numPadText}>{'<'}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           )}
-            <View style={styles.numPadRow}>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
-                <Text style={styles.numPadText}>1</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
-                <Text style={styles.numPadText}>2</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
-                <Text style={styles.numPadText}>3</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.numPadRow}>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
-                <Text style={styles.numPadText}>4</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
-                <Text style={styles.numPadText}>5</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
-                <Text style={styles.numPadText}>6</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.numPadRow}>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
-                <Text style={styles.numPadText}>7</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
-                <Text style={styles.numPadText}>8</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
-                <Text style={styles.numPadText}>9</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.numPadRow}>
-              <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
-                <Text style={styles.numPadText}>.</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
-                <Text style={styles.numPadText}>0</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                <Text style={styles.numPadText}>{'<'}</Text>
-              </TouchableOpacity>
-            </View>
-          {Platform.OS === 'ios' ? </BlurView> : </View>}
         </View>
       </View>
     </SafeAreaView>
