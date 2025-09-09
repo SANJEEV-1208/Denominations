@@ -17,7 +17,6 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -186,7 +185,7 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <BlurView intensity={20} tint="light" style={styles.searchBar}>
+            <View style={styles.searchBar}>
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search"
@@ -197,7 +196,7 @@ export const EditListScreen: React.FC = () => {
               <TouchableOpacity style={styles.searchIconButton}>
                 <SearchIcon width={20} height={20} stroke="#757575" />
               </TouchableOpacity>
-            </BlurView>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -339,12 +338,12 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(217, 217, 217, 0.2)',
+    backgroundColor: Platform.OS === 'ios' ? 'rgba(217, 217, 217, 0.3)' : 'rgba(240, 240, 240, 0.95)',
     borderRadius: 42,
     paddingHorizontal: 20,
     height: 84,
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+    borderColor: Platform.OS === 'ios' ? '#FFFFFF' : 'rgba(255, 255, 255, 0.8)',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
