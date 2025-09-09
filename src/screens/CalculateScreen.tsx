@@ -440,6 +440,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
+    textAlign: 'center',
   },
   clearButton: {
     padding: 5,
