@@ -294,7 +294,8 @@ const styles = StyleSheet.create({
   },
   selectedCurrency: {
     fontSize: 14,
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_WHITE,
     marginTop: 4,
   },
@@ -319,12 +320,13 @@ const styles = StyleSheet.create({
   },
   conversionValue: {
     fontSize: 20,
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
   },
   conversionCurrency: {
     fontSize: 12,
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
     marginTop: 2,
   },
@@ -347,7 +349,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 18,
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
   },
   clearButton: {
@@ -368,6 +370,6 @@ const styles = StyleSheet.create({
   calculateText: {
     fontSize: 24,
     color: Colors.BACKGROUND,
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
   },
 });

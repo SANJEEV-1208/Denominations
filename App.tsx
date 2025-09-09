@@ -21,8 +21,7 @@ export default function App() {
     async function loadFonts() {
       try {
         await Font.loadAsync({
-          'SpaceMono-Regular': require('./assets/fonts/SpaceMono-Regular.ttf'),
-          'SpaceMono-Bold': require('./assets/fonts/SpaceMono-Bold.ttf'),
+          'MonomaniacOne-Regular': require('./assets/fonts/MonomaniacOne-Regular.ttf'),
           'SpaceGrotesk-Regular': require('./assets/fonts/SpaceGrotesk-Regular.ttf'),
           'SpaceGrotesk-Bold': require('./assets/fonts/SpaceGrotesk-Bold.ttf'),
         });

@@ -14,43 +14,48 @@ interface Typography {
 
 export const Typography: Typography = {
   HEADER: {
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'System',
     fontSize: 15,
+    fontWeight: '600',
     color: Colors.TEXT_PRIMARY,
   },
   SUBTITLE: {
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
     fontSize: 12,
+    fontWeight: '400',
     color: Colors.TEXT_SECONDARY,
   },
   BODY: {
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
     fontSize: 14,
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
   },
   NUMBER: {
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
     fontSize: 18,
     color: Colors.TEXT_PRIMARY,
   },
   NUMBER_LARGE: {
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
     fontSize: 30,
     color: Colors.TEXT_WHITE,
   },
   NUMPAD: {
-    fontFamily: 'SpaceMono-Regular',
+    fontFamily: 'MonomaniacOne-Regular',
     fontSize: 26,
     color: Colors.TEXT_PRIMARY,
   },
   CURRENCY_CODE: {
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'System',
     fontSize: 16,
+    fontWeight: '600',
     color: Colors.TEXT_PRIMARY,
   },
   CURRENCY_NAME: {
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
     fontSize: 14,
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
   },
 };

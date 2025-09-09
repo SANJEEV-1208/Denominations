@@ -104,14 +104,15 @@ const styles = StyleSheet.create({
   },
   rate: {
     fontSize: 26,
-    fontFamily: 'SpaceMono-Bold',
+    fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
     marginBottom: 6,
     letterSpacing: -0.5,
   },
   currencyInfo: {
     fontSize: 14,
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
     letterSpacing: 0.2,
   },

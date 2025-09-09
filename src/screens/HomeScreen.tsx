@@ -174,13 +174,15 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'System',
+    fontWeight: '600',
     color: Colors.TEXT_PRIMARY,
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    fontFamily: 'SpaceGrotesk-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: Colors.TEXT_BODY,
     textAlign: 'center',
   },
