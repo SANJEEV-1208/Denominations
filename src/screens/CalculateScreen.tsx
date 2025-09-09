@@ -13,7 +13,6 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useCurrency } from '../context/CurrencyContext';
-import { NumberPad } from '../components/NumberPad';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -131,7 +130,7 @@ export const CalculateScreen: React.FC = () => {
         </View>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.contentContainer}>
         {/* Selected Currency Card */}
         <LinearGradient
           colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
@@ -153,61 +152,107 @@ export const CalculateScreen: React.FC = () => {
         </LinearGradient>
 
         {/* Conversion Results */}
-        <View style={styles.conversionsContainer}>
-          {savedCurrencyCodes
-            .filter(code => code !== currencyCode)
-            .map(code => {
-              const currency = getCurrencyByCode(code);
-              const value = conversions[code] || 0;
-              
-              return (
-                <View key={code} style={styles.conversionCard}>
-                  <View style={styles.conversionFlagContainer}>
-                    <Text style={styles.conversionFlag}>{currency?.flag}</Text>
+        <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false}>
+          <View style={styles.conversionsContainer}>
+            {savedCurrencyCodes
+              .filter(code => code !== currencyCode)
+              .map(code => {
+                const currency = getCurrencyByCode(code);
+                const value = conversions[code] || 0;
+                
+                return (
+                  <View key={code} style={styles.conversionCard}>
+                    <View style={styles.conversionFlagContainer}>
+                      <Text style={styles.conversionFlag}>{currency?.flag}</Text>
+                    </View>
+                    <View style={styles.conversionInfo}>
+                      <Text style={styles.conversionValue}>
+                        {value > 0 ? formatValue(value) : '—'}
+                      </Text>
+                      <Text style={styles.conversionCurrency}>
+                        {currency?.code} ({currency?.name}) {currency?.symbol}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.conversionInfo}>
-                    <Text style={styles.conversionValue}>
-                      {value > 0 ? formatValue(value) : '—'}
-                    </Text>
-                    <Text style={styles.conversionCurrency}>
-                      {currency?.code} ({currency?.name}) {currency?.symbol}
-                    </Text>
-                  </View>
-                </View>
-              );
-            })}
-        </View>
+                );
+              })}
+          </View>
+        </ScrollView>
 
-        {/* Input Field */}
-        <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              value={inputValue}
-              onChangeText={setInputValue}
-              keyboardType="numeric"
-              editable={false}
-              placeholder="0"
-            />
-            <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-              <Text style={styles.clearText}>×</Text>
+        {/* Bottom Input and Numpad Container */}
+        <View style={styles.bottomContainer}>
+          {/* Input Field */}
+          <View style={styles.inputContainer}>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                value={inputValue}
+                onChangeText={setInputValue}
+                keyboardType="numeric"
+                editable={false}
+                placeholder="0"
+              />
+              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+                <Text style={styles.clearText}>×</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity 
+              style={styles.calculateButton}
+              onPress={handleCalculatePress}
+            >
+              <Text style={styles.calculateText}>=</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity 
-            style={styles.calculateButton}
-            onPress={handleCalculatePress}
-          >
-            <Text style={styles.calculateText}>=</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
 
-      {/* Number Pad */}
-      <NumberPad
-        onNumberPress={handleNumberPress}
-        onDecimalPress={handleDecimalPress}
-        onBackspacePress={handleBackspacePress}
-      />
+          {/* Number Pad */}
+          <View style={styles.numPadContainer}>
+            <View style={styles.numPadRow}>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
+                <Text style={styles.numPadText}>1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
+                <Text style={styles.numPadText}>2</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
+                <Text style={styles.numPadText}>3</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.numPadRow}>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
+                <Text style={styles.numPadText}>4</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
+                <Text style={styles.numPadText}>5</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
+                <Text style={styles.numPadText}>6</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.numPadRow}>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
+                <Text style={styles.numPadText}>7</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
+                <Text style={styles.numPadText}>8</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
+                <Text style={styles.numPadText}>9</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.numPadRow}>
+              <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
+                <Text style={styles.numPadText}>.</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
+                <Text style={styles.numPadText}>0</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
+                <Text style={styles.numPadText}>&lt;</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -258,7 +303,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  content: {
+  contentContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  conversionsScrollView: {
     flex: 1,
   },
   selectedCard: {
@@ -306,6 +355,7 @@ const styles = StyleSheet.create({
   conversionsContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
+    paddingBottom: 320,
   },
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
@@ -344,25 +394,44 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
     marginTop: 2,
   },
+  bottomContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+    paddingBottom: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
   inputContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    marginVertical: 20,
+    paddingTop: 20,
+    paddingBottom: 15,
     alignItems: 'center',
   },
   inputWrapper: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: Colors.CARD_BACKGROUND,
-    borderRadius: 12,
-    paddingHorizontal: 15,
-    height: 50,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    height: 56,
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 12,
   },
   input: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 24,
     fontFamily: 'MonomaniacOne-Regular',
     color: Colors.TEXT_PRIMARY,
   },
@@ -374,16 +443,38 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
   },
   calculateButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: Colors.PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
   },
   calculateText: {
-    fontSize: 24,
+    fontSize: 32,
     color: Colors.BACKGROUND,
     fontFamily: 'MonomaniacOne-Regular',
+  },
+  numPadContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+  },
+  numPadRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 15,
+  },
+  numPadButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#F0F0F0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  numPadText: {
+    fontSize: 28,
+    fontFamily: 'MonomaniacOne-Regular',
+    color: Colors.TEXT_PRIMARY,
   },
 });
