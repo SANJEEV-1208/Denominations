@@ -162,7 +162,6 @@ export const EditListScreen: React.FC = () => {
             {/* Saved Currencies */}
             {savedCurrencies.length > 0 && (
               <View style={styles.savedSection}>
-                <Text style={styles.sectionTitle}>Saved Currencies (drag to reorder)</Text>
                 <DraggableFlatList
                   data={savedCurrencies}
                   renderItem={renderSavedItem}
@@ -179,7 +178,6 @@ export const EditListScreen: React.FC = () => {
             {/* Available Currencies */}
             {availableCurrencies.length > 0 && (
               <View style={styles.availableSection}>
-                <Text style={styles.sectionTitle}>Available Currencies</Text>
                 {availableCurrencies.map(renderAvailableItem)}
               </View>
             )}
@@ -265,12 +263,6 @@ const styles = StyleSheet.create({
   },
   availableSection: {
     marginTop: 20,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: Colors.TEXT_SECONDARY,
-    marginBottom: 12,
   },
   savedCurrencyCard: {
     backgroundColor: Colors.SELECTED_CARD_BG,
