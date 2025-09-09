@@ -144,7 +144,7 @@ export const EditListScreen: React.FC = () => {
               </View>
               <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
                 <View style={styles.doneIconContainer}>
-                  <SaveIcon width={24} height={24} fill={Colors.BUTTON_ICON} />
+                  <SaveIcon width={18} height={18} fill={Colors.BUTTON_ICON} />
                 </View>
               </TouchableOpacity>
             </View>
