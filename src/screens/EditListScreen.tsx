@@ -91,7 +91,9 @@ export const EditListScreen: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <Text style={styles.flag}>{item.flag}</Text>
+            <View style={styles.flagCircle}>
+              <Text style={styles.flag}>{item.flag}</Text>
+            </View>
             <View style={styles.currencyInfo}>
               <Text style={styles.currencyCode}>{item.code}</Text>
               <Text style={styles.currencyName}>
@@ -115,7 +117,9 @@ export const EditListScreen: React.FC = () => {
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
-        <Text style={styles.flag}>{currency.flag}</Text>
+        <View style={styles.flagCircle}>
+          <Text style={styles.flag}>{currency.flag}</Text>
+        </View>
         <View style={styles.currencyInfo}>
           <Text style={styles.currencyCode}>{currency.code}</Text>
           <Text style={styles.currencyName}>
@@ -272,11 +276,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.SELECTED_CARD_BORDER,
     borderRadius: 16,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    minHeight: 96,
   },
   dragging: {
     opacity: 0.9,
@@ -285,19 +291,29 @@ const styles = StyleSheet.create({
   availableCurrencyCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 96,
   },
   currencyContent: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
+  flagCircle: {
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    backgroundColor: Colors.BACKGROUND,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
   flag: {
-    fontSize: 32,
-    marginRight: 12,
+    fontSize: 44,
   },
   currencyInfo: {
     flex: 1,

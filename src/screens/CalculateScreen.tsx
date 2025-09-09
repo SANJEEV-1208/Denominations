@@ -162,7 +162,9 @@ export const CalculateScreen: React.FC = () => {
               
               return (
                 <View key={code} style={styles.conversionCard}>
-                  <Text style={styles.conversionFlag}>{currency?.flag}</Text>
+                  <View style={styles.conversionFlagContainer}>
+                    <Text style={styles.conversionFlag}>{currency?.flag}</Text>
+                  </View>
                   <View style={styles.conversionInfo}>
                     <Text style={styles.conversionValue}>
                       {value > 0 ? formatValue(value) : '—'}
@@ -268,22 +270,24 @@ const styles = StyleSheet.create({
   selectedCardContent: {
     backgroundColor: Colors.BACKGROUND,
     borderRadius: 14,
-    padding: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    minHeight: 96,
   },
   flagContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: 16,
   },
   selectedFlag: {
-    fontSize: 32,
+    fontSize: 44,
   },
   selectedInfo: {
     flex: 1,
@@ -306,14 +310,24 @@ const styles = StyleSheet.create({
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 96,
+  },
+  conversionFlagContainer: {
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    backgroundColor: Colors.BACKGROUND,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
   },
   conversionFlag: {
-    fontSize: 32,
-    marginRight: 15,
+    fontSize: 44,
   },
   conversionInfo: {
     flex: 1,
