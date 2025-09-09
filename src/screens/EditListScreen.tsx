@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 24,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'System',
     color: Colors.TEXT_PRIMARY,
     textAlign: 'left',
   },
