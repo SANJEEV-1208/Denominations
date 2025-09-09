@@ -14,51 +14,43 @@ interface Typography {
 
 export const Typography: Typography = {
   HEADER: {
-    fontFamily: 'System', // Will use SF Pro on iOS
+    fontFamily: 'SpaceGrotesk-Bold',
     fontSize: 15,
-    fontWeight: '900',
     color: Colors.TEXT_PRIMARY,
   },
   SUBTITLE: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceGrotesk-Regular',
     fontSize: 12,
-    fontWeight: '500',
     color: Colors.TEXT_SECONDARY,
   },
   BODY: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceGrotesk-Regular',
     fontSize: 14,
-    fontWeight: '400',
     color: Colors.TEXT_BODY,
   },
   NUMBER: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceMono-Bold',
     fontSize: 18,
-    fontWeight: 'bold',
     color: Colors.TEXT_PRIMARY,
   },
   NUMBER_LARGE: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceMono-Bold',
     fontSize: 30,
-    fontWeight: 'bold',
     color: Colors.TEXT_WHITE,
   },
   NUMPAD: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceMono-Regular',
     fontSize: 26,
-    fontWeight: '400',
     color: Colors.TEXT_PRIMARY,
   },
   CURRENCY_CODE: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceGrotesk-Bold',
     fontSize: 16,
-    fontWeight: '600',
     color: Colors.TEXT_PRIMARY,
   },
   CURRENCY_NAME: {
-    fontFamily: 'System',
+    fontFamily: 'SpaceGrotesk-Regular',
     fontSize: 14,
-    fontWeight: '400',
     color: Colors.TEXT_BODY,
   },
 };

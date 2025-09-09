@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 26,
-    fontWeight: '400',
+    fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_PRIMARY,
   },
   specialButtonText: {
