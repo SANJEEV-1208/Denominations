@@ -203,7 +203,11 @@ export const CalculateScreen: React.FC = () => {
               placeholder="0"
             />
             <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-              <Text style={styles.clearText}>×</Text>
+              {Platform.OS === 'web' ? (
+                <ClearIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+              ) : (
+                <Text style={styles.clearText}>×</Text>
+              )}
             </TouchableOpacity>
           </CustomBlurView>
           <TouchableOpacity 
@@ -493,10 +497,12 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     position: Platform.OS === 'web' ? 'absolute' : 'relative',
-    right: Platform.OS === 'web' ? 15 : undefined,
-    padding: 5,
-    paddingHorizontal: Platform.OS === 'web' ? 10 : 5,
+    right: Platform.OS === 'web' ? 20 : undefined,
+    padding: Platform.OS === 'web' ? 8 : 5,
+    paddingHorizontal: Platform.OS === 'web' ? 8 : 5,
     zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   clearText: {
     fontSize: Platform.OS === 'web' ? 28 : 24,
