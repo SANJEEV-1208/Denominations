@@ -343,10 +343,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 84,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.25)',
     ...Platform.select({
       ios: {
+        borderWidth: 1,
+        borderColor: '#757575',
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -356,7 +356,13 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
       },
       android: {
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.25)',
         elevation: 4,
+      },
+      default: {
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.25)',
       },
     }),
   },
