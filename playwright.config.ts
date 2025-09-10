@@ -20,6 +20,13 @@ export default defineConfig({
       name: 'Desktop Chrome',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'Small Desktop',
+      use: { 
+        ...devices['Desktop Chrome'],
+        viewport: { width: 768, height: 600 }
+      },
+    },
   ],
   webServer: {
     command: 'npm start',

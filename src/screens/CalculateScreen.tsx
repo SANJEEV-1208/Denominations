@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 40,
         paddingHorizontal: 30,
+        position: 'relative',
       },
       default: {
         borderWidth: 1,
@@ -487,15 +488,20 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_PRIMARY,
     textAlign: 'center',
+    minWidth: Platform.OS === 'web' ? 100 : undefined,
+    paddingRight: Platform.OS === 'web' ? 40 : 0,
   },
   clearButton: {
+    position: Platform.OS === 'web' ? 'absolute' : 'relative',
+    right: Platform.OS === 'web' ? 15 : undefined,
     padding: 5,
-    paddingRight: Platform.OS === 'web' ? 10 : 5,
-    marginRight: Platform.OS === 'web' ? 5 : 0,
+    paddingHorizontal: Platform.OS === 'web' ? 10 : 5,
+    zIndex: 1,
   },
   clearText: {
-    fontSize: 24,
+    fontSize: Platform.OS === 'web' ? 28 : 24,
     color: Colors.TEXT_BODY,
+    fontWeight: Platform.OS === 'web' ? 'bold' : 'normal',
   },
   calculateButton: {
     width: Platform.OS === 'web' ? 104 : 90,
