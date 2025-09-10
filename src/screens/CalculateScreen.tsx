@@ -465,12 +465,12 @@ const styles = StyleSheet.create({
       },
       android: {
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.25)',
+        borderColor: 'rgba(117, 117, 117, 0.8)',
         elevation: 4,
       },
       default: {
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.25)',
+        borderColor: 'rgba(117, 117, 117, 0.8)',
       },
     }),
   },
@@ -525,11 +525,11 @@ const styles = StyleSheet.create({
       },
       android: {
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.25)',
+        borderColor: 'rgba(117, 117, 117, 0.8)',
       },
       default: {
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.25)',
+        borderColor: 'rgba(117, 117, 117, 0.8)',
       },
     }),
   },
