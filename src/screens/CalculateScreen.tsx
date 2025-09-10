@@ -540,7 +540,7 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 0,
       android: 20,
-      web: 30,
+      web: 20,
       default: 20,
     }),
     left: 0,
@@ -550,13 +550,13 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.select({
       ios: 0,
       android: 15,
-      web: 20,
+      web: 30,
       default: 15,
     }),
   },
   numPadContainer: {
     borderRadius: 20,
-    paddingVertical: Platform.OS === 'web' ? 10 : 15,
+    paddingVertical: Platform.OS === 'web' ? 12 : 15,
     paddingHorizontal: 10,
     overflow: 'hidden',
     ...Platform.select({
@@ -581,12 +581,12 @@ const styles = StyleSheet.create({
   numPadRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: Platform.OS === 'web' ? 8 : 12,
+    marginBottom: Platform.OS === 'web' ? 10 : 12,
   },
   numPadButtonWrapper: {
     width: width * 0.25,
-    height: Platform.OS === 'web' ? 55 : 65,
-    borderRadius: Platform.OS === 'web' ? 28 : 33,
+    height: Platform.OS === 'web' ? 60 : 65,
+    borderRadius: Platform.OS === 'web' ? 30 : 33,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -606,7 +606,7 @@ const styles = StyleSheet.create({
   numPadButton: {
     width: '100%',
     height: '100%',
-    borderRadius: Platform.OS === 'web' ? 28 : 33,
+    borderRadius: Platform.OS === 'web' ? 30 : 33,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -617,7 +617,7 @@ const styles = StyleSheet.create({
     }),
   },
   numPadText: {
-    fontSize: Platform.OS === 'web' ? 24 : 28,
+    fontSize: Platform.OS === 'web' ? 26 : 28,
     fontFamily: 'SpaceMono-Regular',
     fontWeight: '100',
     color: Colors.TEXT_PRIMARY,
