@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
   numPadText: {
     fontSize: 28,
     fontFamily: 'SpaceMono-Regular',
-    fontWeight: '400',
+    fontWeight: '100',
     color: Colors.TEXT_PRIMARY,
   },
 });
