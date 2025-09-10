@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
   },
   calculateButton: {
-    width: Platform.OS === 'web' ? 80 : 90,
+    width: Platform.OS === 'web' ? 104 : 90,
     height: Platform.OS === 'web' ? 80 : 67,
     borderRadius: Platform.OS === 'web' ? 40 : 34,
     backgroundColor: Colors.PRIMARY,
