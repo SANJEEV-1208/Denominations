@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: 96,
+    minHeight: 77,
   },
   dragging: {
     opacity: 0.9,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 96,
+    minHeight: 77,
   },
   currencyContent: {
     flexDirection: 'row',
@@ -299,16 +299,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flagCircle: {
-    width: 88,
-    height: 88,
-    borderRadius: 44,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
   flag: {
-    fontSize: 44,
+    fontSize: 35,
   },
   currencyInfo: {
     flex: 1,

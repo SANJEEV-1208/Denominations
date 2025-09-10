@@ -26,13 +26,13 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
         style={[
           style,
           {
-            shadowColor: 'rgba(0, 0, 0, 0.08)',
+            shadowColor: '#000',
             shadowOffset: {
               width: 0,
-              height: 2,
+              height: 6,
             },
-            shadowOpacity: 1,
-            shadowRadius: 8,
+            shadowOpacity: 0.25,
+            shadowRadius: 16,
           }
         ]}
       >
@@ -59,7 +59,7 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
     );
   }
 
-  // Web: Use CSS backdrop-filter
+  // Web: Use CSS backdrop-filter with shadow
   return (
     <View
       style={[
@@ -69,6 +69,7 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
           // @ts-ignore - Web-specific style
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
         },
         fallbackStyle,
       ]}
