@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.select({
       ios: 0,
       android: 15,
-      web: 30,
+      web: 50,
       default: 15,
     }),
   },
