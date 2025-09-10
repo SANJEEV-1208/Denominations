@@ -71,16 +71,16 @@ export default function App() {
             name="Calculate" 
             component={CalculateScreen}
             options={{
-              presentation: 'modal',
               animationEnabled: true,
+              animationTypeForReplace: 'push',
             }}
           />
           <Stack.Screen 
             name="EditList" 
             component={EditListScreen}
             options={{
-              presentation: 'modal',
               animationEnabled: true,
+              animationTypeForReplace: 'push',
             }}
           />
         </Stack.Navigator>
