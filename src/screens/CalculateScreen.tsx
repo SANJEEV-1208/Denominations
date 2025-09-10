@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   conversionsContainer: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 450,
+    paddingBottom: Platform.OS === 'web' ? 400 : 450,
   },
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
@@ -438,13 +438,23 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 351 : 390,
+    bottom: Platform.select({
+      ios: 351,
+      android: 390,
+      web: 320,
+      default: 390,
+    }),
     left: 20,
     right: 20,
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 10,
-    marginBottom: Platform.OS === 'ios' ? 9 : 10,
+    marginBottom: Platform.select({
+      ios: 9,
+      android: 10,
+      web: 0,
+      default: 10,
+    }),
   },
   inputWrapper: {
     flex: 1,
@@ -527,12 +537,22 @@ const styles = StyleSheet.create({
   },
   numPadWrapper: {
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 0 : 20,
+    bottom: Platform.select({
+      ios: 0,
+      android: 20,
+      web: 10,
+      default: 20,
+    }),
     left: 0,
     right: 0,
     paddingTop: 15,
     paddingHorizontal: 15,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 15,
+    paddingBottom: Platform.select({
+      ios: 0,
+      android: 15,
+      web: 10,
+      default: 15,
+    }),
   },
   numPadContainer: {
     borderRadius: 20,
@@ -547,6 +567,11 @@ const styles = StyleSheet.create({
       android: {
         borderWidth: 1,
         borderColor: 'rgba(117, 117, 117, 0.8)',
+      },
+      web: {
+        borderWidth: 1,
+        borderColor: 'rgba(117, 117, 117, 0.8)',
+        maxHeight: 300,
       },
       default: {
         borderWidth: 1,
