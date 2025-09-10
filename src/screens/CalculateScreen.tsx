@@ -146,7 +146,7 @@ export const CalculateScreen: React.FC = () => {
               style={styles.selectedCardBorder}
             >
               <LinearGradient
-                colors={[Colors.GRADIENT_START, Colors.GRADIENT_END]}
+                colors={['#D976CA', '#E300FF']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.selectedCard}
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
   numPadText: {
     fontSize: 28,
     fontFamily: 'SpaceMono-Regular',
-    fontWeight: '300',
+    fontWeight: '400',
     color: Colors.TEXT_PRIMARY,
   },
 });
