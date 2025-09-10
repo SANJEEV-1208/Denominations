@@ -24,6 +24,8 @@ export default function App() {
           'MonomaniacOne-Regular': require('./assets/fonts/MonomaniacOne-Regular.ttf'),
           'SpaceGrotesk-Regular': require('./assets/fonts/SpaceGrotesk-Regular.ttf'),
           'SpaceGrotesk-Bold': require('./assets/fonts/SpaceGrotesk-Bold.ttf'),
+          'SpaceMono-Regular': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          'SpaceMono-Bold': require('./assets/fonts/SpaceMono-Bold.ttf'),
         });
       } catch (e) {
         console.warn('Font loading error:', e);
