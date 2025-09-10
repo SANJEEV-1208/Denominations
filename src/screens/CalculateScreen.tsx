@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 34,
     paddingHorizontal: 20,
-    height: 67,
+    height: Platform.OS === 'web' ? 80 : 67,
     alignItems: 'center',
     marginRight: 12,
     overflow: 'hidden',
@@ -467,6 +467,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgba(117, 117, 117, 0.8)',
         elevation: 4,
+      },
+      web: {
+        borderWidth: 1,
+        borderColor: 'rgba(117, 117, 117, 0.8)',
+        height: 80,
       },
       default: {
         borderWidth: 1,
@@ -490,7 +495,7 @@ const styles = StyleSheet.create({
   },
   calculateButton: {
     width: 90,
-    height: 67,
+    height: Platform.OS === 'web' ? 80 : 67,
     borderRadius: 34,
     backgroundColor: Colors.PRIMARY,
     justifyContent: 'center',
