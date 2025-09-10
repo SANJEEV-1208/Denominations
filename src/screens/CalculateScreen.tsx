@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     borderRadius: Platform.OS === 'web' ? 40 : 34,
-    paddingHorizontal: 20,
+    paddingHorizontal: Platform.OS === 'web' ? 30 : 20,
     height: Platform.OS === 'web' ? 80 : 67,
     alignItems: 'center',
     marginRight: 12,
@@ -473,6 +473,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(117, 117, 117, 0.8)',
         height: 80,
         borderRadius: 40,
+        paddingHorizontal: 30,
       },
       default: {
         borderWidth: 1,
@@ -489,7 +490,8 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     padding: 5,
-    paddingRight: Platform.OS === 'web' ? 20 : 5,
+    paddingRight: Platform.OS === 'web' ? 10 : 5,
+    marginRight: Platform.OS === 'web' ? 5 : 0,
   },
   clearText: {
     fontSize: 24,
