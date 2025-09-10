@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 351,
       android: 390,
-      web: 320,
+      web: 370,
       default: 390,
     }),
     left: 20,
@@ -540,23 +540,23 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 0,
       android: 20,
-      web: 10,
+      web: 30,
       default: 20,
     }),
     left: 0,
     right: 0,
-    paddingTop: 15,
+    paddingTop: Platform.OS === 'web' ? 10 : 15,
     paddingHorizontal: 15,
     paddingBottom: Platform.select({
       ios: 0,
       android: 15,
-      web: 10,
+      web: 20,
       default: 15,
     }),
   },
   numPadContainer: {
     borderRadius: 20,
-    paddingVertical: 15,
+    paddingVertical: Platform.OS === 'web' ? 10 : 15,
     paddingHorizontal: 10,
     overflow: 'hidden',
     ...Platform.select({
@@ -571,7 +571,6 @@ const styles = StyleSheet.create({
       web: {
         borderWidth: 1,
         borderColor: 'rgba(117, 117, 117, 0.8)',
-        maxHeight: 300,
       },
       default: {
         borderWidth: 1,
@@ -582,12 +581,12 @@ const styles = StyleSheet.create({
   numPadRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 12,
+    marginBottom: Platform.OS === 'web' ? 8 : 12,
   },
   numPadButtonWrapper: {
     width: width * 0.25,
-    height: 65,
-    borderRadius: 33,
+    height: Platform.OS === 'web' ? 55 : 65,
+    borderRadius: Platform.OS === 'web' ? 28 : 33,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -607,7 +606,7 @@ const styles = StyleSheet.create({
   numPadButton: {
     width: '100%',
     height: '100%',
-    borderRadius: 33,
+    borderRadius: Platform.OS === 'web' ? 28 : 33,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -618,7 +617,7 @@ const styles = StyleSheet.create({
     }),
   },
   numPadText: {
-    fontSize: 28,
+    fontSize: Platform.OS === 'web' ? 24 : 28,
     fontFamily: 'SpaceMono-Regular',
     fontWeight: '100',
     color: Colors.TEXT_PRIMARY,
