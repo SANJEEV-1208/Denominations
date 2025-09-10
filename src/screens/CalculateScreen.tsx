@@ -218,48 +218,72 @@ export const CalculateScreen: React.FC = () => {
         <View style={styles.numPadWrapper}>
           <CustomBlurView intensity={80} tint="light" style={styles.numPadContainer}>
               <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
-                  <Text style={styles.numPadText}>1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
-                  <Text style={styles.numPadText}>2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
-                  <Text style={styles.numPadText}>3</Text>
-                </TouchableOpacity>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
+                    <Text style={styles.numPadText}>1</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
+                    <Text style={styles.numPadText}>2</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
+                    <Text style={styles.numPadText}>3</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
-                  <Text style={styles.numPadText}>4</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
-                  <Text style={styles.numPadText}>5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
-                  <Text style={styles.numPadText}>6</Text>
-                </TouchableOpacity>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
+                    <Text style={styles.numPadText}>4</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
+                    <Text style={styles.numPadText}>5</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
+                    <Text style={styles.numPadText}>6</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
-                  <Text style={styles.numPadText}>7</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
-                  <Text style={styles.numPadText}>8</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
-                  <Text style={styles.numPadText}>9</Text>
-                </TouchableOpacity>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
+                    <Text style={styles.numPadText}>7</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
+                    <Text style={styles.numPadText}>8</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
+                    <Text style={styles.numPadText}>9</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.numPadRow}>
-                <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
-                  <Text style={styles.numPadText}>.</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
-                  <Text style={styles.numPadText}>0</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                  <Text style={styles.numPadText}>{'<'}</Text>
-                </TouchableOpacity>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
+                    <Text style={styles.numPadText}>.</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
+                    <Text style={styles.numPadText}>0</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.numPadButtonWrapper}>
+                  <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
+                    <Text style={styles.numPadText}>{'<'}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
           </CustomBlurView>
         </View>
@@ -356,6 +380,7 @@ const styles = StyleSheet.create({
   },
   selectedAmount: {
     ...Typography.NUMBER_LARGE,
+    fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_WHITE,
   },
   selectedCurrency: {
@@ -397,7 +422,7 @@ const styles = StyleSheet.create({
   },
   conversionValue: {
     fontSize: 20,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_PRIMARY,
   },
   conversionCurrency: {
@@ -432,7 +457,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 24,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_PRIMARY,
     textAlign: 'center',
   },
@@ -481,25 +506,42 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 12,
   },
-  numPadButton: {
+  numPadButtonWrapper: {
     width: width * 0.25,
     height: 65,
+    borderRadius: 33,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+      },
+      web: {
+        // @ts-ignore
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      },
+    }),
+  },
+  numPadButton: {
+    width: '100%',
+    height: '100%',
     borderRadius: 33,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 3,
+    ...Platform.select({
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   numPadText: {
     fontSize: 28,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'SpaceMono-Regular',
     fontWeight: '300',
     color: Colors.TEXT_PRIMARY,
   },

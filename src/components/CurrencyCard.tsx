@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 96,
+    minHeight: 68,
   },
   selectedContainer: {
     backgroundColor: Colors.SELECTED_CARD_BG,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   rate: {
     fontSize: 26,
-    fontFamily: 'MonomaniacOne-Regular',
+    fontFamily: 'SpaceMono-Regular',
     color: Colors.TEXT_PRIMARY,
     marginBottom: 6,
     letterSpacing: -0.5,
