@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     padding: 5,
-    paddingRight: Platform.OS === 'web' ? 10 : 5,
+    paddingRight: Platform.OS === 'web' ? 20 : 5,
   },
   clearText: {
     fontSize: 24,
