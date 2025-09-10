@@ -455,6 +455,7 @@ const styles = StyleSheet.create({
       web: 0,
       default: 10,
     }),
+    paddingBottom: Platform.OS === 'web' ? 20 : 0,
   },
   inputWrapper: {
     flex: 1,
