@@ -94,7 +94,7 @@ export const EditListScreen: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <View style={[styles.flagCircle, { backgroundColor: theme.colors.BACKGROUND }]}>
+            <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
               <Text style={styles.flag}>{item.flag}</Text>
             </View>
             <View style={styles.currencyInfo}>
@@ -120,7 +120,7 @@ export const EditListScreen: React.FC = () => {
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
-        <View style={styles.flagCircle}>
+        <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
           <Text style={styles.flag}>{currency.flag}</Text>
         </View>
         <View style={styles.currencyInfo}>
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     }),
   },
   androidSearchBar: {
-    backgroundColor: 'white',
+    backgroundColor: '#1c1c1d',
   },
   searchInput: {
     flex: 1,
