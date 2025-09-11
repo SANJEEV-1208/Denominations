@@ -74,12 +74,12 @@ export const CurrencyAPI = {
     }
   },
 
-  async convertCurrency(
+  convertCurrency(
     amount: number,
     fromCurrency: string,
     toCurrency: string,
     rates: ExchangeRates
-  ): Promise<number> {
+  ): number {
     if (fromCurrency === toCurrency) return amount;
     
     // If rates are in USD base

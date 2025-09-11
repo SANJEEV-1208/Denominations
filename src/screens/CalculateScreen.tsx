@@ -48,30 +48,35 @@ export const CalculateScreen: React.FC = () => {
   
   const selectedCurrency = getCurrencyByCode(currencyCode);
 
-  // Debounced conversion calculation
+  // Immediate conversion calculation (for button press)
+  const calculateConversionsImmediate = (value: string) => {
+    const amount = parseFloat(value) || 0;
+    if (amount === 0 || !exchangeRates) {
+      setConversions({});
+      return;
+    }
+
+    const newConversions: { [key: string]: number } = {};
+    
+    for (const code of savedCurrencyCodes) {
+      if (code !== currencyCode) {
+        const converted = CurrencyAPI.convertCurrency(
+          amount,
+          currencyCode,
+          code,
+          exchangeRates
+        );
+        newConversions[code] = converted;
+      }
+    }
+    
+    setConversions(newConversions);
+  };
+
+  // Debounced conversion calculation (for typing)
   const calculateConversions = useMemo(
     () => debounce((value: string) => {
-      const amount = parseFloat(value) || 0;
-      if (amount === 0 || !exchangeRates) {
-        setConversions({});
-        return;
-      }
-
-      const newConversions: { [key: string]: number } = {};
-      
-      savedCurrencyCodes.forEach(code => {
-        if (code !== currencyCode) {
-          const converted = CurrencyAPI.convertCurrency(
-            amount,
-            currencyCode,
-            code,
-            exchangeRates
-          );
-          newConversions[code] = converted;
-        }
-      });
-      
-      setConversions(newConversions);
+      calculateConversionsImmediate(value);
     }, 300),
     [currencyCode, savedCurrencyCodes, exchangeRates]
   );
@@ -107,8 +112,8 @@ export const CalculateScreen: React.FC = () => {
   };
 
   const handleCalculatePress = () => {
-    // Trigger recalculation
-    calculateConversions(inputValue);
+    // Trigger immediate recalculation without debounce
+    calculateConversionsImmediate(inputValue);
   };
 
   const formatValue = (value: number): string => {
