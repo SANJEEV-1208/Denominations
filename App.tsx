@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { CurrencyProvider } from './src/context/CurrencyContext';
-import { SplashScreen as AppSplashScreen } from './src/screens/SplashScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { CalculateScreen } from './src/screens/CalculateScreen';
 import { EditListScreen } from './src/screens/EditListScreen';
@@ -31,7 +30,10 @@ export default function App() {
         console.warn('Font loading error:', e);
       } finally {
         setFontsLoaded(true);
-        await SplashScreen.hideAsync();
+        // Add a small delay to make the transition smoother
+        setTimeout(async () => {
+          await SplashScreen.hideAsync();
+        }, 500);
       }
     }
 
@@ -46,25 +48,17 @@ export default function App() {
     <CurrencyProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Splash"
+          initialRouteName="Home"
           screenOptions={{
             headerShown: false,
             cardStyle: { backgroundColor: '#FFFFFF' },
           }}
         >
           <Stack.Screen 
-            name="Splash" 
-            component={AppSplashScreen}
-            options={{
-              animationEnabled: false,
-            }}
-          />
-          <Stack.Screen 
             name="Home" 
             component={HomeScreen}
             options={{
-              animationEnabled: true,
-              animationTypeForReplace: 'push',
+              animationEnabled: false,
             }}
           />
           <Stack.Screen 
