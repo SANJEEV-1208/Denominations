@@ -1,0 +1,284 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.79845,0.48445,0.77338,1.00000",
+      "display-p3:0.81554,0.17681,0.96522,1.00000"
+    ]
+  },
+  "groups" : [
+    {
+      "hidden" : true,
+      "layers" : [
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,0.00000,0.00000,1.00000"
+          },
+          "image-name" : "I.svg",
+          "name" : "I",
+          "position" : {
+            "scale" : 0.8,
+            "translation-in-points" : [
+              1,
+              0
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,0.00000,0.00000,1.00000"
+          },
+          "image-name" : "s.svg",
+          "name" : "s"
+        }
+      ],
+      "position" : {
+        "scale" : 10,
+        "translation-in-points" : [
+          66.60551378631702,
+          41.3
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden" : false,
+      "layers" : [
+        {
+          "fill" : "automatic",
+          "glass-specializations" : [
+            {
+              "value" : true
+            },
+            {
+              "appearance" : "dark",
+              "value" : true
+            }
+          ],
+          "hidden" : false,
+          "image-name" : "I.svg",
+          "name" : "I",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              1,
+              -0.5
+            ]
+          }
+        },
+        {
+          "fill-specializations" : [
+            {
+              "value" : "automatic"
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "srgb:0.12984,0.12985,0.12984,1.00000"
+              }
+            }
+          ],
+          "glass-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : true
+            }
+          ],
+          "image-name" : "s.svg",
+          "name" : "s"
+        }
+      ],
+      "position" : {
+        "scale" : 20,
+        "translation-in-points" : [
+          0,
+          0
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden" : false,
+      "layers" : [
+        {
+          "hidden" : true,
+          "image-name" : "Group 11.svg",
+          "name" : "Group 11",
+          "position" : {
+            "scale" : 8,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "blur-material" : 0.5,
+      "hidden" : true,
+      "layers" : [
+        {
+          "blend-mode" : "darken",
+          "fill-specializations" : [
+            {
+              "value" : {
+                "solid" : "extended-gray:1.00000,1.00000"
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.81554,0.17681,0.96522,1.00000"
+              }
+            }
+          ],
+          "glass" : true,
+          "image-name" : "I.svg",
+          "name" : "I",
+          "position" : {
+            "scale" : 5,
+            "translation-in-points" : [
+              5.580038114551827,
+              165.15981087291757
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "extended-gray:0.00000,1.00000"
+          },
+          "glass" : false,
+          "image-name" : "denomi nation s.svg",
+          "name" : "denomi nation s",
+          "position" : {
+            "scale" : 6,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden" : true,
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "deno mina tion1s.svg",
+          "name" : "deno mina tion1s",
+          "position" : {
+            "scale" : 6,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden" : true,
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "Dollar (USD).svg",
+          "name" : "Dollar (USD)",
+          "position" : {
+            "scale" : 10,
+            "translation-in-points" : [
+              -94.69921875,
+              83.1328125
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "image-name" : "sAZAM.svg",
+          "name" : "sAZAM",
+          "opacity-specializations" : [
+            {
+              "value" : 0.8
+            },
+            {
+              "appearance" : "dark",
+              "value" : 0.75
+            }
+          ],
+          "position" : {
+            "scale" : 10,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "image-name" : "Yen (JPY).svg",
+          "name" : "Yen (JPY)",
+          "position" : {
+            "scale" : 10,
+            "translation-in-points" : [
+              171.33203125,
+              -47.61328125
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
