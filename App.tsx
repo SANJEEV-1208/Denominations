@@ -51,38 +51,25 @@ export default function App() {
           screenOptions={{
             headerShown: false,
             cardStyle: { backgroundColor: '#FFFFFF' },
+            animationEnabled: false,
+            gestureEnabled: false,
           }}
         >
           <Stack.Screen 
             name="Splash" 
             component={AppSplashScreen}
-            options={{
-              animationEnabled: false,
-            }}
           />
           <Stack.Screen 
             name="Home" 
             component={HomeScreen}
-            options={{
-              animationEnabled: true,
-              animationTypeForReplace: 'push',
-            }}
           />
           <Stack.Screen 
             name="Calculate" 
             component={CalculateScreen}
-            options={{
-              animationEnabled: true,
-              animationTypeForReplace: 'push',
-            }}
           />
           <Stack.Screen 
             name="EditList" 
             component={EditListScreen}
-            options={{
-              animationEnabled: true,
-              animationTypeForReplace: 'push',
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
