@@ -471,6 +471,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 10,
+    marginBottom: Platform.OS === 'web' ? 10 : 0,
   },
   inputWrapper: {
     flex: 1,
