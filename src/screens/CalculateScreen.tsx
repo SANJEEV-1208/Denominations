@@ -20,7 +20,6 @@ import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
-import { debounce } from '../utils/debounce';
 import { CloseIcon } from '../components/Icons';
 // @ts-ignore
 import ClearIcon from '../assets/Clear-Text-Feild.svg';
@@ -40,7 +39,8 @@ export const CalculateScreen: React.FC = () => {
   const { 
     savedCurrencyCodes, 
     exchangeRates, 
-    getCurrencyByCode 
+    getCurrencyByCode,
+    setLastConversions 
   } = useCurrency();
   
   const [inputValue, setInputValue] = useState('1');
@@ -53,10 +53,14 @@ export const CalculateScreen: React.FC = () => {
     const amount = parseFloat(value) || 0;
     if (amount === 0 || !exchangeRates) {
       setConversions({});
+      setLastConversions({}, currencyCode, 0);
       return;
     }
 
     const newConversions: { [key: string]: number } = {};
+    
+    // Also include the base currency with its original amount
+    newConversions[currencyCode] = amount;
     
     for (const code of savedCurrencyCodes) {
       if (code !== currencyCode) {
@@ -71,19 +75,11 @@ export const CalculateScreen: React.FC = () => {
     }
     
     setConversions(newConversions);
+    // Store in context for display on home screen
+    setLastConversions(newConversions, currencyCode, amount);
   };
 
-  // Debounced conversion calculation (for typing)
-  const calculateConversions = useMemo(
-    () => debounce((value: string) => {
-      calculateConversionsImmediate(value);
-    }, 300),
-    [currencyCode, savedCurrencyCodes, exchangeRates]
-  );
-
-  useEffect(() => {
-    calculateConversions(inputValue);
-  }, [inputValue, calculateConversions]);
+  // Remove automatic conversion - only calculate on button press
 
   const handleNumberPress = (num: string) => {
     if (inputValue === '0') {

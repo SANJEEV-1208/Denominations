@@ -9,6 +9,8 @@ interface CurrencyCardProps {
   rate: number;
   onPress: () => void;
   isSelected?: boolean;
+  convertedValue?: number;
+  showConversion?: boolean;
 }
 
 const { width } = Dimensions.get('window');
@@ -18,6 +20,8 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
   rate,
   onPress,
   isSelected = false,
+  convertedValue,
+  showConversion = false,
 }) => {
   const formatRate = (value: number): string => {
     if (value >= 1000) {
@@ -42,7 +46,11 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
       </View>
       
       <View style={styles.centerContent}>
-        <Text style={styles.rate}>{formatRate(rate)}</Text>
+        <Text style={styles.rate}>
+          {showConversion && convertedValue !== undefined 
+            ? formatRate(convertedValue) 
+            : formatRate(rate)}
+        </Text>
         <Text style={styles.currencyInfo}>
           {currency.code} ({currency.name}) {currency.symbol}
         </Text>

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Calculate Button Functionality', () => {
-  test('should convert currency when calculate button is clicked', async ({ page }) => {
+  test('should only convert when calculate button is clicked, not on typing', async ({ page }) => {
     // Navigate to the app
     await page.goto('/');
     
@@ -14,10 +14,7 @@ test.describe('Calculate Button Functionality', () => {
       await currencyCard.click();
       await page.waitForTimeout(2000);
       
-      // Clear the input field and enter a value
-      const inputField = await page.locator('input[type="text"]').first();
-      
-      // Click clear button first
+      // Clear the input field
       const clearButton = await page.locator('text=×').first();
       if (await clearButton.isVisible()) {
         await clearButton.click();
@@ -26,6 +23,11 @@ test.describe('Calculate Button Functionality', () => {
       // Enter value using number pad
       await page.locator('text=2').first().click(); // Click number 2
       await page.waitForTimeout(500);
+      
+      // Check that no conversions are shown yet (should show dashes)
+      const dashesBeforeCalculate = await page.locator('text=—').all();
+      expect(dashesBeforeCalculate.length).toBeGreaterThan(0);
+      console.log('Dashes before calculate:', dashesBeforeCalculate.length);
       
       // Click the calculate button
       const calculateButton = await page.locator('svg').filter({ has: page.locator('path[stroke="white"]') }).last();
@@ -41,11 +43,8 @@ test.describe('Calculate Button Functionality', () => {
       console.log('Number of conversions displayed:', conversionValues.length);
       
       // Verify that conversion values are not empty dashes
-      for (const value of conversionValues) {
-        const text = await value.textContent();
-        expect(text).not.toBe('—');
-        console.log('Conversion value:', text);
-      }
+      const dashesAfterCalculate = await page.locator('text=—').all();
+      expect(dashesAfterCalculate.length).toBe(0);
     }
   });
   

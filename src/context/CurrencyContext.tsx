@@ -9,11 +9,14 @@ interface CurrencyContextType {
   allCurrencies: Currency[];
   exchangeRates: ExchangeRates | null;
   isLoading: boolean;
+  lastConversions: { [key: string]: number } | null;
+  lastConversionBase: { currency: string; amount: number } | null;
   addCurrency: (code: string) => Promise<void>;
   removeCurrency: (code: string) => Promise<void>;
   reorderCurrencies: (codes: string[]) => Promise<void>;
   refreshRates: () => Promise<void>;
   getCurrencyByCode: (code: string) => Currency | undefined;
+  setLastConversions: (conversions: { [key: string]: number }, baseCurrency: string, amount: number) => void;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
@@ -34,6 +37,8 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   const [savedCurrencyCodes, setSavedCurrencyCodes] = useState<string[]>([]);
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastConversions, setLastConversions] = useState<{ [key: string]: number } | null>(null);
+  const [lastConversionBase, setLastConversionBase] = useState<{ currency: string; amount: number } | null>(null);
 
   useEffect(() => {
     loadInitialData();
@@ -93,16 +98,24 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     return CURRENCIES.find(c => c.code === code);
   };
 
+  const setLastConversionsData = (conversions: { [key: string]: number }, baseCurrency: string, amount: number) => {
+    setLastConversions(conversions);
+    setLastConversionBase({ currency: baseCurrency, amount });
+  };
+
   const value: CurrencyContextType = {
     savedCurrencyCodes,
     allCurrencies: CURRENCIES,
     exchangeRates,
     isLoading,
+    lastConversions,
+    lastConversionBase,
     addCurrency,
     removeCurrency,
     reorderCurrencies,
     refreshRates,
     getCurrencyByCode,
+    setLastConversions: setLastConversionsData,
   };
 
   return (
