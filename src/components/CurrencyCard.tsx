@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { Colors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 import { Typography } from '../constants/typography';
 import { Currency } from '../types';
 
@@ -9,8 +9,7 @@ interface CurrencyCardProps {
   rate: number;
   onPress: () => void;
   isSelected?: boolean;
-  convertedValue?: number;
-  showConversion?: boolean;
+  conversionValue?: number;
 }
 
 const { width } = Dimensions.get('window');
@@ -20,9 +19,10 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
   rate,
   onPress,
   isSelected = false,
-  convertedValue,
-  showConversion = false,
+  conversionValue,
 }) => {
+  const theme = useTheme();
+  
   const formatRate = (value: number): string => {
     if (value >= 1000) {
       return value.toFixed(2);
@@ -33,25 +33,33 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
     }
   };
 
+  const displayValue = conversionValue !== undefined ? conversionValue : rate;
+
   return (
     <TouchableOpacity
-      style={[styles.container, isSelected && styles.selectedContainer]}
+      style={[
+        styles.container,
+        { backgroundColor: theme.colors.CARD_BACKGROUND },
+        isSelected && {
+          backgroundColor: theme.colors.SELECTED_CARD_BG,
+          borderWidth: 2,
+          borderColor: theme.colors.SELECTED_CARD_BORDER,
+        }
+      ]}
       onPress={onPress}
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <View style={styles.flagCircle}>
+        <View style={[styles.flagCircle, { backgroundColor: theme.colors.BACKGROUND }]}>
           <Text style={styles.flag}>{currency.flag}</Text>
         </View>
       </View>
       
       <View style={styles.centerContent}>
-        <Text style={styles.rate}>
-          {showConversion && convertedValue !== undefined 
-            ? formatRate(convertedValue) 
-            : formatRate(rate)}
+        <Text style={[styles.rate, { color: theme.colors.TEXT_PRIMARY }]}>
+          {formatRate(displayValue)}
         </Text>
-        <Text style={styles.currencyInfo}>
+        <Text style={[styles.currencyInfo, { color: theme.colors.TEXT_BODY }]}>
           {currency.code} ({currency.name}) {currency.symbol}
         </Text>
       </View>
@@ -61,7 +69,6 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.CARD_BACKGROUND,
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -71,11 +78,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: 54,
   },
-  selectedContainer: {
-    backgroundColor: Colors.SELECTED_CARD_BG,
-    borderWidth: 2,
-    borderColor: Colors.SELECTED_CARD_BORDER,
-  },
   leftContent: {
     marginRight: 16,
   },
@@ -83,7 +85,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -105,7 +106,6 @@ const styles = StyleSheet.create({
   rate: {
     fontSize: 26,
     fontFamily: 'SpaceMono-Regular',
-    color: Colors.TEXT_PRIMARY,
     marginBottom: 6,
     letterSpacing: -0.5,
   },
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'System',
     fontWeight: '400',
-    color: Colors.TEXT_BODY,
     letterSpacing: 0.2,
   },
 });

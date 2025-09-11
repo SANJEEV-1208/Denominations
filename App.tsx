@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { CurrencyProvider } from './src/context/CurrencyContext';
+import { ThemeProvider } from './src/context/ThemeContext';
 import { SplashScreen as AppSplashScreen } from './src/screens/SplashScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { CalculateScreen } from './src/screens/CalculateScreen';
@@ -44,35 +45,37 @@ export default function App() {
   }
 
   return (
-    <CurrencyProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Splash"
-          screenOptions={{
-            headerShown: false,
-            cardStyle: { backgroundColor: '#FFFFFF' },
-            animationEnabled: false,
-            gestureEnabled: false,
-          }}
-        >
-          <Stack.Screen 
-            name="Splash" 
-            component={AppSplashScreen}
-          />
-          <Stack.Screen 
-            name="Home" 
-            component={HomeScreen}
-          />
-          <Stack.Screen 
-            name="Calculate" 
-            component={CalculateScreen}
-          />
-          <Stack.Screen 
-            name="EditList" 
-            component={EditListScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </CurrencyProvider>
+    <ThemeProvider>
+      <CurrencyProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Splash"
+            screenOptions={{
+              headerShown: false,
+              cardStyle: { backgroundColor: 'transparent' },
+              animationEnabled: false,
+              gestureEnabled: false,
+            }}
+          >
+            <Stack.Screen 
+              name="Splash" 
+              component={AppSplashScreen}
+            />
+            <Stack.Screen 
+              name="Home" 
+              component={HomeScreen}
+            />
+            <Stack.Screen 
+              name="Calculate" 
+              component={CalculateScreen}
+            />
+            <Stack.Screen 
+              name="EditList" 
+              component={EditListScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CurrencyProvider>
+    </ThemeProvider>
   );
 }

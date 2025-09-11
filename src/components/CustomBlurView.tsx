@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Platform, ViewStyle } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { useTheme } from '../context/ThemeContext';
 
 interface CustomBlurViewProps {
   intensity?: number;
@@ -12,17 +13,21 @@ interface CustomBlurViewProps {
 
 export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
   intensity = 80,
-  tint = 'light',
+  tint,
   style,
   children,
   fallbackStyle,
 }) => {
+  const theme = useTheme();
+  // Use theme tint if not explicitly provided
+  const blurTint = tint || theme.colors.BLUR_TINT;
+  
   // iOS: Use native BlurView with subtle shadow
   if (Platform.OS === 'ios') {
     return (
       <BlurView 
         intensity={intensity} 
-        tint={tint} 
+        tint={blurTint} 
         style={[
           style,
           {
@@ -43,12 +48,16 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
 
   // Android: Use semi-transparent background with elevation
   if (Platform.OS === 'android') {
+    const backgroundColor = theme.dark 
+      ? 'rgba(0, 0, 0, 0.92)' 
+      : 'rgba(255, 255, 255, 0.92)';
+    
     return (
       <View
         style={[
           style,
           {
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            backgroundColor,
             elevation: 8,
           },
           fallbackStyle,
@@ -60,12 +69,16 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
   }
 
   // Web: Use CSS backdrop-filter with shadow
+  const backgroundColor = theme.dark 
+    ? 'rgba(0, 0, 0, 0.7)' 
+    : 'rgba(255, 255, 255, 0.7)';
+    
   return (
     <View
       style={[
         style,
         {
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          backgroundColor,
           // @ts-ignore - Web-specific style
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',

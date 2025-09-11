@@ -13,8 +13,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useCurrency } from '../context/CurrencyContext';
+import { useTheme } from '../context/ThemeContext';
 import { CurrencyCard } from '../components/CurrencyCard';
-import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { SettingsIcon } from '../components/Icons';
@@ -23,6 +23,7 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const theme = useTheme();
   const { 
     savedCurrencyCodes, 
     exchangeRates, 
@@ -40,80 +41,79 @@ export const HomeScreen: React.FC = () => {
     setRefreshing(false);
   };
 
+  useEffect(() => {
+    // Initial load of exchange rates
+    if (!exchangeRates) {
+      refreshRates();
+    }
+  }, []);
+
   const handleCurrencyPress = (currencyCode: string) => {
     navigation.navigate('Calculate', { currencyCode });
   };
 
-  const handleSettingsPress = () => {
-    navigation.navigate('EditList');
-  };
-
   const renderCurrency = ({ item }: { item: string }) => {
     const currency = getCurrencyByCode(item);
-    if (!currency) return null;
-
     const rate = exchangeRates?.rates[item] || 1;
-    const convertedValue = lastConversions?.[item];
-    const showConversion = lastConversions !== null && convertedValue !== undefined;
+    const lastConversion = lastConversions?.[item];
+    
+    if (!currency) return null;
     
     return (
       <CurrencyCard
         currency={currency}
         rate={rate}
-        convertedValue={convertedValue}
-        showConversion={showConversion}
         onPress={() => handleCurrencyPress(item)}
+        isSelected={lastConversionBase === item}
+        conversionValue={lastConversion}
       />
     );
   };
 
-  if (isLoading && !refreshing) {
+  if (isLoading && !exchangeRates) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={Colors.PRIMARY} />
+      <View style={[styles.loadingContainer, { backgroundColor: theme.colors.BACKGROUND }]}>
+        <ActivityIndicator size="large" color={theme.colors.PRIMARY} />
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
+      <View style={[styles.header, { backgroundColor: theme.colors.BACKGROUND }]}>
         <View style={styles.spacer} />
         <View style={styles.headerRight}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Denominations</Text>
-            <Text style={styles.subtitle}>Saved List</Text>
+            <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
+            <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Home</Text>
           </View>
-          <TouchableOpacity onPress={handleSettingsPress} style={styles.settingsButton}>
-            <View style={styles.settingsIconContainer}>
-              <SettingsIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
+          <TouchableOpacity onPress={() => navigation.navigate('EditList')} style={styles.settingsButton}>
+            <View style={[styles.settingsIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
+              <SettingsIcon width={24} height={24} fill={theme.colors.TEXT_WHITE} />
             </View>
           </TouchableOpacity>
         </View>
       </View>
-
-      {savedCurrencyCodes.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No currencies saved</Text>
-          <Text style={styles.emptySubtext}>
-            Tap the settings icon to add currencies
+      
+      <FlatList
+        data={savedCurrencyCodes}
+        renderItem={renderCurrency}
+        keyExtractor={(item) => item}
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.PRIMARY}
+          />
+        }
+        ListEmptyComponent={
+          <Text style={[styles.emptyText, { color: theme.colors.TEXT_SECONDARY }]}>
+            No currencies added. Tap settings to add currencies.
           </Text>
-        </View>
-      ) : (
-        <FlatList
-          data={savedCurrencyCodes}
-          renderItem={renderCurrency}
-          keyExtractor={(item) => item}
-          contentContainerStyle={styles.listContent}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              tintColor={Colors.PRIMARY}
-            />
-          }
-        />
-      )}
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -121,13 +121,11 @@ export const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUND,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.BACKGROUND,
   },
   header: {
     flexDirection: 'row',
@@ -165,31 +163,16 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  listContent: {
-    paddingVertical: 16,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 40,
+  listContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   emptyText: {
-    fontSize: 18,
-    fontFamily: 'System',
-    fontWeight: '600',
-    color: Colors.TEXT_PRIMARY,
-    marginBottom: 8,
-  },
-  emptySubtext: {
-    fontSize: 14,
-    fontFamily: 'System',
-    fontWeight: '400',
-    color: Colors.TEXT_BODY,
+    ...Typography.BODY,
     textAlign: 'center',
+    marginTop: 50,
   },
 });
