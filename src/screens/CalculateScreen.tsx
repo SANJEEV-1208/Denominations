@@ -645,6 +645,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     ...Platform.select({
       ios: {
+        backgroundColor: 'black',
         borderWidth: 1,
         borderColor: 'rgba(117, 117, 117, 0.8)',
       },
