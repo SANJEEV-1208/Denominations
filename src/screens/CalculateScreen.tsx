@@ -330,7 +330,7 @@ export const CalculateScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',
