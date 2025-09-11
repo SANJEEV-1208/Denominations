@@ -539,22 +539,50 @@ const styles = StyleSheet.create({
     height: Platform.OS === 'web' ? 80 : 67,
     borderRadius: Platform.OS === 'web' ? 40 : 34,
     overflow: 'hidden',
-    shadowColor: '#E300FF',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 16,
-    elevation: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#E300FF',
+        shadowOffset: {
+          width: 0,
+          height: 8,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 16,
+      },
+      android: {
+        elevation: 8,
+      },
+      web: {
+        shadowColor: '#E300FF',
+        shadowOffset: {
+          width: 0,
+          height: 8,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 16,
+      },
+    }),
   },
   calculateButtonGradient: {
     width: '100%',
     height: '100%',
     borderRadius: Platform.OS === 'web' ? 40 : 34,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        // No border on iOS to avoid jagged edges
+        overflow: 'hidden',
+      },
+      android: {
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+        overflow: 'hidden',
+      },
+      web: {
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+        overflow: 'hidden',
+      },
+    }),
   },
   calculateButton: {
     width: '100%',
@@ -562,7 +590,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(227, 0, 255, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
-    backdropFilter: 'blur(20px)',
+    ...Platform.select({
+      ios: {
+        // Smoother rendering on iOS
+      },
+      web: {
+        backdropFilter: 'blur(20px)',
+      },
+    }),
   },
   numPadWrapper: {
     position: 'absolute',
