@@ -172,6 +172,7 @@ export const EditListScreen: React.FC = () => {
                     setLocalSavedCodes(newCodes);
                   }}
                   scrollEnabled={false}
+                  activateOnLongPress={true}
                 />
               </View>
             )}
