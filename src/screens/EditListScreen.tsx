@@ -155,35 +155,41 @@ export const EditListScreen: React.FC = () => {
           </View>
 
           {/* Content */}
-          <ScrollView 
-            style={styles.content}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainer}
-          >
-            {/* Saved Currencies */}
-            {savedCurrencies.length > 0 && (
-              <View style={styles.savedSection}>
-                <DraggableFlatList
-                  data={savedCurrencies}
-                  renderItem={renderSavedItem}
-                  keyExtractor={(item) => item.code}
-                  onDragEnd={({ data }) => {
-                    const newCodes = data.map(c => c.code);
-                    setLocalSavedCodes(newCodes);
-                  }}
-                  scrollEnabled={false}
-                  activateOnLongPress={true}
-                />
-              </View>
+          <View style={styles.content}>
+            {savedCurrencies.length > 0 ? (
+              <DraggableFlatList
+                data={savedCurrencies}
+                renderItem={renderSavedItem}
+                keyExtractor={(item) => item.code}
+                onDragEnd={({ data }) => {
+                  const newCodes = data.map(c => c.code);
+                  setLocalSavedCodes(newCodes);
+                }}
+                scrollEnabled={true}
+                activateOnLongPress={true}
+                ListFooterComponent={
+                  availableCurrencies.length > 0 ? (
+                    <View style={styles.availableSection}>
+                      {availableCurrencies.map(renderAvailableItem)}
+                    </View>
+                  ) : null
+                }
+                contentContainerStyle={styles.contentContainer}
+                showsVerticalScrollIndicator={false}
+              />
+            ) : (
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.contentContainer}
+              >
+                {availableCurrencies.length > 0 && (
+                  <View style={styles.availableSection}>
+                    {availableCurrencies.map(renderAvailableItem)}
+                  </View>
+                )}
+              </ScrollView>
             )}
-
-            {/* Available Currencies */}
-            {availableCurrencies.length > 0 && (
-              <View style={styles.availableSection}>
-                {availableCurrencies.map(renderAvailableItem)}
-              </View>
-            )}
-          </ScrollView>
+          </View>
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
