@@ -31,6 +31,7 @@ export const CustomBlurView: React.FC<CustomBlurViewProps> = ({
         style={[
           style,
           {
+            backgroundColor: '#1c1c1d',
             shadowColor: '#000',
             shadowOffset: {
               width: 0,

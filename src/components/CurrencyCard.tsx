@@ -53,7 +53,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <View style={[styles.flagCircle, { backgroundColor: theme.colors.BACKGROUND }]}>
+        <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
           <Text style={styles.flag}>{currency.flag}</Text>
         </View>
       </View>
