@@ -23,7 +23,7 @@ export const SplashScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
-          source={require('../../assets/splash-icon.png')}
+          source={require('../../assets/icon.png')}
           style={styles.logo}
           resizeMode="contain"
         />
