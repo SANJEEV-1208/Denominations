@@ -137,7 +137,7 @@ export const CalculateScreen: React.FC = () => {
 
       <View style={styles.contentContainer}>
         {/* Conversion Results */}
-        <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false}>
+        <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
           <View style={styles.conversionsContainer}>
             {/* Selected Currency Card */}
             <LinearGradient
@@ -361,7 +361,14 @@ const styles = StyleSheet.create({
   },
   conversionsScrollView: {
     flex: 1,
-    marginBottom: Platform.OS === 'web' ? 380 : 430,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: Platform.OS === 'web' ? 460 : 430,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   selectedCardBorder: {
     borderRadius: 16,
@@ -456,7 +463,7 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 360,
       android: 390,
-      web: 360,
+      web: 350,
       default: 390,
     }),
     left: 20,
@@ -598,7 +605,7 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 0,
       android: 20,
-      web: 30,
+      web: 20,
       default: 20,
     }),
     left: 0,
@@ -608,7 +615,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.select({
       ios: 0,
       android: 15,
-      web: 30,
+      web: 20,
       default: 15,
     }),
   },
