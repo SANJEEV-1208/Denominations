@@ -39,7 +39,10 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
     <TouchableOpacity
       style={[
         styles.container,
-        { backgroundColor: theme.colors.CARD_BACKGROUND },
+        { 
+          backgroundColor: theme.colors.CARD_BACKGROUND,
+          marginHorizontal: 0, // Remove margin as parent has padding
+        },
         isSelected && {
           backgroundColor: theme.colors.SELECTED_CARD_BG,
           borderWidth: 2,
@@ -72,11 +75,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
-    marginHorizontal: 20,
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 54,
+    minHeight: 77,
   },
   leftContent: {
     marginRight: 16,

@@ -19,6 +19,7 @@ import DraggableFlatList, {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
+import { useTheme } from '../context/ThemeContext';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
@@ -30,6 +31,7 @@ type EditListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Edi
 
 export const EditListScreen: React.FC = () => {
   const navigation = useNavigation<EditListScreenNavigationProp>();
+  const theme = useTheme();
   const {
     savedCurrencyCodes,
     allCurrencies,
@@ -86,24 +88,24 @@ export const EditListScreen: React.FC = () => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
-          style={[styles.savedCurrencyCard, isActive && styles.dragging]}
+          style={[styles.savedCurrencyCard, { backgroundColor: theme.colors.SELECTED_CARD_BG, borderColor: theme.colors.SELECTED_CARD_BORDER }, isActive && styles.dragging]}
           onLongPress={drag}
           onPress={() => handleToggleCurrency(item.code)}
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <View style={styles.flagCircle}>
+            <View style={[styles.flagCircle, { backgroundColor: theme.colors.BACKGROUND }]}>
               <Text style={styles.flag}>{item.flag}</Text>
             </View>
             <View style={styles.currencyInfo}>
-              <Text style={styles.currencyCode}>{item.code}</Text>
-              <Text style={styles.currencyName}>
+              <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{item.code}</Text>
+              <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
                 {item.name} {item.symbol}
               </Text>
             </View>
           </View>
           <View style={styles.dragHandle}>
-            <Text style={styles.dragIcon}>≡</Text>
+            <Text style={[styles.dragIcon, { color: theme.colors.TEXT_BODY }]}>≡</Text>
           </View>
         </TouchableOpacity>
       </ScaleDecorator>
@@ -114,7 +116,7 @@ export const EditListScreen: React.FC = () => {
     return (
       <TouchableOpacity
         key={currency.code}
-        style={styles.availableCurrencyCard}
+        style={[styles.availableCurrencyCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
@@ -122,8 +124,8 @@ export const EditListScreen: React.FC = () => {
           <Text style={styles.flag}>{currency.flag}</Text>
         </View>
         <View style={styles.currencyInfo}>
-          <Text style={styles.currencyCode}>{currency.code}</Text>
-          <Text style={styles.currencyName}>
+          <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{currency.code}</Text>
+          <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
             {currency.name} {currency.symbol}
           </Text>
         </View>
@@ -133,7 +135,7 @@ export const EditListScreen: React.FC = () => {
 
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.container}
@@ -143,12 +145,12 @@ export const EditListScreen: React.FC = () => {
             <View style={styles.spacer} />
             <View style={styles.headerRight}>
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>Denominations</Text>
-                <Text style={styles.subtitle}>Edit List</Text>
+                <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
+                <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Edit List</Text>
               </View>
               <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
-                <View style={styles.doneIconContainer}>
-                  <SaveIcon width={18} height={18} fill={Colors.TEXT_WHITE} />
+                <View style={[styles.doneIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
+                  <SaveIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />
                 </View>
               </TouchableOpacity>
             </View>
@@ -196,7 +198,7 @@ export const EditListScreen: React.FC = () => {
             {Platform.OS === 'android' ? (
               <View style={[styles.searchBar, styles.androidSearchBar]}>
                 <TextInput
-                  style={styles.searchInput}
+                  style={[styles.searchInput, { color: theme.colors.TEXT_PRIMARY }]}
                   placeholder="Search"
                   placeholderTextColor="#757575"
                   value={searchQuery}
@@ -209,7 +211,7 @@ export const EditListScreen: React.FC = () => {
             ) : (
               <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
                 <TextInput
-                  style={styles.searchInput}
+                  style={[styles.searchInput, { color: theme.colors.TEXT_PRIMARY }]}
                   placeholder="Search"
                   placeholderTextColor="#757575"
                   value={searchQuery}
@@ -233,7 +235,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUND,
   },
   header: {
     flexDirection: 'row',
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.PRIMARY,
+    // backgroundColor set dynamically
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -289,9 +290,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   savedCurrencyCard: {
-    backgroundColor: Colors.SELECTED_CARD_BG,
+    // backgroundColor and borderColor set dynamically
     borderWidth: 2,
-    borderColor: Colors.SELECTED_CARD_BORDER,
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.02 }],
   },
   availableCurrencyCard: {
-    backgroundColor: Colors.CARD_BACKGROUND,
+    // backgroundColor set dynamically
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: Colors.BACKGROUND,
+    // backgroundColor set dynamically
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
@@ -338,11 +338,9 @@ const styles = StyleSheet.create({
   currencyCode: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.TEXT_PRIMARY,
   },
   currencyName: {
     fontSize: 12,
-    color: Colors.TEXT_BODY,
     marginTop: 2,
   },
   dragHandle: {
@@ -350,7 +348,6 @@ const styles = StyleSheet.create({
   },
   dragIcon: {
     fontSize: 20,
-    color: Colors.TEXT_BODY,
   },
   searchContainer: {
     position: 'absolute',
@@ -389,13 +386,12 @@ const styles = StyleSheet.create({
     }),
   },
   androidSearchBar: {
-    backgroundColor: Colors.TEXT_WHITE,
+    backgroundColor: 'white',
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
     fontFamily: 'System',
-    color: Colors.TEXT_PRIMARY,
     textAlign: 'left',
   },
   searchIconButton: {

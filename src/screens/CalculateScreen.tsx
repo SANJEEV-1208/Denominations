@@ -16,6 +16,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
+import { useTheme } from '../context/ThemeContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
@@ -34,6 +35,7 @@ const { width } = Dimensions.get('window');
 export const CalculateScreen: React.FC = () => {
   const navigation = useNavigation<CalculateScreenNavigationProp>();
   const route = useRoute<CalculateScreenRouteProp>();
+  const theme = useTheme();
   const { currencyCode } = route.params;
   
   const { 
@@ -117,20 +119,20 @@ export const CalculateScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
       <View style={styles.header}>
         <View style={styles.spacer} />
         <View style={styles.headerRight}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Denominations</Text>
-            <Text style={styles.subtitle}>Calculate</Text>
+            <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
+            <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Calculate</Text>
           </View>
           <TouchableOpacity 
             onPress={() => navigation.goBack()} 
             style={styles.closeButton}
           >
-            <View style={styles.closeIconContainer}>
-              <CloseIcon width={18} height={18} fill={Colors.TEXT_WHITE} />
+            <View style={[styles.closeIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
+              <CloseIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />
             </View>
           </TouchableOpacity>
         </View>
@@ -175,15 +177,15 @@ export const CalculateScreen: React.FC = () => {
                 const value = conversions[code] || 0;
                 
                 return (
-                  <View key={code} style={styles.conversionCard}>
+                  <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
                     <View style={styles.conversionFlagContainer}>
                       <Text style={styles.conversionFlag}>{currency?.flag}</Text>
                     </View>
                     <View style={styles.conversionInfo}>
-                      <Text style={styles.conversionValue}>
+                      <Text style={[styles.conversionValue, { color: theme.colors.TEXT_PRIMARY }]}>
                         {value > 0 ? formatValue(value) : '—'}
                       </Text>
-                      <Text style={styles.conversionCurrency}>
+                      <Text style={[styles.conversionCurrency, { color: theme.colors.TEXT_BODY }]}>
                         {currency?.code} ({currency?.name}) {currency?.symbol}
                       </Text>
                     </View>
@@ -198,7 +200,7 @@ export const CalculateScreen: React.FC = () => {
           {Platform.OS === 'android' ? (
             <View style={[styles.inputWrapper, styles.androidInputWrapper]}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.colors.TEXT_PRIMARY }]}
                 value={inputValue}
                 onChangeText={setInputValue}
                 keyboardType="numeric"
@@ -206,13 +208,13 @@ export const CalculateScreen: React.FC = () => {
                 placeholder="0"
               />
               <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-                <Text style={styles.clearText}>×</Text>
+                <Text style={[styles.clearText, { color: theme.colors.TEXT_BODY }]}>×</Text>
               </TouchableOpacity>
             </View>
           ) : (
             <CustomBlurView intensity={80} tint="light" style={styles.inputWrapper}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.colors.TEXT_PRIMARY }]}
                 value={inputValue}
                 onChangeText={setInputValue}
                 keyboardType="numeric"
@@ -221,9 +223,9 @@ export const CalculateScreen: React.FC = () => {
               />
               <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
                 {Platform.OS === 'web' ? (
-                  <ClearIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+                  <ClearIcon width={20} height={20} fill={theme.colors.TEXT_BODY} />
                 ) : (
-                  <Text style={styles.clearText}>×</Text>
+                  <Text style={[styles.clearText, { color: theme.colors.TEXT_BODY }]}>×</Text>
                 )}
               </TouchableOpacity>
             </CustomBlurView>
@@ -255,68 +257,68 @@ export const CalculateScreen: React.FC = () => {
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
-                    <Text style={styles.numPadText}>1</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>1</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
-                    <Text style={styles.numPadText}>2</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>2</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
-                    <Text style={styles.numPadText}>3</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>3</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
-                    <Text style={styles.numPadText}>4</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>4</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
-                    <Text style={styles.numPadText}>5</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>5</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
-                    <Text style={styles.numPadText}>6</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>6</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
-                    <Text style={styles.numPadText}>7</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>7</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
-                    <Text style={styles.numPadText}>8</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>8</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
-                    <Text style={styles.numPadText}>9</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>9</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
-                    <Text style={styles.numPadText}>.</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>.</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
-                    <Text style={styles.numPadText}>0</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>0</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
-                    <Text style={styles.numPadText}>{'<'}</Text>
+                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>{'<'}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -330,7 +332,6 @@ export const CalculateScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',
@@ -368,7 +369,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.PRIMARY,
+    // backgroundColor set dynamically
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -408,7 +409,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
@@ -439,7 +440,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   conversionCard: {
-    backgroundColor: Colors.CARD_BACKGROUND,
+    backgroundColor: 'transparent',
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -452,7 +453,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
@@ -466,13 +467,11 @@ const styles = StyleSheet.create({
   conversionValue: {
     fontSize: 20,
     fontFamily: 'SpaceMono-Regular',
-    color: Colors.TEXT_PRIMARY,
   },
   conversionCurrency: {
     fontSize: 12,
     fontFamily: 'System',
     fontWeight: '400',
-    color: Colors.TEXT_BODY,
     marginTop: 2,
   },
   inputContainer: {
@@ -531,13 +530,12 @@ const styles = StyleSheet.create({
     }),
   },
   androidInputWrapper: {
-    backgroundColor: Colors.TEXT_WHITE,
+    backgroundColor: 'white',
   },
   input: {
     flex: 1,
     fontSize: 24,
     fontFamily: 'SpaceMono-Regular',
-    color: Colors.TEXT_PRIMARY,
     textAlign: 'center',
     minWidth: Platform.OS === 'web' ? 100 : undefined,
     paddingRight: Platform.OS === 'web' ? 40 : 0,
@@ -553,7 +551,6 @@ const styles = StyleSheet.create({
   },
   clearText: {
     fontSize: Platform.OS === 'web' ? 28 : 24,
-    color: Colors.TEXT_BODY,
     fontWeight: Platform.OS === 'web' ? 'bold' : 'normal',
   },
   calculateButtonWrapper: {
@@ -693,7 +690,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: Platform.OS === 'web' ? 30 : 33,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     ...Platform.select({
@@ -706,6 +703,5 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? 26 : 28,
     fontFamily: 'SpaceMono-Regular',
     fontWeight: '100',
-    color: Colors.TEXT_PRIMARY,
   },
 });
