@@ -13,6 +13,7 @@ import {
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
@@ -210,12 +211,25 @@ export const CalculateScreen: React.FC = () => {
               )}
             </TouchableOpacity>
           </CustomBlurView>
-          <TouchableOpacity 
-            style={styles.calculateButton}
-            onPress={handleCalculatePress}
+          <BlurView 
+            intensity={20} 
+            tint="light" 
+            style={styles.calculateButtonWrapper}
           >
-            <CalculateIcon width={24} height={24} stroke="#FFFFFF" />
-          </TouchableOpacity>
+            <LinearGradient
+              colors={['rgba(255, 255, 255, 0.25)', 'rgba(255, 255, 255, 0.1)']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.calculateButtonGradient}
+            >
+              <TouchableOpacity 
+                style={styles.calculateButton}
+                onPress={handleCalculatePress}
+              >
+                <CalculateIcon width={24} height={24} />
+              </TouchableOpacity>
+            </LinearGradient>
+          </BlurView>
         </View>
 
         {/* Number Pad */}
@@ -520,21 +534,35 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_BODY,
     fontWeight: Platform.OS === 'web' ? 'bold' : 'normal',
   },
-  calculateButton: {
+  calculateButtonWrapper: {
     width: Platform.OS === 'web' ? 104 : 90,
     height: Platform.OS === 'web' ? 80 : 67,
     borderRadius: Platform.OS === 'web' ? 40 : 34,
-    backgroundColor: Colors.PRIMARY,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     shadowColor: '#E300FF',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 8,
     },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOpacity: 0.5,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  calculateButtonGradient: {
+    width: '100%',
+    height: '100%',
+    borderRadius: Platform.OS === 'web' ? 40 : 34,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    overflow: 'hidden',
+  },
+  calculateButton: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(227, 0, 255, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backdropFilter: 'blur(20px)',
   },
   numPadWrapper: {
     position: 'absolute',
