@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
   },
   conversionsScrollView: {
     flex: 1,
+    marginBottom: Platform.OS === 'web' ? 380 : 430,
   },
   selectedCardBorder: {
     borderRadius: 16,
@@ -411,7 +412,7 @@ const styles = StyleSheet.create({
   conversionsContainer: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: Platform.OS === 'web' ? 400 : 450,
+    paddingBottom: 20,
   },
   conversionCard: {
     backgroundColor: Colors.CARD_BACKGROUND,
@@ -453,9 +454,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     position: 'absolute',
     bottom: Platform.select({
-      ios: 351,
+      ios: 360,
       android: 390,
-      web: 370,
+      web: 360,
       default: 390,
     }),
     left: 20,
@@ -463,13 +464,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 10,
-    marginBottom: Platform.select({
-      ios: 9,
-      android: 10,
-      web: 0,
-      default: 10,
-    }),
-    paddingBottom: Platform.OS === 'web' ? 20 : 0,
   },
   inputWrapper: {
     flex: 1,
@@ -604,7 +598,7 @@ const styles = StyleSheet.create({
     bottom: Platform.select({
       ios: 0,
       android: 20,
-      web: 20,
+      web: 30,
       default: 20,
     }),
     left: 0,
@@ -614,7 +608,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.select({
       ios: 0,
       android: 15,
-      web: 50,
+      web: 30,
       default: 15,
     }),
   },
