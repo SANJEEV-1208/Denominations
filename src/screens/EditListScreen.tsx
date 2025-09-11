@@ -193,18 +193,33 @@ export const EditListScreen: React.FC = () => {
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search"
-                placeholderTextColor="#757575"
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-              />
-              <TouchableOpacity style={styles.searchIconButton}>
-                <SearchIcon width={20} height={20} stroke="#757575" />
-              </TouchableOpacity>
-            </CustomBlurView>
+            {Platform.OS === 'android' ? (
+              <View style={[styles.searchBar, styles.androidSearchBar]}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </CustomBlurView>
+            )}
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -372,6 +387,9 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(117, 117, 117, 0.8)',
       },
     }),
+  },
+  androidSearchBar: {
+    backgroundColor: Colors.TEXT_WHITE,
   },
   searchInput: {
     flex: 1,

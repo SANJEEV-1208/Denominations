@@ -195,23 +195,39 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Input Field and Calculate Button */}
         <View style={styles.inputContainer}>
-          <CustomBlurView intensity={80} tint="light" style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              value={inputValue}
-              onChangeText={setInputValue}
-              keyboardType="numeric"
-              editable={false}
-              placeholder="0"
-            />
-            <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-              {Platform.OS === 'web' ? (
-                <ClearIcon width={20} height={20} fill={Colors.TEXT_BODY} />
-              ) : (
+          {Platform.OS === 'android' ? (
+            <View style={[styles.inputWrapper, styles.androidInputWrapper]}>
+              <TextInput
+                style={styles.input}
+                value={inputValue}
+                onChangeText={setInputValue}
+                keyboardType="numeric"
+                editable={false}
+                placeholder="0"
+              />
+              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
                 <Text style={styles.clearText}>×</Text>
-              )}
-            </TouchableOpacity>
-          </CustomBlurView>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <CustomBlurView intensity={80} tint="light" style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                value={inputValue}
+                onChangeText={setInputValue}
+                keyboardType="numeric"
+                editable={false}
+                placeholder="0"
+              />
+              <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
+                {Platform.OS === 'web' ? (
+                  <ClearIcon width={20} height={20} fill={Colors.TEXT_BODY} />
+                ) : (
+                  <Text style={styles.clearText}>×</Text>
+                )}
+              </TouchableOpacity>
+            </CustomBlurView>
+          )}
           <BlurView 
             intensity={20} 
             tint="light" 
@@ -513,6 +529,9 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(117, 117, 117, 0.8)',
       },
     }),
+  },
+  androidInputWrapper: {
+    backgroundColor: Colors.TEXT_WHITE,
   },
   input: {
     flex: 1,
