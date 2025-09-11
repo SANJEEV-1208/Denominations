@@ -19,6 +19,7 @@ export interface CachedRates {
 }
 
 export type RootStackParamList = {
+  Splash: undefined;
   Home: undefined;
   Calculate: { currencyCode: string };
   EditList: undefined;

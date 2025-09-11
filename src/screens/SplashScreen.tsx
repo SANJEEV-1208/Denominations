@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Dimensions, useColorScheme, Image } from 'react-native';
+import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
@@ -10,8 +10,6 @@ const { width, height } = Dimensions.get('window');
 
 export const SplashScreen: React.FC = () => {
   const navigation = useNavigation<SplashScreenNavigationProp>();
-  const colorScheme = useColorScheme();
-  const isDarkMode = colorScheme === 'dark';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,10 +20,7 @@ export const SplashScreen: React.FC = () => {
   }, [navigation]);
 
   return (
-    <View style={[
-      styles.container,
-      { backgroundColor: isDarkMode ? '#000000' : '#FFFFFF' }
-    ]}>
+    <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
           source={require('../../assets/splash-icon.png')}
@@ -42,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   logoContainer: {
     justifyContent: 'center',
