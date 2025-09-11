@@ -51,12 +51,12 @@ test.describe('Conversion Persistence', () => {
       const settingsButton = await page.locator('svg').first();
       expect(settingsButton).toBeTruthy();
       
-      // Check if the subtitle shows the conversion base (e.g., "5 USD =")
-      const subtitle = await page.locator('text=/\\d+\\s+[A-Z]{3}\\s+=$/').first();
+      // Check if the subtitle remains "Saved List"
+      const subtitle = await page.locator('text=Saved List').first();
       expect(subtitle).toBeTruthy();
       const subtitleText = await subtitle.textContent();
       console.log('Subtitle on home screen:', subtitleText);
-      expect(subtitleText).toContain('5');
+      expect(subtitleText).toBe('Saved List');
       
       // Check if conversion values are displayed on currency cards
       const homeConversionValues = await page.locator('text=/\\d+\\.\\d+/').all();
@@ -88,9 +88,9 @@ test.describe('Conversion Persistence', () => {
       await closeButton.click();
       await page.waitForTimeout(2000);
       
-      // Verify conversions are shown
-      const subtitleWithConversion = await page.locator('text=/\\d+\\s+[A-Z]{3}\\s+=$/').first();
-      expect(subtitleWithConversion).toBeTruthy();
+      // Verify subtitle remains "Saved List" even with conversions
+      const subtitle = await page.locator('text=Saved List').first();
+      expect(subtitle).toBeTruthy();
       
       // Pull to refresh (simulate by scrolling)
       // Note: This is a simplified test - actual pull-to-refresh testing would require mobile emulation

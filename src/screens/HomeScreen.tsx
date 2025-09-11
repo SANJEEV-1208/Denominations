@@ -82,11 +82,7 @@ export const HomeScreen: React.FC = () => {
         <View style={styles.headerRight}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Denominations</Text>
-            <Text style={styles.subtitle}>
-              {lastConversionBase 
-                ? `${lastConversionBase.amount} ${lastConversionBase.currency} =`
-                : 'Saved List'}
-            </Text>
+            <Text style={styles.subtitle}>Saved List</Text>
           </View>
           <TouchableOpacity onPress={handleSettingsPress} style={styles.settingsButton}>
             <View style={styles.settingsIconContainer}>
