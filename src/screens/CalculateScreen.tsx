@@ -22,6 +22,7 @@ import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { CloseIcon } from '../components/Icons';
+import { CurrencyIcon } from '../components/CurrencyIcon';
 // @ts-ignore
 import ClearIcon from '../assets/Clear-Text-Feild.svg';
 // @ts-ignore
@@ -156,8 +157,14 @@ export const CalculateScreen: React.FC = () => {
                 style={styles.selectedCard}
               >
                 <View style={styles.selectedCardContent}>
-                  <View style={styles.flagContainer}>
-                    <Text style={styles.selectedFlag}>{selectedCurrency?.flag}</Text>
+                  <View style={styles.selectedIconWrapper}>
+                    {selectedCurrency && (
+                      <CurrencyIcon 
+                        currency={selectedCurrency} 
+                        size={70} 
+                        backgroundColor="black"
+                      />
+                    )}
                   </View>
                   <View style={styles.selectedInfo}>
                     <Text style={styles.selectedAmount}>{inputValue}</Text>
@@ -178,8 +185,14 @@ export const CalculateScreen: React.FC = () => {
                 
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
-                    <View style={styles.conversionFlagContainer}>
-                      <Text style={styles.conversionFlag}>{currency?.flag}</Text>
+                    <View style={styles.conversionIconWrapper}>
+                      {currency && (
+                        <CurrencyIcon 
+                          currency={currency} 
+                          size={70} 
+                          backgroundColor="black"
+                        />
+                      )}
                     </View>
                     <View style={styles.conversionInfo}>
                       <Text style={[styles.conversionValue, { color: theme.colors.TEXT_PRIMARY }]}>
@@ -405,19 +418,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     minHeight: 77,
   },
-  flagContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
+  selectedIconWrapper: {
     marginRight: 16,
     borderWidth: 2,
     borderColor: '#E300FF',
-  },
-  selectedFlag: {
-    fontSize: 35,
+    borderRadius: 37,
   },
   selectedInfo: {
     flex: 1,
@@ -449,17 +454,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: 77,
   },
-  conversionFlagContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
+  conversionIconWrapper: {
     marginRight: 16,
-  },
-  conversionFlag: {
-    fontSize: 35,
   },
   conversionInfo: {
     flex: 1,
