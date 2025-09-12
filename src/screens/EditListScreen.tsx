@@ -226,13 +226,29 @@ export const EditListScreen: React.FC = () => {
           <Animated.View style={[
             styles.searchContainer,
             {
-              bottom: Platform.OS === 'ios' 
-                ? keyboardHeight 
-                : Animated.add(keyboardHeight, 30)
+              bottom: Platform.select({
+                ios: keyboardHeight,
+                android: Animated.add(keyboardHeight, 30),
+                web: 20,
+                default: 30
+              })
             }
           ]}>
             {Platform.OS === 'android' ? (
               <View style={[styles.searchBar, styles.androidSearchBar]}>
+                <TextInput
+                  style={[styles.searchInput, { color: '#757575' }]}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </View>
+            ) : Platform.OS === 'web' ? (
+              <View style={[styles.searchBar, styles.webSearchBar]}>
                 <TextInput
                   style={[styles.searchInput, { color: '#757575' }]}
                   placeholder="Search"
@@ -268,6 +284,13 @@ export const EditListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   gestureContainer: {
     flex: 1,
+    ...Platform.select({
+      web: {
+        height: '100vh',
+        overflow: 'hidden',
+      } as any,
+      default: {}
+    }),
   },
   container: {
     flex: 1,
@@ -314,10 +337,17 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    ...Platform.select({
+      web: {
+        overflow: 'auto',
+        maxHeight: 'calc(100vh - 200px)',
+      } as any,
+      default: {}
+    }),
   },
   contentContainer: {
     paddingHorizontal: 20,
-    paddingBottom: 100,
+    paddingBottom: Platform.OS === 'web' ? 150 : 100,
   },
   savedSection: {
     marginTop: 20,
@@ -374,10 +404,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   searchContainer: {
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 0 : 30,
+    position: Platform.OS === 'web' ? 'fixed' as any : 'absolute',
+    bottom: Platform.select({
+      ios: 0,
+      android: 30,
+      web: 20,
+      default: 30
+    }),
     left: '10%',
     right: '10%',
+    zIndex: Platform.OS === 'web' ? 999 : 10,
   },
   searchBar: {
     flexDirection: 'row',
@@ -403,6 +439,13 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(117, 117, 117, 0.8)',
         elevation: 4,
       },
+      web: {
+        borderWidth: 1,
+        borderColor: 'rgba(117, 117, 117, 0.8)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+      } as any,
       default: {
         borderWidth: 1,
         borderColor: 'rgba(117, 117, 117, 0.8)',
@@ -411,6 +454,9 @@ const styles = StyleSheet.create({
   },
   androidSearchBar: {
     backgroundColor: '#1c1c1d',
+  },
+  webSearchBar: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
   },
   searchInput: {
     flex: 1,
