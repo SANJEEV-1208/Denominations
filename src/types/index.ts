@@ -24,4 +24,5 @@ export type RootStackParamList = {
   Home: undefined;
   Calculate: { currencyCode: string };
   EditList: undefined;
+  Settings: undefined;
 };

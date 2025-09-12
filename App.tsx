@@ -9,6 +9,7 @@ import { SplashScreen as AppSplashScreen } from './src/screens/SplashScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { CalculateScreen } from './src/screens/CalculateScreen';
 import { EditListScreen } from './src/screens/EditListScreen';
+import { SettingsScreen } from './src/screens/SettingsScreen';
 import { RootStackParamList } from './src/types';
 
 SplashScreen.preventAutoHideAsync();
@@ -72,6 +73,10 @@ export default function App() {
             <Stack.Screen 
               name="EditList" 
               component={EditListScreen}
+            />
+            <Stack.Screen 
+              name="Settings" 
+              component={SettingsScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

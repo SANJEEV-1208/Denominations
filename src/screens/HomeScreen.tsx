@@ -87,7 +87,7 @@ export const HomeScreen: React.FC = () => {
             <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
             <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Home</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('EditList')} style={styles.settingsButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.settingsButton}>
             <View style={[styles.settingsIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
               <SettingsIcon width={24} height={24} fill={theme.colors.TEXT_WHITE} />
             </View>
