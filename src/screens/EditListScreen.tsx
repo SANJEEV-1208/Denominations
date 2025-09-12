@@ -208,7 +208,7 @@ export const EditListScreen: React.FC = () => {
             ) : (
               <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
                 <TextInput
-                  style={[styles.searchInput, { color: theme.colors.TEXT_PRIMARY }]}
+                  style={[styles.searchInput, { color: 'black' }]}
                   placeholder="Search"
                   placeholderTextColor="#757575"
                   value={searchQuery}
