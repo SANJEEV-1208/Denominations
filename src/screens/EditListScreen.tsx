@@ -195,7 +195,7 @@ export const EditListScreen: React.FC = () => {
             {Platform.OS === 'android' ? (
               <View style={[styles.searchBar, styles.androidSearchBar]}>
                 <TextInput
-                  style={[styles.searchInput, { color: theme.colors.TEXT_PRIMARY }]}
+                  style={[styles.searchInput, { color: '#757575' }]}
                   placeholder="Search"
                   placeholderTextColor="#757575"
                   value={searchQuery}
@@ -208,7 +208,7 @@ export const EditListScreen: React.FC = () => {
             ) : (
               <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
                 <TextInput
-                  style={[styles.searchInput, { color: 'black' }]}
+                  style={[styles.searchInput, { color: '#757575' }]}
                   placeholder="Search"
                   placeholderTextColor="#757575"
                   value={searchQuery}
