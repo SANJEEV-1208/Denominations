@@ -2,7 +2,8 @@ export interface Currency {
   code: string;
   name: string;
   symbol: string;
-  flag: string;
+  flag?: string;
+  icon?: string;
 }
 
 export const CURRENCIES: Currency[] = [
@@ -40,6 +41,9 @@ export const CURRENCIES: Currency[] = [
   { code: 'KWD', name: 'Dinar', symbol: 'د.ك', flag: '🇰🇼' },
   { code: 'BHD', name: 'Dinar', symbol: 'د.ب', flag: '🇧🇭' },
   { code: 'OMR', name: 'Rial', symbol: 'ر.ع', flag: '🇴🇲' },
+  { code: 'XAU', name: 'Gold', symbol: 'oz', icon: 'Gold' },
+  { code: 'XAG', name: 'Silver', symbol: 'oz', icon: 'Silver' },
+  { code: 'BTC', name: 'Bitcoin', symbol: '₿', icon: 'bitcoin' },
 ];
 
 // Default currencies to show initially

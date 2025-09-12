@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import { useTheme } from '../context/ThemeContext';
 import { Typography } from '../constants/typography';
 import { Currency } from '../types';
+import { CurrencyIcon } from './CurrencyIcon';
 
 interface CurrencyCardProps {
   currency: Currency;
@@ -53,9 +54,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
-          <Text style={styles.flag}>{currency.flag}</Text>
-        </View>
+        <CurrencyIcon currency={currency} size={70} backgroundColor="black" />
       </View>
       
       <View style={styles.centerContent}>
@@ -82,24 +81,6 @@ const styles = StyleSheet.create({
   },
   leftContent: {
     marginRight: 16,
-  },
-  flagCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  flag: {
-    fontSize: 35,
   },
   centerContent: {
     flex: 1,

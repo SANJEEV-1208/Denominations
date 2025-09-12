@@ -4,6 +4,8 @@ import { ExchangeRates } from '../../types';
 
 const API_BASE_URL = 'https://api.exchangerate-api.com/v4/latest';
 const FALLBACK_API_URL = 'https://api.fixer.io/latest'; // Fallback API
+const METALS_API_URL = 'https://api.metals.live/v1/spot';
+const CRYPTO_API_URL = 'https://api.coinbase.com/v2/exchange-rates';
 
 export const CurrencyAPI = {
   async getExchangeRates(baseCurrency: string = 'USD'): Promise<ExchangeRates> {
@@ -20,7 +22,27 @@ export const CurrencyAPI = {
           timeout: 10000, // 10 second timeout
         });
 
-        const rates = response.data;
+        let rates = response.data;
+        
+        // Fetch commodity and crypto rates
+        try {
+          // Fetch Bitcoin rate from Coinbase
+          const cryptoResponse = await axios.get(`${CRYPTO_API_URL}?currency=BTC`, {
+            timeout: 5000,
+          });
+          if (cryptoResponse.data?.data?.rates?.USD) {
+            const btcToUsd = parseFloat(cryptoResponse.data.data.rates.USD);
+            rates.rates.BTC = 1 / btcToUsd; // Invert to get USD to BTC rate
+          }
+        } catch (cryptoError) {
+          console.log('Failed to fetch crypto rates, using fallback');
+          rates.rates.BTC = 0.000025; // Fallback rate (1 BTC ≈ 40,000 USD)
+        }
+        
+        // Add fallback rates for Gold and Silver (these would normally come from a metals API)
+        // Using approximate rates: 1 oz Gold ≈ 2000 USD, 1 oz Silver ≈ 25 USD
+        rates.rates.XAU = 1 / 2000; // USD to Gold oz
+        rates.rates.XAG = 1 / 25;   // USD to Silver oz
         
         // Cache the new rates
         await StorageService.cacheRates(rates);
@@ -69,6 +91,9 @@ export const CurrencyAPI = {
           AUD: 1.35,
           CAD: 1.25,
           CHF: 0.92,
+          XAU: 0.0005,  // 1 oz Gold ≈ 2000 USD
+          XAG: 0.04,    // 1 oz Silver ≈ 25 USD
+          BTC: 0.000025, // 1 BTC ≈ 40,000 USD
         },
       };
     }

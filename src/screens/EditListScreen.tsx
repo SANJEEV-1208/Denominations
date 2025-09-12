@@ -24,6 +24,7 @@ import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
+import { CurrencyIcon } from '../components/CurrencyIcon';
 // @ts-ignore
 import SearchIcon from '../assets/search-Text-Feild.svg';
 
@@ -94,10 +95,8 @@ export const EditListScreen: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
-              <Text style={styles.flag}>{item.flag}</Text>
-            </View>
-            <View style={styles.currencyInfo}>
+            <CurrencyIcon currency={item} size={70} backgroundColor="black" />
+            <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
               <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{item.code}</Text>
               <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
                 {item.name} {item.symbol}
@@ -120,10 +119,8 @@ export const EditListScreen: React.FC = () => {
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
-        <View style={[styles.flagCircle, { backgroundColor: 'black' }]}>
-          <Text style={styles.flag}>{currency.flag}</Text>
-        </View>
-        <View style={styles.currencyInfo}>
+        <CurrencyIcon currency={currency} size={70} backgroundColor="black" />
+        <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
           <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{currency.code}</Text>
           <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
             {currency.name} {currency.symbol}
@@ -319,18 +316,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
-  },
-  flagCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    // backgroundColor set dynamically
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  flag: {
-    fontSize: 35,
   },
   currencyInfo: {
     flex: 1,

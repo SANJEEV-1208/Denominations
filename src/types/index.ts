@@ -2,7 +2,8 @@ export interface Currency {
   code: string;
   name: string;
   symbol: string;
-  flag: string;
+  flag?: string;
+  icon?: string;
 }
 
 export interface ExchangeRates {
