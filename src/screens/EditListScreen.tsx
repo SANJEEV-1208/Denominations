@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
+  Animated,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -44,6 +46,7 @@ export const EditListScreen: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [localSavedCodes, setLocalSavedCodes] = useState(savedCurrencyCodes);
+  const [keyboardHeight] = useState(new Animated.Value(0));
 
   // Filter currencies based on search
   const filteredCurrencies = useMemo(() => {
@@ -67,6 +70,35 @@ export const EditListScreen: React.FC = () => {
       currency => !localSavedCodes.includes(currency.code)
     );
   }, [filteredCurrencies, localSavedCodes]);
+
+  useEffect(() => {
+    const keyboardWillShowListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      (e) => {
+        Animated.timing(keyboardHeight, {
+          toValue: e.endCoordinates.height,
+          duration: Platform.OS === 'ios' ? 250 : 0,
+          useNativeDriver: false,
+        }).start();
+      }
+    );
+
+    const keyboardWillHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        Animated.timing(keyboardHeight, {
+          toValue: 0,
+          duration: Platform.OS === 'ios' ? 250 : 0,
+          useNativeDriver: false,
+        }).start();
+      }
+    );
+
+    return () => {
+      keyboardWillShowListener.remove();
+      keyboardWillHideListener.remove();
+    };
+  }, [keyboardHeight]);
 
   const handleDonePress = async () => {
     await reorderCurrencies(localSavedCodes);
@@ -191,7 +223,14 @@ export const EditListScreen: React.FC = () => {
           </View>
 
           {/* Search Bar */}
-          <View style={styles.searchContainer}>
+          <Animated.View style={[
+            styles.searchContainer,
+            {
+              bottom: Platform.OS === 'ios' 
+                ? keyboardHeight 
+                : Animated.add(keyboardHeight, 30)
+            }
+          ]}>
             {Platform.OS === 'android' ? (
               <View style={[styles.searchBar, styles.androidSearchBar]}>
                 <TextInput
@@ -219,7 +258,7 @@ export const EditListScreen: React.FC = () => {
                 </TouchableOpacity>
               </CustomBlurView>
             )}
-          </View>
+          </Animated.View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </GestureHandlerRootView>
