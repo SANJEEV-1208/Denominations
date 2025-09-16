@@ -151,7 +151,7 @@ export const CalculateScreen: React.FC = () => {
               style={styles.selectedCardBorder}
             >
               <LinearGradient
-                colors={['#D976CA', '#E300FF']}
+                colors={['rgba(217, 118, 202, 0.7)', 'rgba(227, 0, 255, 0.7)']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.selectedCard}
