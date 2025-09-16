@@ -269,68 +269,68 @@ export const CalculateScreen: React.FC = () => {
           <CustomBlurView intensity={80} tint="light" style={styles.numPadContainer}>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('1')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('1')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>1</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('2')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('2')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>2</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('3')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('3')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>3</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('4')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('4')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>4</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('5')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('5')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>5</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('6')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('6')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>6</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('7')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('7')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>7</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('8')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('8')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>8</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('9')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('9')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>9</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={handleDecimalPress}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleDecimalPress}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>.</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={() => handleNumberPress('0')}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('0')}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>0</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={styles.numPadButton} onPress={handleBackspacePress}>
+                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleBackspacePress}>
                     <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>{'<'}</Text>
                   </TouchableOpacity>
                 </View>
@@ -688,7 +688,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: Platform.OS === 'web' ? 30 : 33,
-    backgroundColor: '#1c1c1d',
     justifyContent: 'center',
     alignItems: 'center',
     ...Platform.select({
