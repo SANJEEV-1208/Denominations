@@ -235,7 +235,7 @@ export const EditListScreen: React.FC = () => {
             }
           ]}>
             {Platform.OS === 'android' ? (
-              <View style={[styles.searchBar, styles.androidSearchBar]}>
+              <View style={[styles.searchBar, theme.dark ? styles.androidSearchBar : styles.lightSearchBar]}>
                 <TextInput
                   style={[styles.searchInput, { color: '#757575' }]}
                   placeholder="Search"
@@ -248,7 +248,7 @@ export const EditListScreen: React.FC = () => {
                 </TouchableOpacity>
               </View>
             ) : Platform.OS === 'web' ? (
-              <View style={[styles.searchBar, styles.webSearchBar]}>
+              <View style={[styles.searchBar, theme.dark ? styles.webSearchBar : styles.lightSearchBar]}>
                 <TextInput
                   style={[styles.searchInput, { color: '#757575' }]}
                   placeholder="Search"
@@ -260,7 +260,7 @@ export const EditListScreen: React.FC = () => {
                   <SearchIcon width={20} height={20} stroke="#757575" />
                 </TouchableOpacity>
               </View>
-            ) : (
+            ) : theme.dark ? (
               <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
                 <TextInput
                   style={[styles.searchInput, { color: '#757575' }]}
@@ -273,6 +273,19 @@ export const EditListScreen: React.FC = () => {
                   <SearchIcon width={20} height={20} stroke="#757575" />
                 </TouchableOpacity>
               </CustomBlurView>
+            ) : (
+              <View style={[styles.searchBar, styles.lightSearchBar]}>
+                <TextInput
+                  style={[styles.searchInput, { color: '#757575' }]}
+                  placeholder="Search"
+                  placeholderTextColor="#757575"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <TouchableOpacity style={styles.searchIconButton}>
+                  <SearchIcon width={20} height={20} stroke="#757575" />
+                </TouchableOpacity>
+              </View>
             )}
           </Animated.View>
         </KeyboardAvoidingView>
@@ -457,6 +470,9 @@ const styles = StyleSheet.create({
   },
   webSearchBar: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
+  },
+  lightSearchBar: {
+    backgroundColor: 'white',
   },
   searchInput: {
     flex: 1,
