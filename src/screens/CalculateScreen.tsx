@@ -225,7 +225,7 @@ export const CalculateScreen: React.FC = () => {
               </TouchableOpacity>
             </View>
           ) : theme.dark ? (
-            <CustomBlurView intensity={80} tint="light" style={styles.inputWrapper}>
+            <View style={[styles.inputWrapper, styles.darkInputWrapper]}>
               <TextInput
                 style={[styles.input, { color: theme.colors.TEXT_PRIMARY }]}
                 value={inputValue}
@@ -241,7 +241,7 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={[styles.clearText, { color: theme.colors.TEXT_BODY }]}>×</Text>
                 )}
               </TouchableOpacity>
-            </CustomBlurView>
+            </View>
           ) : (
             <View style={[styles.inputWrapper, styles.lightInputWrapper]}>
               <TextInput
@@ -285,7 +285,7 @@ export const CalculateScreen: React.FC = () => {
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
           {theme.dark ? (
-            <CustomBlurView intensity={80} tint="light" style={styles.numPadContainer}>
+            <View style={[styles.numPadContainer, styles.darkNumPadContainer]}>
               <View style={styles.numPadRow}>
                 <View style={styles.numPadButtonWrapper}>
                   <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('1')}>
@@ -354,7 +354,7 @@ export const CalculateScreen: React.FC = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </CustomBlurView>
+            </View>
           ) : (
             <View style={[styles.numPadContainer, styles.lightNumPadContainer]}>
               <View style={styles.numPadRow}>
@@ -617,7 +617,10 @@ const styles = StyleSheet.create({
     }),
   },
   androidInputWrapper: {
-    backgroundColor: '#1c1c1d',
+    backgroundColor: 'black',
+  },
+  darkInputWrapper: {
+    backgroundColor: 'black',
   },
   lightInputWrapper: {
     backgroundColor: 'white',
@@ -755,6 +758,9 @@ const styles = StyleSheet.create({
   },
   lightNumPadContainer: {
     backgroundColor: 'white',
+  },
+  darkNumPadContainer: {
+    backgroundColor: 'black',
   },
   numPadRow: {
     flexDirection: 'row',
