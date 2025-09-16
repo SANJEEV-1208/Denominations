@@ -76,7 +76,7 @@ export const EditListScreen: React.FC = () => {
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
       (e) => {
         Animated.timing(keyboardHeight, {
-          toValue: e.endCoordinates.height,
+          toValue: Platform.OS === 'android' ? 0 : e.endCoordinates.height,
           duration: Platform.OS === 'ios' ? 250 : 0,
           useNativeDriver: false,
         }).start();
@@ -228,7 +228,7 @@ export const EditListScreen: React.FC = () => {
             {
               bottom: Platform.select({
                 ios: keyboardHeight,
-                android: Animated.add(keyboardHeight, 30),
+                android: 30,
                 web: 20,
                 default: 30
               })
