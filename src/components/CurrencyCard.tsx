@@ -54,7 +54,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <CurrencyIcon currency={currency} size={70} backgroundColor="black" />
+        <CurrencyIcon currency={currency} size={70} backgroundColor={theme.dark ? "black" : "white"} />
       </View>
       
       <View style={styles.centerContent}>

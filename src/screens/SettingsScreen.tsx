@@ -86,7 +86,7 @@ export const SettingsScreen: React.FC = () => {
                     { backgroundColor: theme.colors.CARD_BACKGROUND }
                   ]}
                 >
-                  <CurrencyIcon currency={currency} size={50} backgroundColor="black" />
+                  <CurrencyIcon currency={currency} size={50} backgroundColor={theme.dark ? "black" : "white"} />
                   <View style={styles.currencyInfo}>
                     <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>
                       {currency.code}

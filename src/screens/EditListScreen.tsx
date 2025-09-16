@@ -127,7 +127,7 @@ export const EditListScreen: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <CurrencyIcon currency={item} size={70} backgroundColor="black" />
+            <CurrencyIcon currency={item} size={70} backgroundColor={theme.dark ? "black" : "white"} />
             <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
               <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{item.code}</Text>
               <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
@@ -151,7 +151,7 @@ export const EditListScreen: React.FC = () => {
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
-        <CurrencyIcon currency={currency} size={70} backgroundColor="black" />
+        <CurrencyIcon currency={currency} size={70} backgroundColor={theme.dark ? "black" : "white"} />
         <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
           <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{currency.code}</Text>
           <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>

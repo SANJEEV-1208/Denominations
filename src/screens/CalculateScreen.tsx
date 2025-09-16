@@ -162,7 +162,7 @@ export const CalculateScreen: React.FC = () => {
                       <CurrencyIcon 
                         currency={selectedCurrency} 
                         size={70} 
-                        backgroundColor="black"
+                        backgroundColor={theme.dark ? "black" : "white"}
                       />
                     )}
                   </View>
@@ -190,7 +190,7 @@ export const CalculateScreen: React.FC = () => {
                         <CurrencyIcon 
                           currency={currency} 
                           size={70} 
-                          backgroundColor="black"
+                          backgroundColor={theme.dark ? "black" : "white"}
                         />
                       )}
                     </View>
