@@ -55,6 +55,13 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       // Load exchange rates
       const rates = await CurrencyAPI.getExchangeRates('USD');
       setExchangeRates(rates);
+      
+      // Load last conversion data
+      const { conversions, base } = await StorageService.getLastConversion();
+      if (conversions && base) {
+        setLastConversions(conversions);
+        setLastConversionBase(base);
+      }
     } catch (error) {
       console.error('Error loading initial data:', error);
     } finally {
@@ -98,9 +105,11 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     return CURRENCIES.find(c => c.code === code);
   };
 
-  const setLastConversionsData = (conversions: { [key: string]: number }, baseCurrency: string, amount: number) => {
+  const setLastConversionsData = async (conversions: { [key: string]: number }, baseCurrency: string, amount: number) => {
     setLastConversions(conversions);
     setLastConversionBase({ currency: baseCurrency, amount });
+    // Save to persistent storage
+    await StorageService.saveLastConversion(conversions, baseCurrency, amount);
   };
 
   const value: CurrencyContextType = {

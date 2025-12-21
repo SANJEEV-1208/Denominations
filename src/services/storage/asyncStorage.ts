@@ -4,6 +4,8 @@ const STORAGE_KEYS = {
   SAVED_CURRENCIES: '@denominations_saved_currencies',
   CACHED_RATES: '@denominations_cached_rates',
   LAST_UPDATE: '@denominations_last_update',
+  LAST_CONVERSION_DATA: '@denominations_last_conversion_data',
+  LAST_CONVERSION_BASE: '@denominations_last_conversion_base',
 };
 
 export const StorageService = {
@@ -73,6 +75,37 @@ export const StorageService = {
       await AsyncStorage.removeItem(STORAGE_KEYS.LAST_UPDATE);
     } catch (error) {
       console.error('Error clearing cache:', error);
+    }
+  },
+
+  // Last conversion management
+  async saveLastConversion(conversions: { [key: string]: number }, baseCurrency: string, amount: number): Promise<void> {
+    try {
+      await AsyncStorage.setItem(
+        STORAGE_KEYS.LAST_CONVERSION_DATA,
+        JSON.stringify(conversions)
+      );
+      await AsyncStorage.setItem(
+        STORAGE_KEYS.LAST_CONVERSION_BASE,
+        JSON.stringify({ currency: baseCurrency, amount })
+      );
+    } catch (error) {
+      console.error('Error saving last conversion:', error);
+    }
+  },
+
+  async getLastConversion(): Promise<{ conversions: { [key: string]: number } | null, base: { currency: string; amount: number } | null }> {
+    try {
+      const conversionsData = await AsyncStorage.getItem(STORAGE_KEYS.LAST_CONVERSION_DATA);
+      const baseData = await AsyncStorage.getItem(STORAGE_KEYS.LAST_CONVERSION_BASE);
+      
+      const conversions = conversionsData ? JSON.parse(conversionsData) : null;
+      const base = baseData ? JSON.parse(baseData) : null;
+      
+      return { conversions, base };
+    } catch (error) {
+      console.error('Error loading last conversion:', error);
+      return { conversions: null, base: null };
     }
   },
 };

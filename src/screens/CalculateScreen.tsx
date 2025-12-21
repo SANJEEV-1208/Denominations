@@ -113,6 +113,8 @@ export const CalculateScreen: React.FC = () => {
   const handleCalculatePress = () => {
     // Trigger immediate recalculation without debounce
     calculateConversionsImmediate(inputValue);
+    // Navigate back to home screen
+    navigation.goBack();
   };
 
   const formatValue = (value: number): string => {
