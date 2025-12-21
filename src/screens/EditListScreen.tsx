@@ -425,16 +425,16 @@ const styles = StyleSheet.create({
       web: 20,
       default: 30
     }),
-    left: '17.5%',
-    right: '17.5%',
+    left: '10%',
+    right: '10%',
     zIndex: Platform.OS === 'web' ? 999 : 10,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 42,
+    borderRadius: 32,
     paddingHorizontal: 20,
-    height: 84,
+    height: 63,
     overflow: 'hidden',
     ...Platform.select({
       ios: {
