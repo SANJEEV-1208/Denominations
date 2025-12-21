@@ -46,7 +46,7 @@ export const CalculateScreen: React.FC = () => {
     setLastConversions 
   } = useCurrency();
   
-  const [inputValue, setInputValue] = useState('1');
+  const [inputValue, setInputValue] = useState('0');
   const [conversions, setConversions] = useState<{ [key: string]: number }>({});
   
   const selectedCurrency = getCurrencyByCode(currencyCode);
