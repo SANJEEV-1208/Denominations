@@ -188,7 +188,7 @@ export const EditListScreen: React.FC = () => {
 
           {/* Content */}
           <View style={styles.content}>
-            {savedCurrencies.length > 0 ? (
+            {savedCurrencies.length > 0 && !searchQuery ? (
               <DraggableFlatList
                 data={savedCurrencies}
                 renderItem={renderSavedItem}
@@ -425,8 +425,8 @@ const styles = StyleSheet.create({
       web: 20,
       default: 30
     }),
-    left: '10%',
-    right: '10%',
+    left: '17.5%',
+    right: '17.5%',
     zIndex: Platform.OS === 'web' ? 999 : 10,
   },
   searchBar: {
