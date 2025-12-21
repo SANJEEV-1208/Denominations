@@ -286,149 +286,100 @@ export const CalculateScreen: React.FC = () => {
 
         {/* Number Pad */}
         <View style={styles.numPadWrapper}>
-          {theme.dark ? (
-            <View style={[styles.numPadContainer, styles.darkNumPadContainer]}>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('1')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>1</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('2')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>2</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('3')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>3</Text>
-                  </TouchableOpacity>
-                </View>
+          <View style={[styles.numPadContainer, theme.dark ? styles.darkNumPadContainer : styles.lightNumPadContainer]}>
+            {/* Row 1: 1, 2, 3, + */}
+            <View style={styles.numPadRow}>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('1')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>1</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('4')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>4</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('5')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>5</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('6')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>6</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('2')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>2</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('7')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>7</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('8')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>8</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('9')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>9</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('3')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>3</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleDecimalPress}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>.</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('0')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>0</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleBackspacePress}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>{'<'}</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                  <Text style={[styles.numPadText, styles.operatorText]}>+</Text>
+                </TouchableOpacity>
               </View>
             </View>
-          ) : (
-            <View style={[styles.numPadContainer, styles.lightNumPadContainer]}>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('1')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>1</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('2')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>2</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('3')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>3</Text>
-                  </TouchableOpacity>
-                </View>
+            {/* Row 2: 4, 5, 6, - */}
+            <View style={styles.numPadRow}>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('4')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>4</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('4')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>4</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('5')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>5</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('6')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>6</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('5')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>5</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('7')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>7</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('8')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>8</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('9')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>9</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('6')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>6</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.numPadRow}>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleDecimalPress}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>.</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('0')}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>0</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.numPadButtonWrapper}>
-                  <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleBackspacePress}>
-                    <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>{'<'}</Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                  <Text style={[styles.numPadText, styles.operatorText]}>−</Text>
+                </TouchableOpacity>
               </View>
             </View>
-          )}
+            {/* Row 3: 7, 8, 9, × */}
+            <View style={styles.numPadRow}>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('7')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>7</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('8')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>8</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('9')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>9</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                  <Text style={[styles.numPadText, styles.operatorText]}>×</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            {/* Row 4: ., 0, ⌫, ÷ */}
+            <View style={styles.numPadRow}>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleDecimalPress}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>.</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => handleNumberPress('0')}>
+                  <Text style={[styles.numPadText, { color: theme.colors.TEXT_PRIMARY }]}>0</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={handleBackspacePress}>
+                  <Text style={[styles.numPadText, styles.backspaceText, { color: theme.colors.TEXT_PRIMARY }]}>⌫</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.numPadButtonWrapper}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                  <Text style={[styles.numPadText, styles.operatorText]}>÷</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -770,9 +721,9 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'web' ? 10 : 12,
   },
   numPadButtonWrapper: {
-    width: width * 0.25,
-    height: Platform.OS === 'web' ? 60 : 65,
-    borderRadius: Platform.OS === 'web' ? 30 : 33,
+    width: width * 0.20,
+    height: Platform.OS === 'web' ? 55 : 60,
+    borderRadius: Platform.OS === 'web' ? 28 : 30,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -792,7 +743,7 @@ const styles = StyleSheet.create({
   numPadButton: {
     width: '100%',
     height: '100%',
-    borderRadius: Platform.OS === 'web' ? 30 : 33,
+    borderRadius: Platform.OS === 'web' ? 28 : 30,
     justifyContent: 'center',
     alignItems: 'center',
     ...Platform.select({
@@ -802,8 +753,17 @@ const styles = StyleSheet.create({
     }),
   },
   numPadText: {
-    fontSize: Platform.OS === 'web' ? 26 : 28,
+    fontSize: Platform.OS === 'web' ? 24 : 26,
     fontFamily: 'SpaceMono-Regular',
     fontWeight: '100',
+  },
+  operatorButton: {
+    backgroundColor: '#E300FF',
+  },
+  operatorText: {
+    color: '#FFFFFF',
+  },
+  backspaceText: {
+    fontSize: Platform.OS === 'web' ? 20 : 22,
   },
 });
