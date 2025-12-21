@@ -10,9 +10,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.denominations.app",
-      "icon": "./assets/icon.png",
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png"
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "android": {
@@ -33,6 +39,9 @@
       "eas": {
         "projectId": "1e1303ba-4e82-49d0-b768-7ecd11b8b522"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1e1303ba-4e82-49d0-b768-7ecd11b8b522"
     }
   }
 }
