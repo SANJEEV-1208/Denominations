@@ -28,7 +28,7 @@ export const CURRENCIES: Currency[] = [
   { code: 'BRL', name: 'Real', symbol: 'R$', flag: '🇧🇷', country: 'Brazil' },
   { code: 'RUB', name: 'Ruble', symbol: '₽', flag: '🇷🇺', country: 'Russia' },
   { code: 'KRW', name: 'Won', symbol: '₩', flag: '🇰🇷', country: 'South Korea' },
-  { code: 'TWD', name: 'Dollar', symbol: 'NT$', flag: '🇹🇼', country: 'Taiwan' },
+  { code: 'TWD', name: 'Taiwan Dollar', symbol: 'NT$', flag: '🇹🇼', country: 'Taiwan' },
   { code: 'THB', name: 'Baht', symbol: '฿', flag: '🇹🇭', country: 'Thailand' },
   { code: 'IDR', name: 'Rupiah', symbol: 'Rp', flag: '🇮🇩', country: 'Indonesia' },
   { code: 'MYR', name: 'Ringgit', symbol: 'RM', flag: '🇲🇾', country: 'Malaysia' },
