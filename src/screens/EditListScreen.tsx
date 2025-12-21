@@ -54,7 +54,8 @@ export const EditListScreen: React.FC = () => {
     return allCurrencies.filter(
       currency =>
         currency.code.toLowerCase().includes(query) ||
-        currency.name.toLowerCase().includes(query)
+        currency.name.toLowerCase().includes(query) ||
+        (currency.country && currency.country.toLowerCase().includes(query))
     );
   }, [searchQuery, allCurrencies]);
 
