@@ -305,7 +305,7 @@ export const CalculateScreen: React.FC = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.numPadButtonWrapper}>
-                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => {}}>
                   <Text style={[styles.numPadText, styles.operatorText]}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -328,7 +328,7 @@ export const CalculateScreen: React.FC = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.numPadButtonWrapper}>
-                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => {}}>
                   <Text style={[styles.numPadText, styles.operatorText]}>−</Text>
                 </TouchableOpacity>
               </View>
@@ -351,7 +351,7 @@ export const CalculateScreen: React.FC = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.numPadButtonWrapper}>
-                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => {}}>
                   <Text style={[styles.numPadText, styles.operatorText]}>×</Text>
                 </TouchableOpacity>
               </View>
@@ -374,7 +374,7 @@ export const CalculateScreen: React.FC = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.numPadButtonWrapper}>
-                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, styles.operatorButton, { backgroundColor: theme.dark ? '#1c1c1d' : '#f9f9f9' }]} onPress={() => {}}>
                   <Text style={[styles.numPadText, styles.operatorText]}>÷</Text>
                 </TouchableOpacity>
               </View>
@@ -689,31 +689,14 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'web' ? 12 : 15,
     paddingHorizontal: 10,
     overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        backgroundColor: 'black',
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-      },
-      android: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-      },
-      web: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-      },
-      default: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-      },
-    }),
   },
   lightNumPadContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   darkNumPadContainer: {
     backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: 'rgba(117, 117, 117, 0.8)',
   },
   numPadRow: {
     flexDirection: 'row',
@@ -758,10 +741,10 @@ const styles = StyleSheet.create({
     fontWeight: '100',
   },
   operatorButton: {
-    backgroundColor: '#E300FF',
+    // Same background as regular buttons - color applied inline based on theme
   },
   operatorText: {
-    color: '#FFFFFF',
+    color: '#E300FF',
   },
   backspaceText: {
     fontSize: Platform.OS === 'web' ? 20 : 22,
