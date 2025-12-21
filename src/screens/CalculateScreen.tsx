@@ -689,14 +689,13 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'web' ? 12 : 15,
     paddingHorizontal: 10,
     overflow: 'hidden',
+    backgroundColor: 'transparent',
   },
   lightNumPadContainer: {
     backgroundColor: 'transparent',
   },
   darkNumPadContainer: {
-    backgroundColor: 'black',
-    borderWidth: 1,
-    borderColor: 'rgba(117, 117, 117, 0.8)',
+    backgroundColor: 'transparent',
   },
   numPadRow: {
     flexDirection: 'row',
