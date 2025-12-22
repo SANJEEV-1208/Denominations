@@ -264,7 +264,7 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>3</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
-                  <PlusIcon width={20} height={20} stroke={theme.dark ? '#FFFFFF' : '#000000'} />
+                  <PlusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
 
@@ -280,7 +280,7 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>6</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
-                  <MinusIcon width={20} height={20} stroke={theme.dark ? '#FFFFFF' : '#000000'} />
+                  <MinusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
 
@@ -296,7 +296,7 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>9</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
-                  <MultiplyIcon width={20} height={20} stroke={theme.dark ? '#FFFFFF' : '#000000'} />
+                  <MultiplyIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
 
@@ -309,10 +309,10 @@ export const CalculateScreen: React.FC = () => {
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>0</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={handleBackspacePress}>
-                  <DeleteIcon width={20} height={20} stroke={theme.dark ? '#FFFFFF' : '#000000'} />
+                  <DeleteIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
-                  <DivideIcon width={20} height={20} stroke={theme.dark ? '#FFFFFF' : '#000000'} />
+                  <DivideIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
             </View>
