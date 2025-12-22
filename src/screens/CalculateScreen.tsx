@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    borderRadius: 30,
+    borderRadius: ((width - 24) / 4) * 0.35,
     overflow: 'hidden',
   },
   input: {
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'SpaceMono-Regular',
     textAlign: 'center',
-    borderRadius: 30,
+    borderRadius: ((width - 24) / 4) * 0.35,
   },
   clearButton: {
     position: 'absolute',
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
     width: (width - 24) / 4,
     height: ((width - 24) / 4) * 0.7,
     backgroundColor: '#E300FF',
-    borderRadius: 30,
+    borderRadius: ((width - 24) / 4) * 0.35,
     justifyContent: 'center',
     alignItems: 'center',
     ...Platform.select({
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
   numPadButton: {
     width: (width - 24) / 4,
     height: ((width - 24) / 4) * 0.7,
-    borderRadius: 30,
+    borderRadius: ((width - 24) / 4) * 0.35,
     justifyContent: 'center',
     alignItems: 'center',
   },
