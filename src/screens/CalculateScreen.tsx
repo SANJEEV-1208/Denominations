@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: ((width - 24) / 4) * 5 + 20, // 5 rows of buttons + padding
+    bottom: ((width - 24) / 4) * 0.7 * 5 + 20, // 5 rows of buttons (70% height) + padding
   },
   scrollContent: {
     flexGrow: 1,
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: (width - 24) / 4,
+    height: ((width - 24) / 4) * 0.7,
     fontSize: 24,
     fontFamily: 'SpaceMono-Regular',
     textAlign: 'center',
@@ -502,7 +502,7 @@ const styles = StyleSheet.create({
   },
   calculateButton: {
     width: (width - 24) / 4,
-    height: (width - 24) / 4,
+    height: ((width - 24) / 4) * 0.7,
     backgroundColor: '#E300FF',
     borderRadius: 30,
     justifyContent: 'center',
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
   },
   numPadButton: {
     width: (width - 24) / 4,
-    height: (width - 24) / 4,
+    height: ((width - 24) / 4) * 0.7,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
