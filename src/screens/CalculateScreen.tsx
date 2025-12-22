@@ -58,7 +58,10 @@ export const CalculateScreen: React.FC = () => {
   
   const [inputValue, setInputValue] = useState('0');
   const [conversions, setConversions] = useState<{ [key: string]: number }>({});
-  
+  const [previousValue, setPreviousValue] = useState<string | null>(null);
+  const [operator, setOperator] = useState<string | null>(null);
+  const [waitingForNewNumber, setWaitingForNewNumber] = useState(false);
+
   const selectedCurrency = getCurrencyByCode(currencyCode);
 
   // Immediate conversion calculation (for button press)
@@ -95,7 +98,10 @@ export const CalculateScreen: React.FC = () => {
   // Remove automatic conversion - only calculate on button press
 
   const handleNumberPress = (num: string) => {
-    if (inputValue === '0') {
+    if (waitingForNewNumber) {
+      setInputValue(num);
+      setWaitingForNewNumber(false);
+    } else if (inputValue === '0') {
       setInputValue(num);
     } else {
       setInputValue(inputValue + num);
@@ -103,7 +109,10 @@ export const CalculateScreen: React.FC = () => {
   };
 
   const handleDecimalPress = () => {
-    if (!inputValue.includes('.')) {
+    if (waitingForNewNumber) {
+      setInputValue('0.');
+      setWaitingForNewNumber(false);
+    } else if (!inputValue.includes('.')) {
       setInputValue(inputValue + '.');
     }
   };
@@ -118,11 +127,75 @@ export const CalculateScreen: React.FC = () => {
 
   const handleClearPress = () => {
     setInputValue('0');
+    setPreviousValue(null);
+    setOperator(null);
+    setWaitingForNewNumber(false);
+  };
+
+  const performCalculation = (prev: number, current: number, op: string): number => {
+    switch (op) {
+      case '+':
+        return prev + current;
+      case '-':
+        return prev - current;
+      case '*':
+        return prev * current;
+      case '/':
+        return current !== 0 ? prev / current : 0;
+      default:
+        return current;
+    }
+  };
+
+  const handleOperatorPress = (op: string) => {
+    const currentValue = parseFloat(inputValue) || 0;
+
+    if (previousValue !== null && operator && !waitingForNewNumber) {
+      // Chain calculation
+      const result = performCalculation(parseFloat(previousValue), currentValue, operator);
+      const resultStr = String(parseFloat(result.toFixed(8)));
+      setInputValue(resultStr);
+      setPreviousValue(resultStr);
+    } else {
+      setPreviousValue(inputValue);
+    }
+
+    setOperator(op);
+    setWaitingForNewNumber(true);
+  };
+
+  const handleEqualsPress = () => {
+    if (previousValue === null || operator === null) {
+      return;
+    }
+
+    const prev = parseFloat(previousValue);
+    const current = parseFloat(inputValue) || 0;
+    const result = performCalculation(prev, current, operator);
+    const resultStr = String(parseFloat(result.toFixed(8)));
+
+    setInputValue(resultStr);
+    setPreviousValue(null);
+    setOperator(null);
+    setWaitingForNewNumber(true);
   };
 
   const handleCalculatePress = () => {
+    // First complete any pending math operation
+    let finalValue = inputValue;
+    if (previousValue !== null && operator !== null) {
+      const prev = parseFloat(previousValue);
+      const current = parseFloat(inputValue) || 0;
+      const result = performCalculation(prev, current, operator);
+      finalValue = String(parseFloat(result.toFixed(8)));
+      setInputValue(finalValue);
+      setPreviousValue(null);
+      setOperator(null);
+      setWaitingForNewNumber(true);
+    }
+
     // Trigger immediate recalculation without debounce
-    calculateConversionsImmediate(inputValue);
+    calculateConversionsImmediate(finalValue);
     // Navigate back to home screen
     navigation.goBack();
   };
@@ -263,7 +336,7 @@ export const CalculateScreen: React.FC = () => {
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('3')}>
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>3</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('+')}>
                   <PlusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
@@ -279,7 +352,7 @@ export const CalculateScreen: React.FC = () => {
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('6')}>
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>6</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('-')}>
                   <MinusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
@@ -295,7 +368,7 @@ export const CalculateScreen: React.FC = () => {
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('9')}>
                   <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>9</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('*')}>
                   <MultiplyIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
@@ -311,7 +384,7 @@ export const CalculateScreen: React.FC = () => {
                 <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={handleBackspacePress}>
                   <DeleteIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => {}}>
+                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('/')}>
                   <DivideIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
                 </TouchableOpacity>
               </View>
