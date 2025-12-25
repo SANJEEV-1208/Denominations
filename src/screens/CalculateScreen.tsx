@@ -57,7 +57,6 @@ export const CalculateScreen: React.FC = () => {
   } = useCurrency();
   
   const [inputValue, setInputValue] = useState('0');
-  const [conversions, setConversions] = useState<{ [key: string]: number }>({});
   const [previousValue, setPreviousValue] = useState<string | null>(null);
   const [operator, setOperator] = useState<string | null>(null);
   const [waitingForNewNumber, setWaitingForNewNumber] = useState(false);
@@ -82,15 +81,12 @@ export const CalculateScreen: React.FC = () => {
     return inputValue;
   }, [previousValue, operator, inputValue, waitingForNewNumber]);
 
-  // Real-time conversion display as user types (including math operations)
-  useEffect(() => {
-    // Compute the effective value for conversions (handles pending math operations)
-    let effectiveValue: string;
-
+  // Compute the effective value for conversions (handles pending math operations)
+  const effectiveValue = useMemo(() => {
     if (previousValue !== null && operator !== null) {
       if (waitingForNewNumber) {
         // User just pressed operator, show previousValue for now
-        effectiveValue = previousValue;
+        return previousValue;
       } else {
         // Calculate the result of the pending operation
         const prev = parseFloat(previousValue);
@@ -112,17 +108,17 @@ export const CalculateScreen: React.FC = () => {
           default:
             result = current;
         }
-        effectiveValue = String(parseFloat(result.toFixed(8)));
+        return String(parseFloat(result.toFixed(8)));
       }
-    } else {
-      effectiveValue = inputValue;
     }
+    return inputValue;
+  }, [inputValue, previousValue, operator, waitingForNewNumber]);
 
-    // Calculate conversions for display (inline to avoid stale closures)
+  // Compute conversions based on effective value
+  const computedConversions = useMemo(() => {
     const amount = parseFloat(effectiveValue) || 0;
     if (amount === 0 || !exchangeRates) {
-      setConversions({});
-      return;
+      return {};
     }
 
     const newConversions: { [key: string]: number } = {};
@@ -140,14 +136,13 @@ export const CalculateScreen: React.FC = () => {
       }
     }
 
-    setConversions(newConversions);
-  }, [inputValue, previousValue, operator, waitingForNewNumber, exchangeRates, savedCurrencyCodes, currencyCode]);
+    return newConversions;
+  }, [effectiveValue, exchangeRates, savedCurrencyCodes, currencyCode]);
 
-  // Immediate conversion calculation (for button press - saves to context)
-  const calculateConversionsImmediate = (value: string) => {
+  // Save conversions to context (for button press - saves to context for home screen)
+  const saveConversionsToContext = (value: string) => {
     const amount = parseFloat(value) || 0;
     if (amount === 0 || !exchangeRates) {
-      setConversions({});
       setLastConversions({}, currencyCode, 0);
       return;
     }
@@ -167,7 +162,6 @@ export const CalculateScreen: React.FC = () => {
       }
     }
 
-    setConversions(newConversions);
     // Store in context for display on home screen
     setLastConversions(newConversions, currencyCode, amount);
   };
@@ -269,8 +263,8 @@ export const CalculateScreen: React.FC = () => {
       setWaitingForNewNumber(true);
     }
 
-    // Trigger immediate recalculation without debounce
-    calculateConversionsImmediate(finalValue);
+    // Save conversions to context for home screen display
+    saveConversionsToContext(finalValue);
     // Navigate back to home screen
     navigation.goBack();
   };
@@ -341,7 +335,7 @@ export const CalculateScreen: React.FC = () => {
               .filter(code => code !== currencyCode)
               .map(code => {
                 const currency = getCurrencyByCode(code);
-                const value = conversions[code] || 0;
+                const value = computedConversions[code] || 0;
                 
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
