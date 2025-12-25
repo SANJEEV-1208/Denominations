@@ -82,20 +82,19 @@ export const CalculateScreen: React.FC = () => {
     return inputValue;
   }, [previousValue, operator, inputValue, waitingForNewNumber]);
 
-  // Immediate conversion calculation (for button press)
-  const calculateConversionsImmediate = (value: string) => {
+  // Calculate conversions for display (without saving to context)
+  const calculateConversionsForDisplay = (value: string) => {
     const amount = parseFloat(value) || 0;
     if (amount === 0 || !exchangeRates) {
       setConversions({});
-      setLastConversions({}, currencyCode, 0);
       return;
     }
 
     const newConversions: { [key: string]: number } = {};
-    
+
     // Also include the base currency with its original amount
     newConversions[currencyCode] = amount;
-    
+
     for (const code of savedCurrencyCodes) {
       if (code !== currencyCode) {
         const converted = CurrencyAPI.convertCurrency(
@@ -107,13 +106,45 @@ export const CalculateScreen: React.FC = () => {
         newConversions[code] = converted;
       }
     }
-    
+
+    setConversions(newConversions);
+  };
+
+  // Immediate conversion calculation (for button press - saves to context)
+  const calculateConversionsImmediate = (value: string) => {
+    const amount = parseFloat(value) || 0;
+    if (amount === 0 || !exchangeRates) {
+      setConversions({});
+      setLastConversions({}, currencyCode, 0);
+      return;
+    }
+
+    const newConversions: { [key: string]: number } = {};
+
+    // Also include the base currency with its original amount
+    newConversions[currencyCode] = amount;
+
+    for (const code of savedCurrencyCodes) {
+      if (code !== currencyCode) {
+        const converted = CurrencyAPI.convertCurrency(
+          amount,
+          currencyCode,
+          code,
+          exchangeRates
+        );
+        newConversions[code] = converted;
+      }
+    }
+
     setConversions(newConversions);
     // Store in context for display on home screen
     setLastConversions(newConversions, currencyCode, amount);
   };
 
-  // Remove automatic conversion - only calculate on button press
+  // Real-time conversion display as user types
+  useEffect(() => {
+    calculateConversionsForDisplay(inputValue);
+  }, [inputValue, exchangeRates, savedCurrencyCodes, currencyCode]);
 
   const handleNumberPress = (num: string) => {
     if (waitingForNewNumber) {
