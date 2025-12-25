@@ -141,10 +141,39 @@ export const CalculateScreen: React.FC = () => {
     setLastConversions(newConversions, currencyCode, amount);
   };
 
-  // Real-time conversion display as user types
+  // Compute the effective value for conversions (handles pending math operations)
+  const computeEffectiveValue = (): string => {
+    if (previousValue !== null && operator !== null && !waitingForNewNumber) {
+      // Calculate the result of the pending operation
+      const prev = parseFloat(previousValue);
+      const current = parseFloat(inputValue) || 0;
+      let result: number;
+      switch (operator) {
+        case '+':
+          result = prev + current;
+          break;
+        case '-':
+          result = prev - current;
+          break;
+        case '*':
+          result = prev * current;
+          break;
+        case '/':
+          result = current !== 0 ? prev / current : 0;
+          break;
+        default:
+          result = current;
+      }
+      return String(parseFloat(result.toFixed(8)));
+    }
+    return inputValue;
+  };
+
+  // Real-time conversion display as user types (including math operations)
   useEffect(() => {
-    calculateConversionsForDisplay(inputValue);
-  }, [inputValue, exchangeRates, savedCurrencyCodes, currencyCode]);
+    const effectiveValue = computeEffectiveValue();
+    calculateConversionsForDisplay(effectiveValue);
+  }, [inputValue, previousValue, operator, waitingForNewNumber, exchangeRates, savedCurrencyCodes, currencyCode]);
 
   const handleNumberPress = (num: string) => {
     if (waitingForNewNumber) {
