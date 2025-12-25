@@ -343,6 +343,7 @@ export const CalculateScreen: React.FC = () => {
               .map(code => {
                 const currency = getCurrencyByCode(code);
                 const value = computedConversions[code] || 0;
+                console.log('Rendering card for', code, 'with value:', value);
                 
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
