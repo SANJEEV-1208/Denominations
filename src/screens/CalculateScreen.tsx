@@ -83,11 +83,9 @@ export const CalculateScreen: React.FC = () => {
 
   // Compute the effective value for conversions (handles pending math operations)
   const effectiveValue = useMemo(() => {
-    console.log('Computing effectiveValue:', { inputValue, previousValue, operator, waitingForNewNumber });
     if (previousValue !== null && operator !== null) {
       if (waitingForNewNumber) {
         // User just pressed operator, show previousValue for now
-        console.log('Waiting for new number, returning previousValue:', previousValue);
         return previousValue;
       } else {
         // Calculate the result of the pending operation
@@ -110,18 +108,14 @@ export const CalculateScreen: React.FC = () => {
           default:
             result = current;
         }
-        const resultStr = String(parseFloat(result.toFixed(8)));
-        console.log('Calculated result:', resultStr);
-        return resultStr;
+        return String(parseFloat(result.toFixed(8)));
       }
     }
-    console.log('No operator, returning inputValue:', inputValue);
     return inputValue;
   }, [inputValue, previousValue, operator, waitingForNewNumber]);
 
   // Compute conversions based on effective value
   const computedConversions = useMemo(() => {
-    console.log('Computing conversions for effectiveValue:', effectiveValue);
     const amount = parseFloat(effectiveValue) || 0;
     if (amount === 0 || !exchangeRates) {
       return {};
@@ -142,7 +136,6 @@ export const CalculateScreen: React.FC = () => {
       }
     }
 
-    console.log('Computed conversions:', newConversions);
     return newConversions;
   }, [effectiveValue, exchangeRates, savedCurrencyCodes, currencyCode]);
 
@@ -343,7 +336,6 @@ export const CalculateScreen: React.FC = () => {
               .map(code => {
                 const currency = getCurrencyByCode(code);
                 const value = computedConversions[code] || 0;
-                console.log('Rendering card for', code, 'with value:', value);
                 
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
