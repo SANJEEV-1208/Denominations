@@ -82,65 +82,6 @@ export const CalculateScreen: React.FC = () => {
     return inputValue;
   }, [previousValue, operator, inputValue, waitingForNewNumber]);
 
-  // Calculate conversions for display (without saving to context)
-  const calculateConversionsForDisplay = (value: string) => {
-    const amount = parseFloat(value) || 0;
-    if (amount === 0 || !exchangeRates) {
-      setConversions({});
-      return;
-    }
-
-    const newConversions: { [key: string]: number } = {};
-
-    // Also include the base currency with its original amount
-    newConversions[currencyCode] = amount;
-
-    for (const code of savedCurrencyCodes) {
-      if (code !== currencyCode) {
-        const converted = CurrencyAPI.convertCurrency(
-          amount,
-          currencyCode,
-          code,
-          exchangeRates
-        );
-        newConversions[code] = converted;
-      }
-    }
-
-    setConversions(newConversions);
-  };
-
-  // Immediate conversion calculation (for button press - saves to context)
-  const calculateConversionsImmediate = (value: string) => {
-    const amount = parseFloat(value) || 0;
-    if (amount === 0 || !exchangeRates) {
-      setConversions({});
-      setLastConversions({}, currencyCode, 0);
-      return;
-    }
-
-    const newConversions: { [key: string]: number } = {};
-
-    // Also include the base currency with its original amount
-    newConversions[currencyCode] = amount;
-
-    for (const code of savedCurrencyCodes) {
-      if (code !== currencyCode) {
-        const converted = CurrencyAPI.convertCurrency(
-          amount,
-          currencyCode,
-          code,
-          exchangeRates
-        );
-        newConversions[code] = converted;
-      }
-    }
-
-    setConversions(newConversions);
-    // Store in context for display on home screen
-    setLastConversions(newConversions, currencyCode, amount);
-  };
-
   // Real-time conversion display as user types (including math operations)
   useEffect(() => {
     // Compute the effective value for conversions (handles pending math operations)
@@ -177,8 +118,59 @@ export const CalculateScreen: React.FC = () => {
       effectiveValue = inputValue;
     }
 
-    calculateConversionsForDisplay(effectiveValue);
+    // Calculate conversions for display (inline to avoid stale closures)
+    const amount = parseFloat(effectiveValue) || 0;
+    if (amount === 0 || !exchangeRates) {
+      setConversions({});
+      return;
+    }
+
+    const newConversions: { [key: string]: number } = {};
+    newConversions[currencyCode] = amount;
+
+    for (const code of savedCurrencyCodes) {
+      if (code !== currencyCode) {
+        const converted = CurrencyAPI.convertCurrency(
+          amount,
+          currencyCode,
+          code,
+          exchangeRates
+        );
+        newConversions[code] = converted;
+      }
+    }
+
+    setConversions(newConversions);
   }, [inputValue, previousValue, operator, waitingForNewNumber, exchangeRates, savedCurrencyCodes, currencyCode]);
+
+  // Immediate conversion calculation (for button press - saves to context)
+  const calculateConversionsImmediate = (value: string) => {
+    const amount = parseFloat(value) || 0;
+    if (amount === 0 || !exchangeRates) {
+      setConversions({});
+      setLastConversions({}, currencyCode, 0);
+      return;
+    }
+
+    const newConversions: { [key: string]: number } = {};
+    newConversions[currencyCode] = amount;
+
+    for (const code of savedCurrencyCodes) {
+      if (code !== currencyCode) {
+        const converted = CurrencyAPI.convertCurrency(
+          amount,
+          currencyCode,
+          code,
+          exchangeRates
+        );
+        newConversions[code] = converted;
+      }
+    }
+
+    setConversions(newConversions);
+    // Store in context for display on home screen
+    setLastConversions(newConversions, currencyCode, amount);
+  };
 
   const handleNumberPress = (num: string) => {
     if (waitingForNewNumber) {
