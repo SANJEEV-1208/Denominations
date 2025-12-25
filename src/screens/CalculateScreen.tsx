@@ -141,41 +141,42 @@ export const CalculateScreen: React.FC = () => {
     setLastConversions(newConversions, currencyCode, amount);
   };
 
-  // Compute the effective value for conversions (handles pending math operations)
-  const computeEffectiveValue = (): string => {
+  // Real-time conversion display as user types (including math operations)
+  useEffect(() => {
+    // Compute the effective value for conversions (handles pending math operations)
+    let effectiveValue: string;
+
     if (previousValue !== null && operator !== null) {
       if (waitingForNewNumber) {
         // User just pressed operator, show previousValue for now
-        return previousValue;
+        effectiveValue = previousValue;
+      } else {
+        // Calculate the result of the pending operation
+        const prev = parseFloat(previousValue);
+        const current = parseFloat(inputValue) || 0;
+        let result: number;
+        switch (operator) {
+          case '+':
+            result = prev + current;
+            break;
+          case '-':
+            result = prev - current;
+            break;
+          case '*':
+            result = prev * current;
+            break;
+          case '/':
+            result = current !== 0 ? prev / current : 0;
+            break;
+          default:
+            result = current;
+        }
+        effectiveValue = String(parseFloat(result.toFixed(8)));
       }
-      // Calculate the result of the pending operation
-      const prev = parseFloat(previousValue);
-      const current = parseFloat(inputValue) || 0;
-      let result: number;
-      switch (operator) {
-        case '+':
-          result = prev + current;
-          break;
-        case '-':
-          result = prev - current;
-          break;
-        case '*':
-          result = prev * current;
-          break;
-        case '/':
-          result = current !== 0 ? prev / current : 0;
-          break;
-        default:
-          result = current;
-      }
-      return String(parseFloat(result.toFixed(8)));
+    } else {
+      effectiveValue = inputValue;
     }
-    return inputValue;
-  };
 
-  // Real-time conversion display as user types (including math operations)
-  useEffect(() => {
-    const effectiveValue = computeEffectiveValue();
     calculateConversionsForDisplay(effectiveValue);
   }, [inputValue, previousValue, operator, waitingForNewNumber, exchangeRates, savedCurrencyCodes, currencyCode]);
 
