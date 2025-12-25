@@ -64,6 +64,24 @@ export const CalculateScreen: React.FC = () => {
 
   const selectedCurrency = getCurrencyByCode(currencyCode);
 
+  // Compute display value showing the full expression (e.g., "1+1", "3-1")
+  const getOperatorSymbol = (op: string): string => {
+    switch (op) {
+      case '+': return '+';
+      case '-': return '-';
+      case '*': return '×';
+      case '/': return '÷';
+      default: return op;
+    }
+  };
+
+  const displayExpression = useMemo(() => {
+    if (previousValue !== null && operator !== null) {
+      return `${previousValue}${getOperatorSymbol(operator)}${waitingForNewNumber ? '' : inputValue}`;
+    }
+    return inputValue;
+  }, [previousValue, operator, inputValue, waitingForNewNumber]);
+
   // Immediate conversion calculation (for button press)
   const calculateConversionsImmediate = (value: string) => {
     const amount = parseFloat(value) || 0;
@@ -309,7 +327,7 @@ export const CalculateScreen: React.FC = () => {
                   </TouchableOpacity>
                   <TextInput
                     style={[styles.input, { color: theme.dark ? '#FFFFFF' : '#000000', backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]}
-                    value={inputValue}
+                    value={displayExpression}
                     onChangeText={setInputValue}
                     keyboardType="numeric"
                     editable={false}
