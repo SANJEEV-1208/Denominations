@@ -83,9 +83,11 @@ export const CalculateScreen: React.FC = () => {
 
   // Compute the effective value for conversions (handles pending math operations)
   const effectiveValue = useMemo(() => {
+    console.log('Computing effectiveValue:', { inputValue, previousValue, operator, waitingForNewNumber });
     if (previousValue !== null && operator !== null) {
       if (waitingForNewNumber) {
         // User just pressed operator, show previousValue for now
+        console.log('Waiting for new number, returning previousValue:', previousValue);
         return previousValue;
       } else {
         // Calculate the result of the pending operation
@@ -108,9 +110,12 @@ export const CalculateScreen: React.FC = () => {
           default:
             result = current;
         }
-        return String(parseFloat(result.toFixed(8)));
+        const resultStr = String(parseFloat(result.toFixed(8)));
+        console.log('Calculated result:', resultStr);
+        return resultStr;
       }
     }
+    console.log('No operator, returning inputValue:', inputValue);
     return inputValue;
   }, [inputValue, previousValue, operator, waitingForNewNumber]);
 
