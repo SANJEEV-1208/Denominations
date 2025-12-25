@@ -143,7 +143,11 @@ export const CalculateScreen: React.FC = () => {
 
   // Compute the effective value for conversions (handles pending math operations)
   const computeEffectiveValue = (): string => {
-    if (previousValue !== null && operator !== null && !waitingForNewNumber) {
+    if (previousValue !== null && operator !== null) {
+      if (waitingForNewNumber) {
+        // User just pressed operator, show previousValue for now
+        return previousValue;
+      }
       // Calculate the result of the pending operation
       const prev = parseFloat(previousValue);
       const current = parseFloat(inputValue) || 0;
