@@ -121,6 +121,7 @@ export const CalculateScreen: React.FC = () => {
 
   // Compute conversions based on effective value
   const computedConversions = useMemo(() => {
+    console.log('Computing conversions for effectiveValue:', effectiveValue);
     const amount = parseFloat(effectiveValue) || 0;
     if (amount === 0 || !exchangeRates) {
       return {};
@@ -141,6 +142,7 @@ export const CalculateScreen: React.FC = () => {
       }
     }
 
+    console.log('Computed conversions:', newConversions);
     return newConversions;
   }, [effectiveValue, exchangeRates, savedCurrencyCodes, currencyCode]);
 
