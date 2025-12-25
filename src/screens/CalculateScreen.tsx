@@ -321,7 +321,7 @@ export const CalculateScreen: React.FC = () => {
                     )}
                   </View>
                   <View style={styles.selectedInfo}>
-                    <Text style={styles.selectedAmount}>{inputValue}</Text>
+                    <Text style={styles.selectedAmount}>{effectiveValue}</Text>
                     <Text style={styles.selectedCurrency}>
                       {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
                     </Text>
