@@ -54,7 +54,6 @@ export default function App() {
             screenOptions={{
               headerShown: false,
               cardStyle: { backgroundColor: 'transparent' },
-              animationEnabled: false,
               gestureEnabled: false,
             }}
           >

@@ -4,7 +4,7 @@ import { lightColors, darkColors } from '../constants/colors';
 
 type Theme = {
   dark: boolean;
-  colors: typeof lightColors;
+  colors: typeof lightColors | typeof darkColors;
 };
 
 type ThemeContextType = {

@@ -29,6 +29,7 @@ import { SaveIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
 // @ts-ignore
 import SearchIcon from '../assets/search-Text-Feild.svg';
+import { CURRENCIES } from '../constants/currencies';
 
 type EditListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditList'>;
 
@@ -51,11 +52,11 @@ export const EditListScreen: React.FC = () => {
   // Filter currencies based on search
   const filteredCurrencies = useMemo(() => {
     const query = searchQuery.toLowerCase();
-    return allCurrencies.filter(
+    return CURRENCIES.filter(
       currency =>
         currency.code.toLowerCase().includes(query) ||
         currency.name.toLowerCase().includes(query) ||
-        (currency.country && currency.country.toLowerCase().includes(query))
+        (currency?.country && currency?.country.toLowerCase().includes(query))
     );
   }, [searchQuery, allCurrencies]);
 
@@ -198,7 +199,6 @@ export const EditListScreen: React.FC = () => {
                   setLocalSavedCodes(newCodes);
                 }}
                 scrollEnabled={true}
-                activateOnLongPress={true}
                 ListFooterComponent={
                   availableCurrencies.length > 0 ? (
                     <View style={styles.availableSection}>
@@ -227,12 +227,7 @@ export const EditListScreen: React.FC = () => {
           <Animated.View style={[
             styles.searchContainer,
             {
-              bottom: Platform.select({
-                ios: keyboardHeight,
-                android: 30,
-                web: 20,
-                default: 30
-              })
+              bottom: Platform.OS === 'ios' ? keyboardHeight : Platform.OS === 'web' ? 20 : 30
             }
           ]}>
             {Platform.OS === 'android' ? (
@@ -419,12 +414,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: Platform.OS === 'web' ? 'fixed' as any : 'absolute',
-    bottom: Platform.select({
-      ios: 0,
-      android: 30,
-      web: 20,
-      default: 30
-    }),
+    bottom: Platform.OS === 'ios' ? 0 : Platform.OS === 'web' ? 20 : 30,
     left: '10%',
     right: '10%',
     zIndex: Platform.OS === 'web' ? 999 : 10,

@@ -52,7 +52,7 @@ export const HomeScreen: React.FC = () => {
     navigation.navigate('Calculate', { currencyCode });
   };
 
-  const renderCurrency = ({ item }: { item: string }) => {
+  const renderCurrency = ({ item }: { item: string}) => {
     const currency = getCurrencyByCode(item);
     const rate = exchangeRates?.rates[item] || 1;
     const lastConversion = lastConversions?.[item];
@@ -64,7 +64,7 @@ export const HomeScreen: React.FC = () => {
         currency={currency}
         rate={rate}
         onPress={() => handleCurrencyPress(item)}
-        isSelected={lastConversionBase === item}
+        isSelected={lastConversionBase?.currency === item}
         conversionValue={lastConversion}
       />
     );
