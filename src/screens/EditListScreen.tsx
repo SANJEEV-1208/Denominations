@@ -22,7 +22,6 @@ import { useTheme } from '../context/ThemeContext';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
-import { CurrencyIcon } from '../components/CurrencyIcon';
 import { SearchBar } from '../components/SearchBar';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { IconButton } from '../components/IconButton';
