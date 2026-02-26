@@ -35,7 +35,7 @@ export const CurrencyAPI = {
             rates.rates.BTC = 1 / btcToUsd; // Invert to get USD to BTC rate
           }
         } catch (cryptoError) {
-          console.log('Failed to fetch crypto rates, using fallback');
+          console.error('Failed to fetch crypto rates, using fallback:', cryptoError);
           rates.rates.BTC = 0.000025; // Fallback rate (1 BTC ≈ 40,000 USD)
         }
         

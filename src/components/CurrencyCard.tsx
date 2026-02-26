@@ -33,7 +33,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
     }
   };
 
-  const displayValue = conversionValue !== undefined ? conversionValue : rate;
+  const displayValue = conversionValue ?? rate;
 
   return (
     <TouchableOpacity

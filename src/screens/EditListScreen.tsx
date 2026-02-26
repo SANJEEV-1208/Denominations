@@ -50,12 +50,6 @@ export const EditListScreen: React.FC = () => {
     return 30;
   };
 
-  const getSearchContainerStaticBottom = () => {
-    if (Platform.OS === 'ios') return 0;
-    if (Platform.OS === 'web') return 20;
-    return 30;
-  };
-
   const filteredCurrencies = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return CURRENCIES.filter(currency => {

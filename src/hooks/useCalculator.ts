@@ -32,7 +32,7 @@ export const useCalculator = () => {
       case '*':
         return prev * current;
       case '/':
-        return current !== 0 ? prev / current : 0;
+        return current === 0 ? 0 : prev / current;
       default:
         return current;
     }
