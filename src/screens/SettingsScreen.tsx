@@ -34,33 +34,6 @@ export const SettingsScreen: React.FC = () => {
     navigation.goBack();
   };
 
-  const addButtonContent = Platform.select({
-  web: (
-    <TouchableOpacity
-      style={[styles.addButton, styles.webAddButton]}
-      onPress={handleAddPress}
-      activeOpacity={0.8}
-    >
-      <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
-      <Text style={styles.addButtonText}>Add Currency</Text>
-    </TouchableOpacity>
-  ),
-  default: (
-    <CustomBlurView intensity={80} tint="light" style={styles.addButtonBlur}>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={handleAddPress}
-        activeOpacity={0.8}
-      >
-        <AddIcon width={24} height={24} fill={theme.colors.PRIMARY} />
-        <Text style={[styles.addButtonText, { color: theme.colors.PRIMARY }]}>
-          Add Currency
-        </Text>
-      </TouchableOpacity>
-    </CustomBlurView>
-  ),
-});
-
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
       {/* Header */}

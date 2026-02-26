@@ -55,7 +55,7 @@ export const CalculateScreen: React.FC = () => {
   const handleCalculatePress = () => {
     const finalValue = calculator.completePendingCalculation();
     const conversions = createConversions(finalValue);
-    const amount = parseFloat(finalValue) || 0;
+    const amount = Number.parseFloat(finalValue) || 0;
     setLastConversions(conversions, currencyCode, amount);
     navigation.goBack();
   };

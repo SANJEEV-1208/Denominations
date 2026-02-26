@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
 import { StorageService } from '../services/storage/asyncStorage';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Currency, ExchangeRates } from '../types';
@@ -69,26 +69,26 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     }
   };
 
-  const addCurrency = async (code: string) => {
+  const addCurrency = useCallback(async (code: string) => {
     if (!savedCurrencyCodes.includes(code)) {
       const newCodes = [...savedCurrencyCodes, code];
       setSavedCurrencyCodes(newCodes);
       await StorageService.saveCurrencies(newCodes);
     }
-  };
+  }, [savedCurrencyCodes]);
 
-  const removeCurrency = async (code: string) => {
+  const removeCurrency = useCallback(async (code: string) => {
     const newCodes = savedCurrencyCodes.filter(c => c !== code);
     setSavedCurrencyCodes(newCodes);
     await StorageService.saveCurrencies(newCodes);
-  };
+  }, [savedCurrencyCodes]);
 
-  const reorderCurrencies = async (codes: string[]) => {
+  const reorderCurrencies = useCallback(async (codes: string[]) => {
     setSavedCurrencyCodes(codes);
     await StorageService.saveCurrencies(codes);
-  };
+  }, []);
 
-  const refreshRates = async () => {
+  const refreshRates = useCallback(async () => {
     try {
       setIsLoading(true);
       await StorageService.clearCache();
@@ -99,18 +99,18 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const getCurrencyByCode = (code: string): Currency | undefined => {
+  const getCurrencyByCode = useCallback((code: string): Currency | undefined => {
     return CURRENCIES.find(c => c.code === code);
-  };
+  }, []);
 
-  const setLastConversionsData = async (conversions: { [key: string]: number }, baseCurrency: string, amount: number) => {
+  const setLastConversionsData = useCallback((conversions: { [key: string]: number }, baseCurrency: string, amount: number) => {
     setLastConversions(conversions);
     setLastConversionBase({ currency: baseCurrency, amount });
-    // Save to persistent storage
-    await StorageService.saveLastConversion(conversions, baseCurrency, amount);
-  };
+    // Save to persistent storage - fire and forget
+    StorageService.saveLastConversion(conversions, baseCurrency, amount).catch(console.error);
+  }, []);
 
   const value = useMemo<CurrencyContextType>(
   () => ({
@@ -138,7 +138,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     reorderCurrencies,
     refreshRates,
     getCurrencyByCode,
-    setLastConversionsData, // stable across renders (from useState)
+    setLastConversionsData,
   ]
 );
 

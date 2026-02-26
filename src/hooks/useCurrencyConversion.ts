@@ -33,7 +33,7 @@ export const useCurrencyConversion = (
   }, [effectiveValue, exchangeRates, savedCurrencyCodes, currencyCode]);
 
   const createConversions = (value: string): { [key: string]: number } => {
-    const amount = parseFloat(value) || 0;
+    const amount = Number.parseFloat(value) || 0;
     if (amount === 0 || !exchangeRates) {
       return {};
     }

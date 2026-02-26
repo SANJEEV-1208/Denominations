@@ -97,7 +97,7 @@ export const useCalculator = () => {
     const currentValue = Number.parseFloat(inputValue) || 0;
 
     if (previousValue !== null && operator && !waitingForNewNumber) {
-      const result = performCalculation(parseFloat(previousValue), currentValue, operator);
+      const result = performCalculation(Number.parseFloat(previousValue), currentValue, operator);
       const resultStr = String(Number.parseFloat(result.toFixed(8)));
       setInputValue(resultStr);
       setPreviousValue(resultStr);

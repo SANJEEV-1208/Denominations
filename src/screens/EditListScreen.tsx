@@ -44,6 +44,18 @@ export const EditListScreen: React.FC = () => {
   const [localSavedCodes, setLocalSavedCodes] = useState(savedCurrencyCodes);
   const keyboardHeight = useKeyboardAnimation();
 
+  const getSearchContainerBottom = () => {
+    if (Platform.OS === 'ios') return keyboardHeight;
+    if (Platform.OS === 'web') return 20;
+    return 30;
+  };
+
+  const getSearchContainerStaticBottom = () => {
+    if (Platform.OS === 'ios') return 0;
+    if (Platform.OS === 'web') return 20;
+    return 30;
+  };
+
   const filteredCurrencies = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return CURRENCIES.filter(currency => {
@@ -205,7 +217,7 @@ export const EditListScreen: React.FC = () => {
           <Animated.View style={[
             styles.searchContainer,
             {
-              bottom: Platform.OS === 'ios' ? keyboardHeight : Platform.OS === 'web' ? 20 : 30
+              bottom: getSearchContainerBottom()
             }
           ]}>
             <SearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
@@ -334,7 +346,6 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: Platform.OS === 'web' ? 'fixed' as any : 'absolute',
-    bottom: Platform.OS === 'ios' ? 0 : Platform.OS === 'web' ? 20 : 30,
     left: '10%',
     right: '10%',
     zIndex: Platform.OS === 'web' ? 999 : 10,

@@ -22,11 +22,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     dark: isDark,
     colors: isDark ? darkColors : lightColors,
   }),
-  [isDark, darkColors, lightColors]
+  [isDark]
 );
 
+  const value = useMemo<ThemeContextType>(() => ({ theme }), [theme]);
+
   return (
-    <ThemeContext.Provider value={{ theme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
