@@ -306,17 +306,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  currencyInfo: {
-    flex: 1,
-  },
-  currencyCode: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  currencyName: {
-    fontSize: 12,
-    marginTop: 2,
-  },
   dragHandle: {
     padding: 8,
   },
