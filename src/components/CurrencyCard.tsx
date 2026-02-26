@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
-import { Typography } from '../constants/typography';
 import { Currency } from '../types';
 import { CurrencyIcon } from './CurrencyIcon';
 

@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const fontPath = path.join(__dirname, 'assets', 'fonts');
 const fonts = fs.readdirSync(fontPath);
@@ -15,7 +15,7 @@ fonts.forEach(file => {
     console.log(`${file}:`);
     console.log(`  Size: ${fontData.length} bytes`);
     console.log(`  First 8 bytes (hex): ${signature.toString('hex')}`);
-    console.log(`  First 8 bytes (ASCII): ${signature.toString('ascii').replace(/[^\x20-\x7E]/g, '.')}`);
+    console.log(`  First 8 bytes (ASCII): ${signature.toString('ascii').replaceAll(/[^\x20-\x7E]/g, '.')}`);
     
     // Check for common TTF/OTF signatures
     const hex = signature.toString('hex');

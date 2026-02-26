@@ -8,6 +8,12 @@ const STORAGE_KEYS = {
   LAST_CONVERSION_BASE: '@denominations_last_conversion_base',
 };
 
+interface CachedRates {
+  base: string;
+  date: string;
+  rates: Record<string, number>;
+}
+
 export const StorageService = {
   // Currency list management
   async getSavedCurrencies(): Promise<string[]> {
@@ -32,13 +38,13 @@ export const StorageService = {
   },
 
   // Exchange rates caching
-  async getCachedRates(): Promise<any | null> {
+  async getCachedRates(): Promise<CachedRates | null> {
     try {
       const data = await AsyncStorage.getItem(STORAGE_KEYS.CACHED_RATES);
       const lastUpdate = await AsyncStorage.getItem(STORAGE_KEYS.LAST_UPDATE);
       
       if (data && lastUpdate) {
-        const updateTime = parseInt(lastUpdate, 10);
+        const updateTime = Number.parseInt(lastUpdate, 10);
         const now = Date.now();
         const thirtyMinutes = 30 * 60 * 1000;
         

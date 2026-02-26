@@ -15,7 +15,7 @@ test.describe('Denominations App', () => {
     // Check if the icon has white fill color
     const fillColor = await settingsIcon.evaluate((el) => {
       const path = el.querySelector('path');
-      return path ? window.getComputedStyle(path).fill : null;
+      return path ? globalThis.getComputedStyle(path).fill : null;
     });
     
     // The fill should be white (rgb(255, 255, 255) or #FFFFFF)

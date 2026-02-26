@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,6 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
@@ -23,8 +22,7 @@ import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { CloseIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
-// @ts-ignore
-import ClearIcon from '../assets/Clear-Text-Feild.svg';
+
 // @ts-ignore
 import CalculateIcon from '../assets/Calculate.svg';
 // @ts-ignore
@@ -89,8 +87,8 @@ export const CalculateScreen: React.FC = () => {
         return previousValue;
       } else {
         // Calculate the result of the pending operation
-        const prev = parseFloat(previousValue);
-        const current = parseFloat(inputValue) || 0;
+        const prev = Number.parseFloat(previousValue);
+        const current = Number.parseFloat(inputValue) || 0;
         let result: number;
         switch (operator) {
           case '+':
@@ -108,7 +106,7 @@ export const CalculateScreen: React.FC = () => {
           default:
             result = current;
         }
-        return String(parseFloat(result.toFixed(8)));
+        return String(Number.parseFloat(result.toFixed(8)));
       }
     }
     return inputValue;
@@ -116,7 +114,7 @@ export const CalculateScreen: React.FC = () => {
 
   // Compute conversions based on effective value
   const computedConversions = useMemo(() => {
-    const amount = parseFloat(effectiveValue) || 0;
+    const amount = Number.parseFloat(effectiveValue) || 0;
     if (amount === 0 || !exchangeRates) {
       return {};
     }
@@ -217,12 +215,12 @@ export const CalculateScreen: React.FC = () => {
   };
 
   const handleOperatorPress = (op: string) => {
-    const currentValue = parseFloat(inputValue) || 0;
+    const currentValue = Number.parseFloat(inputValue) || 0;
 
     if (previousValue !== null && operator && !waitingForNewNumber) {
       // Chain calculation
       const result = performCalculation(parseFloat(previousValue), currentValue, operator);
-      const resultStr = String(parseFloat(result.toFixed(8)));
+      const resultStr = String(Number.parseFloat(result.toFixed(8)));
       setInputValue(resultStr);
       setPreviousValue(resultStr);
     } else {
@@ -238,10 +236,10 @@ export const CalculateScreen: React.FC = () => {
       return;
     }
 
-    const prev = parseFloat(previousValue);
-    const current = parseFloat(inputValue) || 0;
+    const prev = Number.parseFloat(previousValue);
+    const current = Number.parseFloat(inputValue) || 0;
     const result = performCalculation(prev, current, operator);
-    const resultStr = String(parseFloat(result.toFixed(8)));
+    const resultStr = String(Number.parseFloat(result.toFixed(8)));
 
     setInputValue(resultStr);
     setPreviousValue(null);
@@ -253,10 +251,10 @@ export const CalculateScreen: React.FC = () => {
     // First complete any pending math operation
     let finalValue = inputValue;
     if (previousValue !== null && operator !== null) {
-      const prev = parseFloat(previousValue);
-      const current = parseFloat(inputValue) || 0;
+      const prev = Number.parseFloat(previousValue);
+      const current = Number.parseFloat(inputValue) || 0;
       const result = performCalculation(prev, current, operator);
-      finalValue = String(parseFloat(result.toFixed(8)));
+      finalValue = String(Number.parseFloat(result.toFixed(8)));
       setInputValue(finalValue);
       setPreviousValue(null);
       setOperator(null);

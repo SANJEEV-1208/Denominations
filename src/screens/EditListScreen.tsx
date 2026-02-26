@@ -22,7 +22,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
-import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
@@ -51,14 +50,14 @@ export const EditListScreen: React.FC = () => {
 
   // Filter currencies based on search
   const filteredCurrencies = useMemo(() => {
-    const query = searchQuery.toLowerCase();
-    return CURRENCIES.filter(
-      currency =>
-        currency.code.toLowerCase().includes(query) ||
-        currency.name.toLowerCase().includes(query) ||
-        (currency?.country && currency?.country.toLowerCase().includes(query))
-    );
-  }, [searchQuery, allCurrencies]);
+  const query = searchQuery.toLowerCase();
+  return CURRENCIES.filter(currency => {
+    const codeMatch = currency.code.toLowerCase().includes(query);
+    const nameMatch = currency.name.toLowerCase().includes(query);
+    const countryMatch = currency.country ? currency.country.toLowerCase().includes(query) : false;
+    return codeMatch || nameMatch || countryMatch;
+  });
+}, [searchQuery]);
 
   // Separate saved and available currencies
   const savedCurrencies = useMemo(() => {

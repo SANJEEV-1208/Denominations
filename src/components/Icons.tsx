@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import Svg, { Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
 
 interface IconProps {

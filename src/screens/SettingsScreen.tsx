@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -34,6 +33,33 @@ export const SettingsScreen: React.FC = () => {
   const handleClosePress = () => {
     navigation.goBack();
   };
+
+  const addButtonContent = Platform.select({
+  web: (
+    <TouchableOpacity
+      style={[styles.addButton, styles.webAddButton]}
+      onPress={handleAddPress}
+      activeOpacity={0.8}
+    >
+      <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
+      <Text style={styles.addButtonText}>Add Currency</Text>
+    </TouchableOpacity>
+  ),
+  default: (
+    <CustomBlurView intensity={80} tint="light" style={styles.addButtonBlur}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={handleAddPress}
+        activeOpacity={0.8}
+      >
+        <AddIcon width={24} height={24} fill={theme.colors.PRIMARY} />
+        <Text style={[styles.addButtonText, { color: theme.colors.PRIMARY }]}>
+          Add Currency
+        </Text>
+      </TouchableOpacity>
+    </CustomBlurView>
+  ),
+});
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
@@ -104,37 +130,43 @@ export const SettingsScreen: React.FC = () => {
 
       {/* Add Button */}
       <View style={styles.addButtonContainer}>
-        {Platform.OS === 'android' ? (
-          <TouchableOpacity
-            style={[styles.addButton, styles.androidAddButton]}
-            onPress={handleAddPress}
-            activeOpacity={0.8}
-          >
-            <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
-            <Text style={styles.addButtonText}>Add Currency</Text>
-          </TouchableOpacity>
-        ) : Platform.OS === 'web' ? (
-          <TouchableOpacity
-            style={[styles.addButton, styles.webAddButton]}
-            onPress={handleAddPress}
-            activeOpacity={0.8}
-          >
-            <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
-            <Text style={styles.addButtonText}>Add Currency</Text>
-          </TouchableOpacity>
-        ) : (
-          <CustomBlurView intensity={80} tint="light" style={styles.addButtonBlur}>
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={handleAddPress}
-              activeOpacity={0.8}
-            >
-              <AddIcon width={24} height={24} fill={theme.colors.PRIMARY} />
-              <Text style={[styles.addButtonText, { color: theme.colors.PRIMARY }]}>Add Currency</Text>
-            </TouchableOpacity>
-          </CustomBlurView>
-        )}
-      </View>
+  {Platform.select({
+    android: (
+      <TouchableOpacity
+        style={[styles.addButton, styles.androidAddButton]}
+        onPress={handleAddPress}
+        activeOpacity={0.8}
+      >
+        <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
+        <Text style={styles.addButtonText}>Add Currency</Text>
+      </TouchableOpacity>
+    ),
+    ios: (
+      <CustomBlurView intensity={80} tint="light" style={styles.addButtonBlur}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={handleAddPress}
+          activeOpacity={0.8}
+        >
+          <AddIcon width={24} height={24} fill={theme.colors.PRIMARY} />
+          <Text style={[styles.addButtonText, { color: theme.colors.PRIMARY }]}>
+            Add Currency
+          </Text>
+        </TouchableOpacity>
+      </CustomBlurView>
+    ),
+    web: (
+      <TouchableOpacity
+        style={[styles.addButton, styles.webAddButton]}
+        onPress={handleAddPress}
+        activeOpacity={0.8}
+      >
+        <AddIcon width={24} height={24} fill={Colors.TEXT_WHITE} />
+        <Text style={styles.addButtonText}>Add Currency</Text>
+      </TouchableOpacity>
+    ),
+  })}
+</View>
     </SafeAreaView>
   );
 };

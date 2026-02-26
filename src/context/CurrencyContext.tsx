@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 import { StorageService } from '../services/storage/asyncStorage';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Currency, ExchangeRates } from '../types';
@@ -112,7 +112,8 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     await StorageService.saveLastConversion(conversions, baseCurrency, amount);
   };
 
-  const value: CurrencyContextType = {
+  const value = useMemo<CurrencyContextType>(
+  () => ({
     savedCurrencyCodes,
     allCurrencies: CURRENCIES,
     exchangeRates,
@@ -125,7 +126,21 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     refreshRates,
     getCurrencyByCode,
     setLastConversions: setLastConversionsData,
-  };
+  }),
+  [
+    savedCurrencyCodes,
+    exchangeRates,
+    isLoading,
+    lastConversions,
+    lastConversionBase,
+    addCurrency,
+    removeCurrency,
+    reorderCurrencies,
+    refreshRates,
+    getCurrencyByCode,
+    setLastConversionsData, // stable across renders (from useState)
+  ]
+);
 
   return (
     <CurrencyContext.Provider value={value}>

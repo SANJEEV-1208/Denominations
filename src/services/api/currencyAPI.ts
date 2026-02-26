@@ -31,7 +31,7 @@ export const CurrencyAPI = {
             timeout: 5000,
           });
           if (cryptoResponse.data?.data?.rates?.USD) {
-            const btcToUsd = parseFloat(cryptoResponse.data.data.rates.USD);
+            const btcToUsd = Number.parseFloat(cryptoResponse.data.data.rates.USD);
             rates.rates.BTC = 1 / btcToUsd; // Invert to get USD to BTC rate
           }
         } catch (cryptoError) {
@@ -84,7 +84,7 @@ export const CurrencyAPI = {
           USD: 1,
           EUR: 0.85,
           GBP: 0.73,
-          JPY: 110.0,
+          JPY: 110,
           CNY: 6.45,
           INR: 74.5,
           AED: 3.67,

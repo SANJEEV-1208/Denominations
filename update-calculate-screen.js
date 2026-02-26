@@ -1,17 +1,17 @@
-const fs = require('fs');
+const fs = require('node:fs');
 
 // Read the CalculateScreen file
 let content = fs.readFileSync('src/screens/CalculateScreen.tsx', 'utf8');
 
 // Replace Colors references with theme.colors in JSX
-content = content.replace(/fill={Colors\./g, 'fill={theme.colors.');
-content = content.replace(/color={Colors\./g, 'color={theme.colors.');
-content = content.replace(/tintColor={Colors\./g, 'tintColor={theme.colors.');
+content = content.replaceAll(/fill={Colors\./g, 'fill={theme.colors.');
+content = content.replaceAll(/color={Colors\./g, 'color={theme.colors.');
+content = content.replaceAll(/tintColor={Colors\./g, 'tintColor={theme.colors.');
 
 // Replace Colors references in styles
-content = content.replace(/backgroundColor: Colors\./g, 'backgroundColor: theme.colors.');
-content = content.replace(/color: Colors\./g, 'color: theme.colors.');
-content = content.replace(/borderColor: Colors\./g, 'borderColor: theme.colors.');
+content = content.replaceAll(/backgroundColor: Colors\./g, 'backgroundColor: theme.colors.');
+content = content.replaceAll(/color: Colors\./g, 'color: theme.colors.');
+content = content.replaceAll(/borderColor: Colors\./g, 'borderColor: theme.colors.');
 
 // Fix the styles section to accept theme parameter
 content = content.replace(
