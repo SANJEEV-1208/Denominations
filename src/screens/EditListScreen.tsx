@@ -1,14 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,15 +17,14 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { Typography } from '../constants/typography';
 import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
-// @ts-ignore
-import SearchIcon from '../assets/search-Text-Feild.svg';
+import { SearchBar } from '../components/SearchBar';
+import { useKeyboardAnimation } from '../hooks/useKeyboardAnimation';
 import { CURRENCIES } from '../constants/currencies';
 
 type EditListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditList'>;
@@ -37,7 +34,6 @@ export const EditListScreen: React.FC = () => {
   const theme = useTheme();
   const {
     savedCurrencyCodes,
-    allCurrencies,
     addCurrency,
     removeCurrency,
     reorderCurrencies,
@@ -46,20 +42,18 @@ export const EditListScreen: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [localSavedCodes, setLocalSavedCodes] = useState(savedCurrencyCodes);
-  const [keyboardHeight] = useState(new Animated.Value(0));
+  const keyboardHeight = useKeyboardAnimation();
 
-  // Filter currencies based on search
   const filteredCurrencies = useMemo(() => {
-  const query = searchQuery.toLowerCase();
-  return CURRENCIES.filter(currency => {
-    const codeMatch = currency.code.toLowerCase().includes(query);
-    const nameMatch = currency.name.toLowerCase().includes(query);
-    const countryMatch = currency.country ? currency.country.toLowerCase().includes(query) : false;
-    return codeMatch || nameMatch || countryMatch;
-  });
-}, [searchQuery]);
+    const query = searchQuery.toLowerCase();
+    return CURRENCIES.filter(currency => {
+      const codeMatch = currency.code.toLowerCase().includes(query);
+      const nameMatch = currency.name.toLowerCase().includes(query);
+      const countryMatch = currency.country ? currency.country.toLowerCase().includes(query) : false;
+      return codeMatch || nameMatch || countryMatch;
+    });
+  }, [searchQuery]);
 
-  // Separate saved and available currencies
   const savedCurrencies = useMemo(() => {
     return localSavedCodes
       .map(code => getCurrencyByCode(code))
@@ -71,35 +65,6 @@ export const EditListScreen: React.FC = () => {
       currency => !localSavedCodes.includes(currency.code)
     );
   }, [filteredCurrencies, localSavedCodes]);
-
-  useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-      (e) => {
-        Animated.timing(keyboardHeight, {
-          toValue: Platform.OS === 'android' ? 0 : e.endCoordinates.height,
-          duration: Platform.OS === 'ios' ? 250 : 0,
-          useNativeDriver: false,
-        }).start();
-      }
-    );
-
-    const keyboardWillHideListener = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
-      () => {
-        Animated.timing(keyboardHeight, {
-          toValue: 0,
-          duration: Platform.OS === 'ios' ? 250 : 0,
-          useNativeDriver: false,
-        }).start();
-      }
-    );
-
-    return () => {
-      keyboardWillShowListener.remove();
-      keyboardWillHideListener.remove();
-    };
-  }, [keyboardHeight]);
 
   const handleDonePress = async () => {
     await reorderCurrencies(localSavedCodes);
@@ -122,7 +87,11 @@ export const EditListScreen: React.FC = () => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
-          style={[styles.savedCurrencyCard, { backgroundColor: theme.colors.SELECTED_CARD_BG, borderColor: theme.colors.SELECTED_CARD_BORDER }, isActive && styles.dragging]}
+          style={[
+            styles.savedCurrencyCard,
+            { backgroundColor: theme.colors.SELECTED_CARD_BG, borderColor: theme.colors.SELECTED_CARD_BORDER },
+            isActive && styles.dragging
+          ]}
           onLongPress={drag}
           onPress={() => handleToggleCurrency(item.code)}
           activeOpacity={0.7}
@@ -163,6 +132,47 @@ export const EditListScreen: React.FC = () => {
     );
   };
 
+  const renderContent = () => {
+    const shouldShowDraggableList = savedCurrencies.length > 0 && !searchQuery;
+
+    if (shouldShowDraggableList) {
+      return (
+        <DraggableFlatList
+          data={savedCurrencies}
+          renderItem={renderSavedItem}
+          keyExtractor={(item) => item.code}
+          onDragEnd={({ data }) => {
+            const newCodes = data.map(c => c.code);
+            setLocalSavedCodes(newCodes);
+          }}
+          scrollEnabled={true}
+          ListFooterComponent={
+            availableCurrencies.length > 0 ? (
+              <View style={styles.availableSection}>
+                {availableCurrencies.map(renderAvailableItem)}
+              </View>
+            ) : null
+          }
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        />
+      );
+    }
+
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {availableCurrencies.length > 0 && (
+          <View style={styles.availableSection}>
+            {availableCurrencies.map(renderAvailableItem)}
+          </View>
+        )}
+      </ScrollView>
+    );
+  };
+
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
       <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
@@ -188,38 +198,7 @@ export const EditListScreen: React.FC = () => {
 
           {/* Content */}
           <View style={styles.content}>
-            {savedCurrencies.length > 0 && !searchQuery ? (
-              <DraggableFlatList
-                data={savedCurrencies}
-                renderItem={renderSavedItem}
-                keyExtractor={(item) => item.code}
-                onDragEnd={({ data }) => {
-                  const newCodes = data.map(c => c.code);
-                  setLocalSavedCodes(newCodes);
-                }}
-                scrollEnabled={true}
-                ListFooterComponent={
-                  availableCurrencies.length > 0 ? (
-                    <View style={styles.availableSection}>
-                      {availableCurrencies.map(renderAvailableItem)}
-                    </View>
-                  ) : null
-                }
-                contentContainerStyle={styles.contentContainer}
-                showsVerticalScrollIndicator={false}
-              />
-            ) : (
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.contentContainer}
-              >
-                {availableCurrencies.length > 0 && (
-                  <View style={styles.availableSection}>
-                    {availableCurrencies.map(renderAvailableItem)}
-                  </View>
-                )}
-              </ScrollView>
-            )}
+            {renderContent()}
           </View>
 
           {/* Search Bar */}
@@ -229,59 +208,7 @@ export const EditListScreen: React.FC = () => {
               bottom: Platform.OS === 'ios' ? keyboardHeight : Platform.OS === 'web' ? 20 : 30
             }
           ]}>
-            {Platform.OS === 'android' ? (
-              <View style={[styles.searchBar, theme.dark ? styles.androidSearchBar : styles.lightSearchBar]}>
-                <TextInput
-                  style={[styles.searchInput, { color: '#757575' }]}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </View>
-            ) : Platform.OS === 'web' ? (
-              <View style={[styles.searchBar, theme.dark ? styles.webSearchBar : styles.lightSearchBar]}>
-                <TextInput
-                  style={[styles.searchInput, { color: '#757575' }]}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </View>
-            ) : theme.dark ? (
-              <CustomBlurView intensity={80} tint="light" style={styles.searchBar}>
-                <TextInput
-                  style={[styles.searchInput, { color: '#757575' }]}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </CustomBlurView>
-            ) : (
-              <View style={[styles.searchBar, styles.lightSearchBar]}>
-                <TextInput
-                  style={[styles.searchInput, { color: '#757575' }]}
-                  placeholder="Search"
-                  placeholderTextColor="#757575"
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-                <TouchableOpacity style={styles.searchIconButton}>
-                  <SearchIcon width={20} height={20} stroke="#757575" />
-                </TouchableOpacity>
-              </View>
-            )}
+            <SearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
           </Animated.View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -339,7 +266,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    // backgroundColor set dynamically
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -357,14 +283,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: Platform.OS === 'web' ? 150 : 100,
   },
-  savedSection: {
-    marginTop: 20,
-  },
   availableSection: {
     marginTop: 20,
   },
   savedCurrencyCard: {
-    // backgroundColor and borderColor set dynamically
     borderWidth: 2,
     borderRadius: 16,
     paddingVertical: 16,
@@ -380,7 +302,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.02 }],
   },
   availableCurrencyCard: {
-    // backgroundColor set dynamically
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -417,60 +338,5 @@ const styles = StyleSheet.create({
     left: '10%',
     right: '10%',
     zIndex: Platform.OS === 'web' ? 999 : 10,
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 32,
-    paddingHorizontal: 20,
-    height: 63,
-    overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-      },
-      android: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-        elevation: 4,
-      },
-      web: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-      } as any,
-      default: {
-        borderWidth: 1,
-        borderColor: 'rgba(117, 117, 117, 0.8)',
-      },
-    }),
-  },
-  androidSearchBar: {
-    backgroundColor: '#1c1c1d',
-  },
-  webSearchBar: {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-  },
-  lightSearchBar: {
-    backgroundColor: 'white',
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: 'System',
-    textAlign: 'left',
-  },
-  searchIconButton: {
-    padding: 5,
   },
 });

@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  TextInput,
   Dimensions,
   Platform,
 } from 'react-native';
@@ -13,7 +12,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
@@ -22,19 +20,9 @@ import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { CloseIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
-
-// @ts-ignore
-import CalculateIcon from '../assets/Calculate.svg';
-// @ts-ignore
-import DeleteIcon from '../assets/delete.svg';
-// @ts-ignore
-import PlusIcon from '../assets/plus.svg';
-// @ts-ignore
-import MinusIcon from '../assets/minus.svg';
-// @ts-ignore
-import DivideIcon from '../assets/divide.svg';
-// @ts-ignore
-import MultiplyIcon from '../assets/multiply.svg';
+import { CalculatorNumberPad } from '../components/CalculatorNumberPad';
+import { useCalculator } from '../hooks/useCalculator';
+import { useCurrencyConversion } from '../hooks/useCurrencyConversion';
 
 type CalculateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calculate'>;
 type CalculateScreenRouteProp = RouteProp<RootStackParamList, 'Calculate'>;
@@ -46,224 +34,29 @@ export const CalculateScreen: React.FC = () => {
   const route = useRoute<CalculateScreenRouteProp>();
   const theme = useTheme();
   const { currencyCode } = route.params;
-  
-  const { 
-    savedCurrencyCodes, 
-    exchangeRates, 
-    getCurrencyByCode,
-    setLastConversions 
-  } = useCurrency();
-  
-  const [inputValue, setInputValue] = useState('0');
-  const [previousValue, setPreviousValue] = useState<string | null>(null);
-  const [operator, setOperator] = useState<string | null>(null);
-  const [waitingForNewNumber, setWaitingForNewNumber] = useState(false);
 
+  const {
+    savedCurrencyCodes,
+    exchangeRates,
+    getCurrencyByCode,
+    setLastConversions
+  } = useCurrency();
+
+  const calculator = useCalculator();
   const selectedCurrency = getCurrencyByCode(currencyCode);
 
-  // Compute display value showing the full expression (e.g., "1+1", "3-1")
-  const getOperatorSymbol = (op: string): string => {
-    switch (op) {
-      case '+': return '+';
-      case '-': return '-';
-      case '*': return '×';
-      case '/': return '÷';
-      default: return op;
-    }
-  };
-
-  const displayExpression = useMemo(() => {
-    if (previousValue !== null && operator !== null) {
-      return `${previousValue}${getOperatorSymbol(operator)}${waitingForNewNumber ? '' : inputValue}`;
-    }
-    return inputValue;
-  }, [previousValue, operator, inputValue, waitingForNewNumber]);
-
-  // Compute the effective value for conversions (handles pending math operations)
-  const effectiveValue = useMemo(() => {
-    if (previousValue !== null && operator !== null) {
-      if (waitingForNewNumber) {
-        // User just pressed operator, show previousValue for now
-        return previousValue;
-      } else {
-        // Calculate the result of the pending operation
-        const prev = Number.parseFloat(previousValue);
-        const current = Number.parseFloat(inputValue) || 0;
-        let result: number;
-        switch (operator) {
-          case '+':
-            result = prev + current;
-            break;
-          case '-':
-            result = prev - current;
-            break;
-          case '*':
-            result = prev * current;
-            break;
-          case '/':
-            result = current !== 0 ? prev / current : 0;
-            break;
-          default:
-            result = current;
-        }
-        return String(Number.parseFloat(result.toFixed(8)));
-      }
-    }
-    return inputValue;
-  }, [inputValue, previousValue, operator, waitingForNewNumber]);
-
-  // Compute conversions based on effective value
-  const computedConversions = useMemo(() => {
-    const amount = Number.parseFloat(effectiveValue) || 0;
-    if (amount === 0 || !exchangeRates) {
-      return {};
-    }
-
-    const newConversions: { [key: string]: number } = {};
-    newConversions[currencyCode] = amount;
-
-    for (const code of savedCurrencyCodes) {
-      if (code !== currencyCode) {
-        const converted = CurrencyAPI.convertCurrency(
-          amount,
-          currencyCode,
-          code,
-          exchangeRates
-        );
-        newConversions[code] = converted;
-      }
-    }
-
-    return newConversions;
-  }, [effectiveValue, exchangeRates, savedCurrencyCodes, currencyCode]);
-
-  // Save conversions to context (for button press - saves to context for home screen)
-  const saveConversionsToContext = (value: string) => {
-    const amount = parseFloat(value) || 0;
-    if (amount === 0 || !exchangeRates) {
-      setLastConversions({}, currencyCode, 0);
-      return;
-    }
-
-    const newConversions: { [key: string]: number } = {};
-    newConversions[currencyCode] = amount;
-
-    for (const code of savedCurrencyCodes) {
-      if (code !== currencyCode) {
-        const converted = CurrencyAPI.convertCurrency(
-          amount,
-          currencyCode,
-          code,
-          exchangeRates
-        );
-        newConversions[code] = converted;
-      }
-    }
-
-    // Store in context for display on home screen
-    setLastConversions(newConversions, currencyCode, amount);
-  };
-
-  const handleNumberPress = (num: string) => {
-    if (waitingForNewNumber) {
-      setInputValue(num);
-      setWaitingForNewNumber(false);
-    } else if (inputValue === '0') {
-      setInputValue(num);
-    } else {
-      setInputValue(inputValue + num);
-    }
-  };
-
-  const handleDecimalPress = () => {
-    if (waitingForNewNumber) {
-      setInputValue('0.');
-      setWaitingForNewNumber(false);
-    } else if (!inputValue.includes('.')) {
-      setInputValue(inputValue + '.');
-    }
-  };
-
-  const handleBackspacePress = () => {
-    if (inputValue.length > 1) {
-      setInputValue(inputValue.slice(0, -1));
-    } else {
-      setInputValue('0');
-    }
-  };
-
-  const handleClearPress = () => {
-    setInputValue('0');
-    setPreviousValue(null);
-    setOperator(null);
-    setWaitingForNewNumber(false);
-  };
-
-  const performCalculation = (prev: number, current: number, op: string): number => {
-    switch (op) {
-      case '+':
-        return prev + current;
-      case '-':
-        return prev - current;
-      case '*':
-        return prev * current;
-      case '/':
-        return current !== 0 ? prev / current : 0;
-      default:
-        return current;
-    }
-  };
-
-  const handleOperatorPress = (op: string) => {
-    const currentValue = Number.parseFloat(inputValue) || 0;
-
-    if (previousValue !== null && operator && !waitingForNewNumber) {
-      // Chain calculation
-      const result = performCalculation(parseFloat(previousValue), currentValue, operator);
-      const resultStr = String(Number.parseFloat(result.toFixed(8)));
-      setInputValue(resultStr);
-      setPreviousValue(resultStr);
-    } else {
-      setPreviousValue(inputValue);
-    }
-
-    setOperator(op);
-    setWaitingForNewNumber(true);
-  };
-
-  const handleEqualsPress = () => {
-    if (previousValue === null || operator === null) {
-      return;
-    }
-
-    const prev = Number.parseFloat(previousValue);
-    const current = Number.parseFloat(inputValue) || 0;
-    const result = performCalculation(prev, current, operator);
-    const resultStr = String(Number.parseFloat(result.toFixed(8)));
-
-    setInputValue(resultStr);
-    setPreviousValue(null);
-    setOperator(null);
-    setWaitingForNewNumber(true);
-  };
+  const { computedConversions, createConversions } = useCurrencyConversion(
+    calculator.effectiveValue,
+    currencyCode,
+    savedCurrencyCodes,
+    exchangeRates
+  );
 
   const handleCalculatePress = () => {
-    // First complete any pending math operation
-    let finalValue = inputValue;
-    if (previousValue !== null && operator !== null) {
-      const prev = Number.parseFloat(previousValue);
-      const current = Number.parseFloat(inputValue) || 0;
-      const result = performCalculation(prev, current, operator);
-      finalValue = String(Number.parseFloat(result.toFixed(8)));
-      setInputValue(finalValue);
-      setPreviousValue(null);
-      setOperator(null);
-      setWaitingForNewNumber(true);
-    }
-
-    // Save conversions to context for home screen display
-    saveConversionsToContext(finalValue);
-    // Navigate back to home screen
+    const finalValue = calculator.completePendingCalculation();
+    const conversions = createConversions(finalValue);
+    const amount = parseFloat(finalValue) || 0;
+    setLastConversions(conversions, currencyCode, amount);
     navigation.goBack();
   };
 
@@ -280,8 +73,8 @@ export const CalculateScreen: React.FC = () => {
             <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
             <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Calculate</Text>
           </View>
-          <TouchableOpacity 
-            onPress={() => navigation.goBack()} 
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={styles.closeButton}
           >
             <View style={[styles.closeIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
@@ -292,7 +85,6 @@ export const CalculateScreen: React.FC = () => {
       </View>
 
       <View style={styles.contentContainer}>
-        {/* Conversion Results */}
         <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
           <View style={styles.conversionsContainer}>
             {/* Selected Currency Card */}
@@ -311,15 +103,15 @@ export const CalculateScreen: React.FC = () => {
                 <View style={styles.selectedCardContent}>
                   <View style={styles.selectedIconWrapper}>
                     {selectedCurrency && (
-                      <CurrencyIcon 
-                        currency={selectedCurrency} 
-                        size={70} 
+                      <CurrencyIcon
+                        currency={selectedCurrency}
+                        size={70}
                         backgroundColor={theme.dark ? "black" : "white"}
                       />
                     )}
                   </View>
                   <View style={styles.selectedInfo}>
-                    <Text style={styles.selectedAmount}>{effectiveValue}</Text>
+                    <Text style={styles.selectedAmount}>{calculator.effectiveValue}</Text>
                     <Text style={styles.selectedCurrency}>
                       {selectedCurrency?.code} ({selectedCurrency?.name}) {selectedCurrency?.symbol}
                     </Text>
@@ -334,14 +126,14 @@ export const CalculateScreen: React.FC = () => {
               .map(code => {
                 const currency = getCurrencyByCode(code);
                 const value = computedConversions[code] || 0;
-                
+
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
                     <View style={styles.conversionIconWrapper}>
                       {currency && (
-                        <CurrencyIcon 
-                          currency={currency} 
-                          size={70} 
+                        <CurrencyIcon
+                          currency={currency}
+                          size={70}
                           backgroundColor={theme.dark ? "black" : "white"}
                         />
                       )}
@@ -360,104 +152,15 @@ export const CalculateScreen: React.FC = () => {
           </View>
         </ScrollView>
 
-        {/* Number Pad with Input Field */}
-        <View style={styles.numPadWrapper}>
-          <BlurView
-            intensity={40}
-            tint={theme.dark ? "dark" : "light"}
-            style={[styles.numPadBlurContainer]}
-          >
-            <View style={[styles.numPadInnerContainer, { backgroundColor: theme.dark ? 'rgba(117, 117, 117, 0.25)' : 'rgba(217, 217, 217, 0.25)' }]}>
-              {/* Input Row */}
-              <View style={styles.inputRow}>
-                <View style={styles.inputFieldWrapper}>
-                  <TouchableOpacity onPress={handleClearPress} style={styles.clearButton}>
-                    <Text style={[styles.clearText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>×</Text>
-                  </TouchableOpacity>
-                  <TextInput
-                    style={[styles.input, { color: theme.dark ? '#FFFFFF' : '#000000', backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]}
-                    value={displayExpression}
-                    onChangeText={setInputValue}
-                    keyboardType="numeric"
-                    editable={false}
-                    placeholder="0"
-                    placeholderTextColor={theme.dark ? '#666666' : '#999999'}
-                  />
-                </View>
-                <TouchableOpacity
-                  style={styles.calculateButton}
-                  onPress={handleCalculatePress}
-                >
-                  <CalculateIcon width={24} height={24} />
-                </TouchableOpacity>
-              </View>
-
-              {/* Row 1: 1, 2, 3, + */}
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('1')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('2')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('3')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>3</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('+')}>
-                  <PlusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
-                </TouchableOpacity>
-              </View>
-
-              {/* Row 2: 4, 5, 6, - */}
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('4')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>4</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('5')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('6')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>6</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('-')}>
-                  <MinusIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
-                </TouchableOpacity>
-              </View>
-
-              {/* Row 3: 7, 8, 9, × */}
-              <View style={styles.numPadRow}>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('7')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>7</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('8')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>8</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('9')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>9</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('*')}>
-                  <MultiplyIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
-                </TouchableOpacity>
-              </View>
-
-              {/* Row 4: ., 0, ⌫, ÷ */}
-              <View style={[styles.numPadRow, { marginBottom: 0 }]}>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={handleDecimalPress}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>.</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleNumberPress('0')}>
-                  <Text style={[styles.numPadText, { color: theme.dark ? '#FFFFFF' : '#000000' }]}>0</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={handleBackspacePress}>
-                  <DeleteIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.numPadButton, { backgroundColor: theme.dark ? '#000000' : '#FFFFFF' }]} onPress={() => handleOperatorPress('/')}>
-                  <DivideIcon width={20} height={20} color={theme.dark ? '#FFFFFF' : '#000000'} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </BlurView>
-        </View>
+        <CalculatorNumberPad
+          displayExpression={calculator.displayExpression}
+          onNumberPress={calculator.handleNumberPress}
+          onDecimalPress={calculator.handleDecimalPress}
+          onBackspacePress={calculator.handleBackspacePress}
+          onClearPress={calculator.handleClearPress}
+          onOperatorPress={calculator.handleOperatorPress}
+          onCalculatePress={handleCalculatePress}
+        />
       </View>
     </SafeAreaView>
   );
@@ -503,7 +206,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    // backgroundColor set dynamically
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -517,7 +219,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: ((width - 24) / 4) * 0.7 * 5 + 20, // 5 rows of buttons (70% height) + padding
+    bottom: ((width - 24) / 4) * 0.7 * 5 + 20,
   },
   scrollContent: {
     flexGrow: 1,
@@ -590,94 +292,5 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     fontWeight: '400',
     marginTop: 2,
-  },
-  numPadWrapper: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  numPadBlurContainer: {
-    borderRadius: 16,
-    overflow: 'hidden',
-    marginHorizontal: 4,
-    marginBottom: 4,
-  },
-  numPadInnerContainer: {
-    padding: 4,
-    borderRadius: 16,
-  },
-  inputRow: {
-    flexDirection: 'row',
-    marginBottom: 2,
-    gap: 2,
-  },
-  inputFieldWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    borderRadius: ((width - 24) / 4) * 0.35,
-    overflow: 'hidden',
-  },
-  input: {
-    flex: 1,
-    height: ((width - 24) / 4) * 0.7,
-    fontSize: 24,
-    fontFamily: 'SpaceMono-Regular',
-    textAlign: 'center',
-    borderRadius: ((width - 24) / 4) * 0.35,
-  },
-  clearButton: {
-    position: 'absolute',
-    left: 15,
-    zIndex: 1,
-    padding: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  clearText: {
-    fontSize: 20,
-    fontWeight: '400',
-  },
-  calculateButton: {
-    width: (width - 24) / 4,
-    height: ((width - 24) / 4) * 0.7,
-    backgroundColor: '#E300FF',
-    borderRadius: ((width - 24) / 4) * 0.35,
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#E300FF',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 6,
-      },
-    }),
-  },
-  numPadRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 2,
-    gap: 2,
-  },
-  numPadButton: {
-    width: (width - 24) / 4,
-    height: ((width - 24) / 4) * 0.7,
-    borderRadius: ((width - 24) / 4) * 0.35,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  numPadText: {
-    fontSize: 28,
-    fontFamily: 'SpaceMono-Regular',
-    fontWeight: '400',
   },
 });
