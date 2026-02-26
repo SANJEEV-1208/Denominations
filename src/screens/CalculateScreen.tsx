@@ -21,6 +21,9 @@ import { RootStackParamList } from '../types';
 import { CloseIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
 import { CalculatorNumberPad } from '../components/CalculatorNumberPad';
+import { ScreenHeader } from '../components/ScreenHeader';
+import { IconButton } from '../components/IconButton';
+import { CurrencyListItem } from '../components/CurrencyListItem';
 import { useCalculator } from '../hooks/useCalculator';
 import { useCurrencyConversion } from '../hooks/useCurrencyConversion';
 
@@ -66,23 +69,15 @@ export const CalculateScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
-      <View style={styles.header}>
-        <View style={styles.spacer} />
-        <View style={styles.headerRight}>
-          <View style={styles.titleContainer}>
-            <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
-            <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Calculate</Text>
-          </View>
-          <TouchableOpacity
+      <ScreenHeader
+        subtitle="Calculate"
+        actionButton={
+          <IconButton
             onPress={() => navigation.goBack()}
-            style={styles.closeButton}
-          >
-            <View style={[styles.closeIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
-              <CloseIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+            icon={<CloseIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />}
+          />
+        }
+      />
 
       <View style={styles.contentContainer}>
         <ScrollView style={styles.conversionsScrollView} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -129,23 +124,10 @@ export const CalculateScreen: React.FC = () => {
 
                 return (
                   <View key={code} style={[styles.conversionCard, { backgroundColor: theme.colors.CARD_BACKGROUND }]}>
-                    <View style={styles.conversionIconWrapper}>
-                      {currency && (
-                        <CurrencyIcon
-                          currency={currency}
-                          size={70}
-                          backgroundColor={theme.dark ? "black" : "white"}
-                        />
-                      )}
-                    </View>
-                    <View style={styles.conversionInfo}>
-                      <Text style={[styles.conversionValue, { color: theme.colors.TEXT_PRIMARY }]}>
-                        {value > 0 ? formatValue(value) : '—'}
-                      </Text>
-                      <Text style={[styles.conversionCurrency, { color: theme.colors.TEXT_BODY }]}>
-                        {currency?.code} ({currency?.name}) {currency?.symbol}
-                      </Text>
-                    </View>
+                    {currency && <CurrencyListItem currency={currency} iconSize={70} showSymbol={false} />}
+                    <Text style={[styles.conversionValue, { color: theme.colors.TEXT_PRIMARY }]}>
+                      {value > 0 ? formatValue(value) : '—'}
+                    </Text>
                   </View>
                 );
               })}
@@ -169,45 +151,6 @@ export const CalculateScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingTop: Platform.OS === 'android' ? 40 : 20,
-  },
-  spacer: {
-    flex: 1,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  titleContainer: {
-    alignItems: 'flex-end',
-    marginRight: 15,
-  },
-  title: {
-    ...Typography.HEADER,
-    fontSize: 20,
-    textAlign: 'right',
-  },
-  subtitle: {
-    ...Typography.SUBTITLE,
-    marginTop: 2,
-    textAlign: 'right',
-  },
-  closeButton: {
-    padding: 8,
-  },
-  closeIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   contentContainer: {
     flex: 1,
@@ -277,20 +220,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: 77,
   },
-  conversionIconWrapper: {
-    marginRight: 16,
-  },
-  conversionInfo: {
-    flex: 1,
-  },
   conversionValue: {
     fontSize: 20,
     fontFamily: 'SpaceMono-Regular',
-  },
-  conversionCurrency: {
-    fontSize: 12,
-    fontFamily: 'System',
-    fontWeight: '400',
-    marginTop: 2,
+    marginLeft: 'auto',
   },
 });

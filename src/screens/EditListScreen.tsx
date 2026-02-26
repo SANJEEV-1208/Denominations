@@ -24,6 +24,9 @@ import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
 import { SearchBar } from '../components/SearchBar';
+import { ScreenHeader } from '../components/ScreenHeader';
+import { IconButton } from '../components/IconButton';
+import { CurrencyListItem } from '../components/CurrencyListItem';
 import { useKeyboardAnimation } from '../hooks/useKeyboardAnimation';
 import { CURRENCIES } from '../constants/currencies';
 
@@ -103,13 +106,7 @@ export const EditListScreen: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.currencyContent}>
-            <CurrencyIcon currency={item} size={70} backgroundColor={theme.dark ? "black" : "white"} />
-            <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
-              <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{item.code}</Text>
-              <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
-                {item.name} {item.symbol}
-              </Text>
-            </View>
+            <CurrencyListItem currency={item} iconSize={70} />
           </View>
           <View style={styles.dragHandle}>
             <Text style={[styles.dragIcon, { color: theme.colors.TEXT_BODY }]}>≡</Text>
@@ -127,13 +124,7 @@ export const EditListScreen: React.FC = () => {
         onPress={() => handleToggleCurrency(currency.code)}
         activeOpacity={0.7}
       >
-        <CurrencyIcon currency={currency} size={70} backgroundColor={theme.dark ? "black" : "white"} />
-        <View style={[styles.currencyInfo, { marginLeft: 16 }]}>
-          <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>{currency.code}</Text>
-          <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
-            {currency.name} {currency.symbol}
-          </Text>
-        </View>
+        <CurrencyListItem currency={currency} iconSize={70} />
       </TouchableOpacity>
     );
   };
@@ -187,20 +178,15 @@ export const EditListScreen: React.FC = () => {
           style={styles.container}
         >
           {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.spacer} />
-            <View style={styles.headerRight}>
-              <View style={styles.titleContainer}>
-                <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
-                <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Edit List</Text>
-              </View>
-              <TouchableOpacity onPress={handleDonePress} style={styles.doneButton}>
-                <View style={[styles.doneIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
-                  <SaveIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <ScreenHeader
+            subtitle="Edit List"
+            actionButton={
+              <IconButton
+                onPress={handleDonePress}
+                icon={<SaveIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />}
+              />
+            }
+          />
 
           {/* Content */}
           <View style={styles.content}>

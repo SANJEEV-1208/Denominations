@@ -18,6 +18,8 @@ import { CurrencyCard } from '../components/CurrencyCard';
 import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { SettingsIcon } from '../components/Icons';
+import { ScreenHeader } from '../components/ScreenHeader';
+import { IconButton } from '../components/IconButton';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -80,20 +82,15 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
-      <View style={[styles.header, { backgroundColor: theme.colors.BACKGROUND }]}>
-        <View style={styles.spacer} />
-        <View style={styles.headerRight}>
-          <View style={styles.titleContainer}>
-            <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
-            <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Home</Text>
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate('EditList')} style={styles.settingsButton}>
-            <View style={[styles.settingsIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
-              <SettingsIcon width={24} height={24} fill={theme.colors.TEXT_WHITE} />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ScreenHeader
+        subtitle="Home"
+        actionButton={
+          <IconButton
+            onPress={() => navigation.navigate('EditList')}
+            icon={<SettingsIcon width={24} height={24} fill={theme.colors.TEXT_WHITE} />}
+          />
+        }
+      />
       
       <FlatList
         data={savedCurrencyCodes}
@@ -124,45 +121,6 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingTop: Platform.OS === 'android' ? 40 : 20,
-  },
-  spacer: {
-    flex: 1,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  titleContainer: {
-    alignItems: 'flex-end',
-    marginRight: 15,
-  },
-  title: {
-    ...Typography.HEADER,
-    fontSize: 20,
-    textAlign: 'right',
-  },
-  subtitle: {
-    ...Typography.SUBTITLE,
-    marginTop: 2,
-    textAlign: 'right',
-  },
-  settingsButton: {
-    padding: 8,
-  },
-  settingsIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

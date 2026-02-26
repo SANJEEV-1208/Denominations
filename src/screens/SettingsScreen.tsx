@@ -18,6 +18,9 @@ import { Typography } from '../constants/typography';
 import { RootStackParamList } from '../types';
 import { CloseIcon, AddIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
+import { ScreenHeader } from '../components/ScreenHeader';
+import { IconButton } from '../components/IconButton';
+import { CurrencyListItem } from '../components/CurrencyListItem';
 
 type SettingsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 
@@ -36,21 +39,15 @@ export const SettingsScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.spacer} />
-        <View style={styles.headerRight}>
-          <View style={styles.titleContainer}>
-            <Text style={[styles.title, { color: theme.colors.TEXT_PRIMARY }]}>Denominations</Text>
-            <Text style={[styles.subtitle, { color: theme.colors.TEXT_BODY }]}>Settings</Text>
-          </View>
-          <TouchableOpacity onPress={handleClosePress} style={styles.closeButton}>
-            <View style={[styles.closeIconContainer, { backgroundColor: theme.colors.PRIMARY }]}>
-              <CloseIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ScreenHeader
+        subtitle="Settings"
+        actionButton={
+          <IconButton
+            onPress={handleClosePress}
+            icon={<CloseIcon width={18} height={18} fill={theme.colors.TEXT_WHITE} />}
+          />
+        }
+      />
 
       {/* Content */}
       <ScrollView 
@@ -85,15 +82,7 @@ export const SettingsScreen: React.FC = () => {
                     { backgroundColor: theme.colors.CARD_BACKGROUND }
                   ]}
                 >
-                  <CurrencyIcon currency={currency} size={50} backgroundColor={theme.dark ? "black" : "white"} />
-                  <View style={styles.currencyInfo}>
-                    <Text style={[styles.currencyCode, { color: theme.colors.TEXT_PRIMARY }]}>
-                      {currency.code}
-                    </Text>
-                    <Text style={[styles.currencyName, { color: theme.colors.TEXT_BODY }]}>
-                      {currency.name} {currency.symbol}
-                    </Text>
-                  </View>
+                  <CurrencyListItem currency={currency} iconSize={50} />
                 </View>
               );
             })}
@@ -148,45 +137,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingTop: Platform.OS === 'android' ? 40 : 20,
-  },
-  spacer: {
-    flex: 1,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  titleContainer: {
-    alignItems: 'flex-end',
-    marginRight: 15,
-  },
-  title: {
-    ...Typography.HEADER,
-    fontSize: 20,
-    textAlign: 'right',
-  },
-  subtitle: {
-    ...Typography.SUBTITLE,
-    marginTop: 2,
-    textAlign: 'right',
-  },
-  closeButton: {
-    padding: 8,
-  },
-  closeIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   content: {
     flex: 1,
   },
@@ -222,19 +172,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     minHeight: 70,
-  },
-  currencyInfo: {
-    flex: 1,
-    marginLeft: 16,
-  },
-  currencyCode: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  currencyName: {
-    fontSize: 14,
-    opacity: 0.8,
   },
   addButtonContainer: {
     position: 'absolute',
