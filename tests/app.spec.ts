@@ -9,7 +9,7 @@ test.describe('Denominations App', () => {
     await page.waitForTimeout(3000);
     
     // Check if the Settings icon SVG is present
-    const settingsIcon = await page.locator('svg').first();
+    const settingsIcon = page.locator('svg').first();
     expect(settingsIcon).toBeTruthy();
     
     // Check if the icon has white fill color
@@ -29,13 +29,13 @@ test.describe('Denominations App', () => {
     await page.waitForTimeout(3000);
     
     // Click on a currency card (if available)
-    const currencyCard = await page.locator('[role="button"]').first();
+    const currencyCard = page.locator('[role="button"]').first();
     if (await currencyCard.isVisible()) {
       await currencyCard.click();
       await page.waitForTimeout(2000);
       
       // Check if Calculate screen is loaded (Close icon should be visible)
-      const closeIcon = await page.locator('svg').filter({ hasText: /close|x/i });
+      const closeIcon = page.locator('svg').filter({ hasText: /close|x/i });
       expect(closeIcon).toBeTruthy();
     }
   });
