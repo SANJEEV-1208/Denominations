@@ -15,6 +15,7 @@ import { useTheme } from '../context/ThemeContext';
 import { CurrencyAPI } from '../services/api/currencyAPI';
 import { Colors } from '../constants/colors';
 import { Typography } from '../constants/typography';
+import { CommonStyles } from '../constants/commonStyles';
 import { RootStackParamList } from '../types';
 import { CloseIcon } from '../components/Icons';
 import { CurrencyIcon } from '../components/CurrencyIcon';
@@ -66,7 +67,7 @@ export const CalculateScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
+    <SafeAreaView style={[CommonStyles.flexContainer, { backgroundColor: theme.colors.BACKGROUND }]}>
       <ScreenHeader
         subtitle="Calculate"
         actionButton={
@@ -147,9 +148,6 @@ export const CalculateScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   contentContainer: {
     flex: 1,
     position: 'relative',

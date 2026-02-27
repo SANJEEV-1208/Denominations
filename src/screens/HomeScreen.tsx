@@ -14,6 +14,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { CurrencyCard } from '../components/CurrencyCard';
 import { Typography } from '../constants/typography';
+import { CommonStyles } from '../constants/commonStyles';
 import { RootStackParamList } from '../types';
 import { SettingsIcon } from '../components/Icons';
 import { ScreenHeader } from '../components/ScreenHeader';
@@ -79,7 +80,7 @@ export const HomeScreen: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
+    <SafeAreaView style={[CommonStyles.flexContainer, { backgroundColor: theme.colors.BACKGROUND }]}>
       <ScreenHeader
         subtitle="Home"
         actionButton={
@@ -114,9 +115,6 @@ export const HomeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

@@ -14,6 +14,7 @@ import { CustomBlurView } from '../components/CustomBlurView';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { Colors } from '../constants/colors';
+import { CommonStyles } from '../constants/commonStyles';
 import { RootStackParamList } from '../types';
 import { CloseIcon, AddIcon } from '../components/Icons';
 import { ScreenHeader } from '../components/ScreenHeader';
@@ -36,7 +37,7 @@ export const SettingsScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
+    <SafeAreaView style={[CommonStyles.flexContainer, { backgroundColor: theme.colors.BACKGROUND }]}>
       <ScreenHeader
         subtitle="Settings"
         actionButton={
@@ -132,9 +133,6 @@ export const SettingsScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },

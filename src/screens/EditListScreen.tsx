@@ -20,6 +20,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useCurrency } from '../context/CurrencyContext';
 import { useTheme } from '../context/ThemeContext';
 import { Typography } from '../constants/typography';
+import { CommonStyles } from '../constants/commonStyles';
 import { RootStackParamList, Currency } from '../types';
 import { SaveIcon } from '../components/Icons';
 import { SearchBar } from '../components/SearchBar';
@@ -171,10 +172,10 @@ export const EditListScreen: React.FC = () => {
 
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.BACKGROUND }]}>
+      <SafeAreaView style={[CommonStyles.flexContainer, { backgroundColor: theme.colors.BACKGROUND }]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.container}
+          style={CommonStyles.flexContainer}
         >
           {/* Header */}
           <ScreenHeader
@@ -217,9 +218,6 @@ const styles = StyleSheet.create({
       } as any,
       default: {}
     }),
-  },
-  container: {
-    flex: 1,
   },
   header: {
     flexDirection: 'row',
