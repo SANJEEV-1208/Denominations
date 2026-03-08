@@ -3,6 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { Inter_900Black, Inter_900Black_Italic } from '@expo-google-fonts/inter';
+import { Nunito_900Black, Nunito_800ExtraBold } from '@expo-google-fonts/nunito';
+import { Outfit_900Black } from '@expo-google-fonts/outfit';
+import { Poppins_900Black_Italic } from '@expo-google-fonts/poppins';
+import { Montserrat_900Black_Italic } from '@expo-google-fonts/montserrat';
 import { CurrencyProvider } from './src/context/CurrencyContext';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { SplashScreen as AppSplashScreen } from './src/screens/SplashScreen';
@@ -28,6 +33,13 @@ export default function App() {
           'SpaceGrotesk-Bold': require('./assets/fonts/SpaceGrotesk-Bold.ttf'),
           'SpaceMono-Regular': require('./assets/fonts/SpaceMono-Regular.ttf'),
           'SpaceMono-Bold': require('./assets/fonts/SpaceMono-Bold.ttf'),
+          'Inter': Inter_900Black_Italic,
+          'Inter-Black': Inter_900Black,
+          'Nunito': Nunito_900Black,
+          'Nunito-ExtraBold': Nunito_800ExtraBold,
+          'Outfit': Outfit_900Black,
+          'Poppins-BlackItalic': Poppins_900Black_Italic,
+          'Montserrat-BlackItalic': Montserrat_900Black_Italic,
         });
       } catch (e) {
         console.warn('Font loading error:', e);
